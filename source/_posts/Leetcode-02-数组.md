@@ -199,6 +199,71 @@ class Solution {
 
 -----
 
+#### 73. 矩阵置零
+
+> ※ 将每行和每列的第一个元素视为标记，用于表示该行或该列是否需要置零。对于第一行元素，可以额外声明一个变量，用于表示第一行是否需要置零。
+
+```java
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        if (matrix.length == 0) {
+            return;
+        }
+        // 判断第一行是否需要置零
+        boolean setZero = false;
+        for (int i = 0; i < matrix[0].length; i++) {
+            if (matrix[0][i] == 0) {
+                setZero = true;
+                break;
+            }
+        }
+        // 判断第一列是否需要置零
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                matrix[0][0] = 0;
+                break;
+            }
+        }
+        //
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        //
+        for (int i = 1; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < matrix[0].length; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        //
+        for (int i = 0; i < matrix[0].length; i++) {
+            if (matrix[0][i] == 0) {
+                for (int j = 1; j < matrix.length; j++) {
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        //
+        if (setZero) {
+            for (int i = 0; i < matrix[0].length; i++) {
+                matrix[0][i] = 0;
+            }
+        }
+        // MD，我是真的菜，看完解析做了三遍才做出来。。。
+    }
+}
+```
+
+> ※ 时间复杂度：$O(mn)$；空间复杂度：$O(1)$。
+
+> **注**：该题目尤其需要注意置零时的顺序，即首先对第一行之外的行进行置零，然后对所有列进行置零，最后对第一行进行置零！
+
 #### 153. 寻找旋转排序数组中的最小值
 
 > ※ 首先能够想到的便是利用二分搜索，问题在于如何更新状态。对于`left`、`mid`、`right`，它们之间的关系存在如下四种可能：`< <`、`< >`、`> <`、`> >`，分析出每种可能对应的状态更新，便能够轻松解决该题目。更详细的分析请参考<a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/er-fen-cha-zhao-wei-shi-yao-zuo-you-bu-dui-cheng-z/">题解</a>。
