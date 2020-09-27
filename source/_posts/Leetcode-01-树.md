@@ -11,6 +11,83 @@ tags:
 
 -----
 
+#### 108. 将有序数组转换为二叉搜索树
+
+> ※ 选择数组中间位置的数字作为二叉搜索树的根节点，则分给左右子树的数字个数相等或只相差`1`，由此可以使得二叉搜索树保持平衡。
+
+```java
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return buildBST(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode buildBST(int[] nums, int left, int right) {
+        if (left <= right) {
+            int mid = left + (right - left) / 2;
+            TreeNode node = new TreeNode(nums[mid]);
+            node.left = buildBST(nums, left, mid - 1);
+            node.right = buildBST(nums, mid + 1, right);
+            return node;
+        } else {
+            return null;
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n)$；空间复杂度：$O(logn)$。
+
+#### 110. 平衡二叉树
+
+> ※ 自底向上遍历该平衡二叉树，若某颗子树不是平衡二叉树，那么该二叉树便不是平衡二叉树。
+
+```java
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return height(root) >= 0;
+    }
+
+    private int height(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int l = height(node.left);
+        int r = height(node.right);
+        if (l == -1 || r == -1 || Math.abs(l - r) > 1) {
+            return -1;
+        } else {
+            return Math.max(l, r) + 1;
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n)$；空间复杂度：$O(n)$。
+
+#### 235. 二叉搜索树的最近公共祖先
+
+> ※ `p`、`root`、`q`之间共有可能存在`9`种大小关系，弄清每种大小关系出现时，如何进行下一步判断，就能够轻松解决该题目。
+
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root != null && p != null && q != null) {
+            if (p.val > root.val && root.val < q.val) {
+                return lowestCommonAncestor(root.right, p, q);
+            } else if (p.val < root.val && root.val > q.val) {
+                return lowestCommonAncestor(root.left, p, q);
+            } else {
+                return root;
+            }
+        } else {
+            return null;
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n)$；空间复杂度：$O(n)$。
+
 #### 501. 二叉搜索树中的众数
 
 > ※ 想了一段时间后实在想不出来，就按照官方题解实现了一下。狗屎，时间复杂度和空间复杂度完全比不上利用递归的时间复杂度和空间复杂度。好在借此机会了解了一下真·$O(1)$空间复杂度的`Morris`遍历方法，如果有题目规定不能使用额外的空间，包括由递归产生的隐式调用栈的开销，那么该方法就派的上用场了。另外，在此分享一篇关于介绍`Morris`遍历方法的不错的<a href="https://www.cnblogs.com/AnnieKim/archive/2013/06/15/MorrisTraversal.html">博客</a>，后面有时间可以仔细看一看。
