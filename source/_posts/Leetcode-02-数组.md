@@ -11,6 +11,21 @@ tags:
 
 -----
 
+#### 169. 多数元素
+
+> ※ 对数组进行排序，下标为`n/2`的元素一定为众数。
+
+```java
+class Solution {
+    public int majorityElement(int[] nums) {
+        Arrays.sort(nums);
+        return nums[nums.length / 2];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。
+
 #### 217. 存在重复元素
 
 > ※ 对数组中的元素进行遍历，并将遍历过的元素保存至`HashSet`中。对于某个新访问的元素，判断其是否存在于`HashSet`中，若存在，则说明数组中存在重复元素；若不存在，则将其保存至`HashSet`中，并继续进行遍历，直至遍历完所有元素。

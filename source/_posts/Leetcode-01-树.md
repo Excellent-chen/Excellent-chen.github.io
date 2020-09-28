@@ -242,6 +242,47 @@ class Solution {
 
 > **注**：同样的，在获取`index`以及对数组进行复制`Arrays.copyOfRange()`时，涉及到了大量的遍历，这些遍历其实是可以通过增加形参省略的，你知道怎么做嘛？
 
+#### 117. 填充每个节点的下一个右侧节点指针 II
+
+> ※ 在访问第`i`层时，建立第`i+1`层节点的`next`指针，便能够将时间复杂度由层次遍历的`O(n)`降至`O(1)`。
+
+```java
+class Solution {
+    private Node nextStart = null, nextEnd = null;
+    public Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+        Node start = root;
+        while (start != null) {
+            nextStart = null;
+            nextEnd = null;
+            for (Node node = start; node != null; node = node.next) {
+                if (node.left != null) {
+                    helper(node.left);
+                }
+                if (node.right != null) {
+                    helper(node.right);
+                }
+            }
+            start = nextStart;
+        }
+        return root;
+    }
+    private void helper(Node node) {
+        if (nextStart == null) {
+            nextStart = node;
+        }
+        if (nextEnd != null) {
+            nextEnd.next = node;
+        }
+        nextEnd = node;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 困难
