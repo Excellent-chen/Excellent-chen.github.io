@@ -45,4 +45,24 @@ class Solution {
 
 > ※ 时间复杂度：最坏为$O((n-l)l)$；空间复杂度：$O(1)$。
 
+#### 389. 找不同
+
+> ※ 该题目与`136. 只出现一次的数字`类似，均利用了异或的以下性质：任何数和自身进行异或运算均为`0`；任何数和`0`进行异或运算均为自身；异或运算满足交换律。只是没有想到的是，字符居然也能进行异或运算。
+
+```java
+class Solution {
+    public char findTheDifference(String s, String t) {
+        // 字符串也是可以进行异或运算(^)的
+        char res = t.charAt(t.length() - 1);
+        for (int i = 0; i < s.length(); i++) {
+            res ^= s.charAt(i);
+            res ^= t.charAt(i);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n)$；空间复杂度：$O(1)$。
+
 -----

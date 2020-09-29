@@ -242,6 +242,34 @@ class Solution {
 
 > **注**：同样的，在获取`index`以及对数组进行复制`Arrays.copyOfRange()`时，涉及到了大量的遍历，这些遍历其实是可以通过增加形参省略的，你知道怎么做嘛？
 
+#### 116. 填充每个节点的下一个右侧节点指针
+
+> ※ 该题目与`117. 填充每个节点的下一个右侧节点指针 II`的区别在于，指定了二叉树为完美二叉树。由完美二叉树的性质可以得知：只要每一层第一个节点的左孩子不为空，那么下一层的节点就一定都存在。利用该性质，便可解决该题目。
+
+```java
+class Solution {
+    public Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+        Node start = root;
+        while (start.left != null) { // 只要 start.left 不为零，就能保证下一层节点都存在
+            Node nextStart = start.left;
+            for (Node node = start; node != null; node = node.next) {
+                node.left.next = node.right;
+                if (node.next != null) {
+                    node.right.next = node.next.left;
+                }
+            }
+            start = nextStart;
+        }
+        return root;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n)$；空间复杂度：$O(1)$。
+
 #### 117. 填充每个节点的下一个右侧节点指针 II
 
 > ※ 在访问第`i`层时，建立第`i+1`层节点的`next`指针，便能够将时间复杂度由层次遍历的`O(n)`降至`O(1)`。
