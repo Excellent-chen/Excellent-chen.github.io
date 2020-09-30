@@ -311,6 +311,36 @@ class Solution {
 
 > ※ 时间复杂度：$O(n)$；空间复杂度：$O(1)$。
 
+#### 701. 二叉搜索树中的插入操作
+
+> ※ 遍历当前节点，假设当前节点的值小于待插入的值，若当前节点的右孩子不为空，则继续遍历当前节点的右孩子；若当前节点的右孩子为空，则直接为当前节点新建一个右孩子，并将右孩子的值赋值为待插入的值。反之亦然。
+
+```java
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+        if (root.val < val) {
+            if (root.right == null) {
+                root.right = new TreeNode(val);
+            } else {
+                insertIntoBST(root.right, val);
+            }
+        } else {
+            if (root.left == null) {
+                root.left = new TreeNode(val);
+            } else {
+                insertIntoBST(root.left, val);
+            }
+        }
+        return root;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 -----
 
 ### 困难
