@@ -45,6 +45,26 @@ class Solution {
 
 > ※ 时间复杂度：最坏为$O((n-l)l)$；空间复杂度：$O(1)$。
 
+#### 191. 位1的个数
+
+> ※ 该题目有很多种解法，比较常见的一种便是利用移位。然而，对于二进制表示中`0`较多的情况，会进行很多不必要的移位操作。为此，可以利用<a href="https://leetcode-cn.com/problems/hamming-distance/solution/yi-ming-ju-chi-by-leetcode/">布赖恩·克尼根</a>方法。
+
+```java
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int res = 0;
+        while (n != 0) {
+            res++;
+            n = n & (n - 1);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
+
 #### 205. 同构字符串
 
 > ※ 该题目很容易能够想到通过利用`Map`建立两个字符之间的映射关系来进行解决。需要注意的是，这种映射关系应具有对称性，如`ab`、`cc`便不具有对称性。
@@ -135,5 +155,24 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(n)$；空间复杂度：$O(1)$。
+
+#### 461. 汉明距离
+
+> ※ 该题目与`191. 位1的个数`类似，均利用了布赖恩·克尼根方法，只是多了一步与操作。
+
+```java
+class Solution {
+    public int hammingDistance(int x, int y) {
+        int res = 0, n = x ^ y;
+        while (n != 0) {
+            res++;
+            n = n & (n - 1);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
 
 -----
