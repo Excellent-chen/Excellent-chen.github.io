@@ -53,6 +53,40 @@ class Solution {
 
 > **注**：刚开始做的时候没有考虑到`n = Integer.MIN_VALUE`的情况，对于该情况，`n & (n - 1)`等于`0`但是并不满足`2`的幂。为此，可以将`n`转换为长整型。
 
+#### 326. 3的幂
+
+> ※ 在整型范围内，`3`的整数幂最大为`1162261467`，即`3`的`19`次幂。由于`3`为质数，因此$3^{19}$的除数只有$3^{0}$、$3^{1}$、...、$3^{19}$，因此，只需判断$3^{19}$除以`n`余数是否为`0`即可。
+
+```java
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        return n > 0 && 1162261467 % n == 0;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
+
+> **注**：对于求解`n`的幂，应该怎么办呢？这里给出两种方法：
+>
+> <a href="https://leetcode-cn.com/problems/power-of-three/solution/3de-mi-by-leetcode/">基准转换法</a>，首先将`num`转换为`n`进制，然后利用正则表达式判断转换后的数字是否以`1(^1)`开头，后面跟着`0`或多个`0(0*)`。该种方法的时间复杂度为$O(log_{n}num)$，空间复杂度为$O(log_{n}num)$。
+>
+> <a href="https://leetcode-cn.com/problems/power-of-three/solution/3de-mi-by-leetcode/">运算法</a>，若`num`为`n`的幂，则$i=log_{n}num=log_a(num)/log_a{n}$为整数，因此，只需判断`i%1`是否为整数即可。该种方法的时间复杂度为`Unknown`（取决于`Math.log()`的耗时），空间复杂度为$O(1)$。需要注意的是，`Math.log()`返回的是`double`类型的数值，可能会存在一定的误差，我们还需要将该误差考虑在内。
+
+#### 342. 4的幂
+
+> ※ 该题目与`231. 2的幂`类似，均利用了布赖恩·克尼根方法，只是多了一步与操作，用于判断数字为`2`的偶数次幂还是奇数次幂。
+
+```java
+class Solution {
+    public boolean isPowerOfFour(int num) {
+        return num > 0 && (num & (num - 1)) == 0 && ((num & 0xaaaaaaaa) == 0);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
+
 #### 461. 汉明距离
 
 > ※ 该题目与`191. 位1的个数`类似，均利用了布赖恩·克尼根方法，只是多了一步与操作。
@@ -77,6 +111,29 @@ class Solution {
 ### 中等
 
 -----
+
+#### 89. 格雷编码
+
+> ※ 设`n`阶格雷编码集合为`G(n)`，则`G(n+1)`阶格雷编码为：给`G(n)`阶格雷编码中的每个元素的二进制表示前添加前缀`0`；倒序为`G(n)`阶格雷编码中的每个元素的二进制表示前添加前缀`1`。根据上述规律，即可从`0`阶格雷编码推导至任意阶格雷编码。
+
+```java
+class Solution {
+    public List<Integer> grayCode(int n) {
+        List<Integer> res = new ArrayList<Integer>();
+        res.add(0);
+        int head = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = res.size() - 1; j > -1; j--) {
+                res.add(head + res.get(j));
+            }
+            head <<= 1;
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(n^2)$；空间复杂度：$O(1)$。
 
 #### 319. 灯泡开关
 
