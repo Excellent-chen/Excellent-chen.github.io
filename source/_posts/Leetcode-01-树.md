@@ -242,6 +242,47 @@ class Solution {
 
 > **注**：同样的，在获取`index`以及对数组进行复制`Arrays.copyOfRange()`时，涉及到了大量的遍历，这些遍历其实是可以通过增加形参省略的，你知道怎么做嘛？
 
+#### 109. 有序链表转换二叉搜索树
+
+> ※ 该题目与`108. 将有序数组转换为二叉搜索树`类似，只是将有序数组换为了有序链表。在解决该题目时，首先可以利用快慢指针找到链表的中间节点，并以该中间节点作为当前二叉搜索树的根节点，然后分别以中间节点两侧的链表递归构建二叉搜索树，作为该根节点的左子树和右子树。
+
+```java
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        return buildBST(head);
+    }
+    private TreeNode buildBST(ListNode node) {
+        if (node == null) {
+            return null;
+        } else if (node.next == null) {
+            // 对应链表只包含一个节点的情况
+            return new TreeNode(node.val);
+        } else {
+            // 对应链表包含两个或两个以上节点的情况
+            ListNode pre = null;
+            ListNode slow = node, fast = node;
+            while (fast != null && fast.next != null) {
+                pre = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            TreeNode root = new TreeNode(slow.val);
+            pre.next = null;
+            // 若链表中只包含两个节点，则 pre 指向 node，即第一个节点；
+            // slow 指向第二个节点，fast 指向 null。
+            // 此时，以 slow 作为根节点，node 作为左孩子节点，null作为右孩子节点是合理的。
+            root.left = buildBST(node);
+            root.right = buildBST(slow.next);
+            return root;
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$，递归过程中栈的最大深度，也即平衡二叉树的高度。
+
+> **TODO**： <a href="https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/solution/you-xu-lian-biao-zhuan-huan-er-cha-sou-suo-shu-1-3/">题解</a>中还给出了一种分治加中序遍历优化的方法，在空间复杂度保持`O(logN)`的前提下，时间复杂度只有`O(N)`。此外，该题目与上一题均是将中间节点作为了根节点，那么按照该种方法构造出的二叉树一定是平衡的吗？答案是肯定的，但是你知道要怎么证明吗？这些题解里都有，后面有时间可以看一下。
+
 #### 116. 填充每个节点的下一个右侧节点指针
 
 > ※ 该题目与`117. 填充每个节点的下一个右侧节点指针 II`的区别在于，指定了二叉树为完美二叉树。由完美二叉树的性质可以得知：只要每一层第一个节点的左孩子不为空，那么下一层的节点就一定都存在。利用该性质，便可解决该题目。

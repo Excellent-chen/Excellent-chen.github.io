@@ -136,6 +136,29 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 434. 字符串中的单词数
+
+> ※ 在解决该题目时，上来直接调用了`s.split(" ").length`，得到了错误结果。阅读<a href="https://leetcode-cn.com/problems/number-of-segments-in-a-string/solution/zi-fu-chuan-zhong-de-dan-ci-shu-by-leetcode/">题解</a>后得知，该题目存在一些边缘情况，如：开头或结尾存在一个或多个空格，这需要我们事先调用`trim()`函数将它们剔除；在单词之间可能存在一个以上的空格，调用`split()`函数时将会得到多个空字符`""`，这需要我们利用正则表达式将它们剔除。
+
+```java
+class Solution {
+    public int countSegments(String s) {
+        s = s.trim();
+        if (s.length() == 0) {
+            return 0;
+        } else {
+            // 原来 split() 函数中也可以使用正则表达式。
+            // 注：这里是 \\s+ 而不是 //s+
+            return s.split("\\s+").length;
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
+> **注**：如果是用`Python`做，这道题只需要一行代码：`return len(s.split())`。
+
 #### 771. 宝石与石头
 
 > ※ 首先，遍历字符串`J`，并利用哈希集合存储其中的每个字符；然后，遍历字符串`S`，判断其中的每个字符是否出现在哈希集合中，若出现，则是宝石。
