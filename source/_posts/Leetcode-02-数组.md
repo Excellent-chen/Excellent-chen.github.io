@@ -135,6 +135,36 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 350. 两个数组的交集 II
+
+> ※ 首先，遍历长度较小的数组，并将数组中每个数字以及它们出现的次数存储在`Map`中；然后，遍历另一个数组，对于另一个数组中的每个数字，若`Map`中存在该数字，则将该数字添加到答案，并减少`Map`中该数字出现的次数。
+
+```java
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        if (nums1.length > nums2.length) {
+            return intersect(nums2, nums1);
+        }
+        int[] res = new int[nums1.length];
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int num : nums1) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        int index = 0;
+        for (int i = 0; i < nums2.length; i++) {
+            int count = map.getOrDefault(nums2[i], 0);
+            if (count > 0) {
+                res[index++] = nums2[i];
+                map.put(nums2[i], count - 1);
+            }
+        }
+        return Arrays.copyOfRange(res, 0, index); // 如何复制数组？
+    }
+}
+```
+
+> ※ 时间复杂度：$O(M + N)$；空间复杂度：$O(min(M, N))$。
+
 #### 374. 猜数字大小
 
 > ※ 首先能想到的方法便是依次遍历所有数字，但是这种方法的时间复杂度较高。若借助二分查找的思想，能够将时间复杂度优化至$O(logn)$。

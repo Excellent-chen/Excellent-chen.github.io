@@ -80,6 +80,35 @@ class Solution {
 
 > **注**：该题目也可以利用“第三者”建立两个字符串之间的一一对应关系，后面有时间可以试一下。
 
+#### 242. 有效的字母异位词
+
+> ※ 换句话说，该题目是想让我们判断两个字符串中每个字符出现的次数是否相等，我们只需计算两个字符串中每个字符出现的次数并进行比较即可。
+
+```java
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        int[] counter = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            counter[s.charAt(i) - 'a']++;
+            counter[t.charAt(i) - 'a']--;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (counter[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
+> **注**：若数组的字符串包含`Unicode`字符，只需将`counter`设置为`Map`即可。
+
 #### 290. 单词规律
 
 > ※ 该题目与`205. 同构字符串`极为类似，在此不进行赘述。
