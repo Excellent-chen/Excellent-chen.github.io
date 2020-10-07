@@ -87,6 +87,21 @@ class Solution {
 
 > ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
 
+#### 441. 排列硬币
+
+> ※ 该题目利用一元二次方程的求根公式即可轻松解决，不过需要注意的是`Math.sqrt()`函数的参数范围。
+
+```java
+class Solution {
+    public int arrangeCoins(int n) {
+        // 当 n = 1804289383 时 Math.sqrt(2 * n) 将会溢出，具体为什么俺也不清楚。。。
+        return (int) (Math.sqrt(2) * Math.sqrt(n + 0.125) - 0.5);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
+
 #### 461. 汉明距离
 
 > ※ 该题目与`191. 位1的个数`类似，均利用了布赖恩·克尼根方法，只是多了一步与操作。
@@ -126,6 +141,34 @@ class Solution {
 > ※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。
 
 > **注**：在解决该题目时，应时刻防止数字溢出！
+
+#### 504. 七进制数
+
+> ※ 该题目比较简单，不过需要注意的是当`n = 0`的特殊情况！
+
+```java
+class Solution {
+    public String convertToBase7(int num) {
+        if (num == 0) {
+            return "0";
+        }
+        StringBuilder sb = new StringBuilder();
+        int sign = num >= 0 ? 1 : -1;
+        num *= sign;
+        while (num != 0) {
+            sb.append(String.valueOf(num % 7));
+            num /= 7;
+        }
+        if (sign == -1) {
+            sb.append("-");
+        }
+        sb.reverse();
+        return sb.toString();
+    }
+}
+```
+
+> ※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$吧。
 
 -----
 

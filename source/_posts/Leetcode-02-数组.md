@@ -189,6 +189,29 @@ public class Solution extends GuessGame {
 
 > ※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。
 
+#### 485. 最大连续1的个数
+
+> ※ 遍历数组，用`count`记录当前连续`1`的个数，`maxCount`记录当前最大连续`1`的个数。
+
+```java
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int count = 0, maxCount = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 1) {
+                count++;
+            } else {
+                maxCount = Math.max(count, maxCount);
+                count = 0;
+            }
+        }
+        return Math.max(count, maxCount);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 509. 斐波那契数
 
 > ※ 比较经典的题目，一般情况下都能够将时间复杂度和空间复杂度分别优化至$O(n)$和$O(1)$。
@@ -237,6 +260,27 @@ class Solution {
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
 > **TODO**：该题目同样可以利用`Morris`方法解决，后面有时间可以试一下。
+
+#### 561. 数组拆分 I
+
+> ※ 对数组进行排序，计算偶数下标对应的数字之和即可。
+
+```java
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i % 2 == 0) {
+                res += nums[i];
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(1)$。
 
 -----
 
@@ -308,6 +352,30 @@ class Solution {
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
 > **注**：该题目尤其需要注意置零时的顺序，即首先对第一行之外的行进行置零，然后对所有列进行置零，最后对第一行进行置零！
+
+#### 75. 颜色分类
+
+> ※ 利用指针`P_0`来交换`0`，`p_2`来交换`2`。从左向右遍历数组，设当前遍历到的位置为`i`，对应的元素为`nums[i]`。若`nums[i] = 0`，则将其与`nums[p_0]`进行交换，并将`p_0`向后移动一个位置；若`nums[i] = 2`，则将其与`nums[p_2]`进行交换，并将`p_2`向前移动一个位置。需要注意的是，当我们找到`2`时，需要不断将其与`nums[p_2]`进行交换，直至新的`nums[i]`不为`2`。
+
+```java
+class Solution {
+    public void sortColors(int[] nums) {
+        int p_0 = 0, p_2 = nums.length - 1;
+        for (int i = 0; i <= p_2; i++) { // 这里应取到等于。
+            while (i <= p_2 && nums[i] == 2) {
+                nums[i] = nums[p_2];
+                nums[p_2--] = 2;
+            }
+            if (nums[i] == 0) {
+                nums[i] = nums[p_0];
+                nums[p_0++] = 0;
+            }
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
 #### 153. 寻找旋转排序数组中的最小值
 
@@ -424,5 +492,37 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
+#### 1004. 最大连续1的个数 III
+
+> ※ 该题目可以理解为：滑动窗口内最多有`K`个`0`，求滑动窗口的最大长度。
+
+```java
+class Solution {
+    public int longestOnes(int[] A, int K) {
+        int count = 0, maxCount = 0;
+        int left = 0, right = 0;
+        // 滑动窗口表示的区间为[left, right)，左闭右开
+        while (right < A.length) {
+            // 窗口扩充一个元素，若为 0 则 count++；
+            if (A[right++] == 0) {
+                count++;
+            }
+            // 当窗口内 0 的个数超过 K 时，开始收缩窗口。
+            while (count > K) {
+                // 若滑出窗口的元素是 0，则 count--；
+                if (A[left++] == 0) {
+                    count--;
+                }
+            }
+            // 此时 count <= K，保存窗口的最大宽度；
+            maxCount = Math.max(maxCount, right - left);
+        }
+        return maxCount;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
 -----
