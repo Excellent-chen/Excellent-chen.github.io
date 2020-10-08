@@ -170,6 +170,33 @@ class Solution {
 
 > ※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$吧。
 
+#### 728. 自除数
+
+> ※ 首先想到的方法便是暴力求解，但是感觉暴力求解太`LOW`了。本以为题解会有更加牛逼的方法，没想到用的居然也是暴力法。。。
+
+```java
+class Solution {
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        List<Integer> res = new ArrayList<Integer>();
+        for (int num = left; num <= right; num++) {
+            int n = num;
+            while (n != 0) {
+                if (n % 10 == 0 || num % (n % 10) != 0) {
+                    break;
+                }
+                n /= 10;
+            }
+            if (n == 0) {
+                res.add(num);
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等
@@ -197,7 +224,7 @@ class Solution {
 }
 ```
 
-> ※ 时间复杂度：$O(n^2)$；空间复杂度：$O(1)$。
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(1)$。
 
 #### 319. 灯泡开关
 

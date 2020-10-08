@@ -188,6 +188,29 @@ class Solution {
 
 > **注**：如果是用`Python`做，这道题只需要一行代码：`return len(s.split())`。
 
+#### 709. 转换成小写字母
+
+> ※ 没什么可说的，遍历字符串中的每个字符，若当前字符为大写字母，将其转换为小写字母即可。
+
+```java
+class Solution {
+    public String toLowerCase(String str) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if ('A' <= c && c <= 'Z') {
+                sb.append(String.valueOf((char) (c + 32)));
+            } else {
+                sb.append(String.valueOf(c));
+            }
+        }
+        return sb.toString();
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 771. 宝石与石头
 
 > ※ 首先，遍历字符串`J`，并利用哈希集合存储其中的每个字符；然后，遍历字符串`S`，判断其中的每个字符是否出现在哈希集合中，若出现，则是宝石。
@@ -211,5 +234,31 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(M+N)$；空间复杂度：$O(N)$。
+
+-----
+
+### 中等
+
+-----
+
+#### 151. 翻转字符串里的单词
+
+> ※ 首先，利用`trim()`函数和`split("\\s+")`函数剔除首尾冗余的空格和单词之间冗余的空格；然后，借助`StringBuilder`对字符串数组进行反转拼接，没拼接完一个单词后在后面加上分隔用的空格；最后，将结尾处冗余的空格剔除。
+
+```java
+class Solution {
+    public String reverseWords(String s) {
+        String[] str = s.trim().split("\\s+");
+        StringBuilder res = new StringBuilder(str.length);
+        for (int i = str.length - 1; i > -1; i--) {
+            res.append(str[i]);
+            res.append(" ");
+        }
+        return res.toString().trim();
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
 -----
