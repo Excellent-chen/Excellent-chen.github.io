@@ -145,6 +145,29 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 387. 字符串中的第一个唯一字符
+
+> ※ 首先，遍历字符串，将字符串中的每个字符及其出现的次数保存至`Map`中；然后，再次遍历字符串，并判断当前遍历字符是否只出现一次，若是，则返回当前下标；若始终没有找到只出现一次的字符，则返回`-1`。
+
+```java
+class Solution {
+    public int firstUniqChar(String s) {
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (map.get(s.charAt(i)) == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 389. 找不同
 
 > ※ 该题目与`136. 只出现一次的数字`类似，均利用了异或的以下性质：任何数和自身进行异或运算均为`0`；任何数和`0`进行异或运算均为自身；异或运算满足交换律。只是没有想到的是，字符居然也能进行异或运算。
