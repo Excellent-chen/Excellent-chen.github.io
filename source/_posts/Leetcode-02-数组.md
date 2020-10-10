@@ -212,6 +212,65 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 496. 下一个更大元素 I
+
+> ※ 最先想到的方法是：首先，借助`Map`保存`nums1`中的元素以及每个元素对应的下一个更大元素（初始时均为`-1`）；然后，遍历`nums2`，判断当前数字是否包含在`Map`中，若存在，则借助内部循环找到当前元素的下一个更大元素，若不存在，则遍历下一数字；最后，将`Map`的值返回即可。
+
+```java
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums1.length; i++) {
+            map.put(nums1[i], -1);
+        }
+        for (int i = 0; i < nums2.length; i++) {
+            if (map.containsKey(nums2[i])) {
+                for (int j = i + 1; j < nums2.length; j++) {
+                    if (nums2[j] > nums2[i]) {
+                        map.put(nums2[i], nums2[j]);
+                        break;
+                    }
+                }
+            }
+        }
+        int[] res = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            res[i] = map.get(nums1[i]);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(M + N)$，其中`M`、`N`分别表示`nums1`、`nums2`的长度；空间复杂度：$O(M)$。
+
+> ※ 除此之外，题解中还给出了一种利用单调栈解决的方法，避免了内部循环所带来的重复遍历，按理说这种方法的时间复杂度应该要优于上一种方法，但事实证明，这种方法的运行时间更长。个人猜测可能与测试用例的设计有关。
+
+```java
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int[] res = new int[nums1.length];
+        Stack<Integer> stack = new Stack<Integer>();
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums2.length; i++) {
+            while (!stack.isEmpty() && nums2[i] > stack.peek()) {
+                map.put(stack.pop(), nums2[i]);
+            }
+            stack.push(nums2[i]);
+        }
+        while (!stack.isEmpty()) {
+            map.put(stack.pop(), -1);
+        }
+        for (int i = 0; i < nums1.length; i++) {
+            res[i] = map.get(nums1[i]);
+        }
+        return res;
+    }
+}
+```
+
+※ 时间复杂度：$O(M + N)$，其中`M`、`N`分别表示`nums1`、`nums2`的长度；空间复杂度：$O(N)$。
+
 #### 509. 斐波那契数
 
 > ※ 比较经典的题目，一般情况下都能够将时间复杂度和空间复杂度分别优化至$O(n)$和$O(1)$。
@@ -281,6 +340,31 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(1)$。
+
+#### 704. 二分查找
+
+> ※ 简单的二分查找，难点在于各种变形，如存在重复元素，数组进行了旋转，找到某个元素最先或最后出现的位置。
+
+```java
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。
 
 -----
 
@@ -459,6 +543,47 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 289. 生命游戏
+
+> ※ 该题目与`130. 被围绕的区域`类似，同样可以借助其它数字来表示“细胞”状态的更新，如`-1`表示细胞由活变死，`2`表示细胞由死变活。这里需要注意的是第`11`行代码，此时，`board[x][y] = -1`同样表示活细胞。
+
+```java
+class Solution {
+    public void gameOfLife(int[][] board) {
+        int rows = board.length, cols = board[0].length;
+        int[][] directions = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int count = 0;
+                for (int[] direction : directions) {
+                    int x = i + direction[0];
+                    int y = j + direction[1];
+                    if (-1 < x && x < rows && -1 < y && y < cols && (board[x][y] == 1 || board[x][y] == -1)) {
+                        count++;
+                    }
+                }
+                if (board[i][j] == 0 && count == 3) {
+                    board[i][j] = 2;
+                } else if (board[i][j] == 1 && (count < 2 || count > 3)) {
+                    board[i][j] = -1;
+                }
+            }
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] == -1) {
+                    board[i][j] = 0;
+                } else if (board[i][j] == 2) {
+                    board[i][j] = 1;
+                }
+            }
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
+
 #### 670. 最大交换
 
 > ※ 自右向左统计大于（不包含等于）当前字符的最大字符的下标；然后，自左向右遍历字符，若当前字符的下标不等于大于其最大字符的下标，并且这两个字符不相等（该约束很重要！），则对它们进行交换并退出。
@@ -524,5 +649,3 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
-
------
