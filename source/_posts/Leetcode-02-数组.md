@@ -271,6 +271,59 @@ class Solution {
 
 ※ 时间复杂度：$O(M + N)$，其中`M`、`N`分别表示`nums1`、`nums2`的长度；空间复杂度：$O(N)$。
 
+#### 500. 键盘行
+
+> ※ 将键盘上每一行的字母以集合的形式单独保存起来，然后将单词转换为集合，并判断其是否为某一行的子集。<span style="color:green">好久没用Python，都快忘了怎么用了。QAQ</span>
+
+```python
+class Solution:
+    def findWords(self, words: List[str]) -> List[str]:
+        res = []
+        lines = [set('QWERTYUIOP'), set('ASDFGHJKL'), set('ZXCVBNM')]
+        for word in words:
+            word_set = set(word.upper())
+            if word_set.issubset(lines[0]) or word_set.issubset(lines[1]) or word_set.issubset(lines[2]):
+                res.append(word)
+        return res
+```
+
+> ※ 时间复杂度：应该是$O(N)$吧，其中`N`表示所有单词包含的字符个数；空间复杂度：$O(1)$。
+
+#### 506. 相对名次
+
+> ※ 首先，对`nums`进行复制，得到`nums_clone`；然后，对`nums_clone`进行排序，并利用`Map`保存每个元素的排名；最后，基于每个元素的排名给出它的名次。
+
+```java
+class Solution {
+    public String[] findRelativeRanks(int[] nums) {
+        int[] nums_clone = nums.clone();
+        Arrays.sort(nums_clone);
+        String[] res = new String[nums.length];
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums_clone[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = toString(nums.length - map.get(nums[i]));
+        }
+        return res;
+    }
+    private String toString(int rank) {
+        if (rank == 1) {
+            return "Gold Medal";
+        } else if (rank == 2) {
+            return "Silver Medal";
+        } else if (rank == 3) {
+            return "Bronze Medal";
+        } else {
+            return String.valueOf(rank);
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(N)$。
+
 #### 509. 斐波那契数
 
 > ※ 比较经典的题目，一般情况下都能够将时间复杂度和空间复杂度分别优化至$O(n)$和$O(1)$。
