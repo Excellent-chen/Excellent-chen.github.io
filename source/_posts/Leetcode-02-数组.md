@@ -670,6 +670,34 @@ class Solution {
 
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
+#### 419. 甲板上的战舰
+
+> ※ 完全没有思路，看了<a href="https://leetcode-cn.com/problems/battleships-in-a-board/solution/">题解</a>之后才会做，我真的是好菜啊。对二维矩阵进行扫描，扫描到`X`时，如果其上方或左方也是`X`，则不计数，否则计数加`1`。
+
+```java
+class Solution {
+    public int countBattleships(char[][] board) {
+        int res = 0;
+        for (int i = 0; i< board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'X') {
+                    if (i > 0 && board[i - 1][j] == 'X') {
+                        continue;
+                    }
+                    if (j > 0 && board[i][j - 1] == 'X') {
+                        continue;
+                    }
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
+
 #### 670. 最大交换
 
 > ※ 自右向左统计大于（不包含等于）当前字符的最大字符的下标；然后，自左向右遍历字符，若当前字符的下标不等于大于其最大字符的下标，并且这两个字符不相等（该约束很重要！），则对它们进行交换并退出。
