@@ -394,6 +394,39 @@ class Solution {
 
 > ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(1)$。
 
+#### 682. 棒球比赛
+
+> ※ 遍历字符串数组，若当前字符串为整数，则保存至栈中；否则，依据当前字符串对应的规则对栈进行操作。
+
+```java
+class Solution {
+    public int calPoints(String[] ops) {
+        int res = 0;
+        Stack<Integer> stack = new Stack<Integer>();
+        for (String op : ops) {
+            if (op.equals("+")) {
+                int top = stack.pop();
+                int newtop = stack.peek() + top;
+                stack.push(top);
+                stack.push(newtop);
+            } else if (op.equals("D")) {
+                stack.push(2 * stack.peek());
+            } else if (op.equals("C")) {
+                stack.pop();
+            } else {
+                stack.push(Integer.valueOf(op));
+            }
+        }
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 704. 二分查找
 
 > ※ 简单的二分查找，难点在于各种变形，如存在重复元素，数组进行了旋转，找到某个元素最先或最后出现的位置。

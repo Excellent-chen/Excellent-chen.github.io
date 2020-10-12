@@ -151,6 +151,36 @@ class Solution {
 
 > **TODO**：该题目还可以利用递归解决，并且运行效果更好，后面有时间可以试一下。
 
+#### 530. 二叉搜索树的最小绝对差
+
+> ※ 二叉搜索树有一个很重要的性质：其中序遍历得到的序列是非单调递减的。基于该性质，该题目一种常见的解法是：首先，对二叉搜索树进行中序遍历，并将节点值保存至数组中；然后，对数组进行遍历，保存相邻元素之差的绝对值；最后，从所有相邻元素之差的绝对值中取最小值。然而，为了保存节点值，我们需要使用额外的空间，能否在遍历过程中直接获取相邻元素呢？答案是肯定的（见代码）。
+
+```java
+class Solution {
+    private int pre = -1, res = Integer.MAX_VALUE;
+    public int getMinimumDifference(TreeNode root) {
+        middleOrderTraversal(root);
+        return res;
+    }
+    private void middleOrderTraversal(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        middleOrderTraversal(node.left);
+        // 这两个条件语句避免了额外引入数组保存节点值！
+        if (pre == -1) {
+            pre = node.val;
+        } else {
+            res = Math.min(res, Math.abs(node.val - pre));
+            pre = node.val;
+        }
+        middleOrderTraversal(node.right);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 617. 合并二叉树
 
 > ※ 两个二叉树中对应的节点存在以下几种情况：一个节点为空，另一个节点不为空，此时合并后的节点应该为不为空的那个节点；两个节点均不为空，此时合并后的节点为其中任意一个节点即可，但需要对返回的节点的值进行修改；两个节点均为空，此时合并后的节点为其中任意一个节点即可，反正都为空。
