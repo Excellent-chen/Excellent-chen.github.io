@@ -452,6 +452,36 @@ class Solution {
 
 > ※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。
 
+#### 832. 翻转图像
+
+> ※ 没有什么骚操作，按照题意一步一步来即可。需要注意的是，对于宽度为奇数的情况，不要忘记对其中间位置的数字进行反转。
+
+```java
+class Solution {
+    public int[][] flipAndInvertImage(int[][] A) {
+        int rows = A.length, cols = A[0].length;
+        for (int i = 0; i < rows; i++) {
+            // for (int j = 0; j < cols / 2; j++) {
+            //     int num = 1 - A[i][j];
+            //     A[i][j] = 1 - A[i][cols - j - 1];
+            //     A[i][cols - j - 1] = num;
+            // }
+            // if (cols % 2 == 1) {
+            //     A[i][cols / 2] = 1 - A[i][cols / 2];
+            // }
+            for (int j = 0; j < (cols + 1) / 2; j++) {
+                int num = 1 - A[i][j];
+                A[i][j] = 1 - A[i][cols - j - 1];
+                A[i][cols - j - 1] = num;
+            }
+        }
+        return A;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等

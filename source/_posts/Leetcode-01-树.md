@@ -206,6 +206,26 @@ class Solution {
 
 > ※ 时间复杂度：$O(M,N)$，其中`M`、`N`分别表示两个二叉树的节点数，只有当两个二叉树中对应的节点均不为空时，才会对两个节点进行显性合并操作，因此被访问到的节点数不会超过较小的二叉树的节点数；空间复杂度：$O(M,N)$，空间复杂度取决于递归调用的层数，而递归调用的层数不会超过较小的二叉树的节点数。
 
+#### 700. 二叉搜索树中的搜索
+
+> ※ 该题目比较简单，依据二叉搜索树的性质，递归进行求解即可。
+
+```java
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null || root.val == val) {
+            return root;
+        } else if (root.val > val) {
+            return searchBST(root.left, val);
+        } else {
+            return searchBST(root.right, val);
+        }
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 -----
 
 ### 中等
@@ -381,6 +401,31 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
+#### 513. 找树左下角的值
+
+> ※ 最先想到的方法是：从上往下，从左往右依次遍历二叉树每一层的节点，在遍历每一层节点之前，先用一个临时变量保存当前层的第一个节点的值，直至遍历到最后一层。然而，这样的方法需要额外定义两个临时变量，并且程序结构较为复杂，是否存在更为简单明了的方法？答案是肯定的（见代码）。
+
+```java
+class Solution {
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            root = queue.poll();
+            if (root.right != null) {
+                queue.offer(root.right);
+            }
+            if (root.left != null) {
+                queue.offer(root.left);
+            }
+        }
+        return root.val;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
 #### 701. 二叉搜索树中的插入操作
 
