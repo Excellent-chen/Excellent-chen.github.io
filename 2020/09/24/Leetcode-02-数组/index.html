@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="简单 169. 多数元素 ※ 对数组进行排序，下标为n&#x2F;2的元素一定为众数。  123456class Solution &amp;#123;    public int majorityElement(int[] nums) &amp;#123;        Arrays.sort(nums);        return nums[nums.length &#x2F; 2];    &amp;#125;&amp;#125;   ※">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02 数组">
+<meta property="og:url" content="http://example.com/2020/09/24/Leetcode-02-%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:site_name" content="阿晨的博客">
+<meta property="og:description" content="简单 169. 多数元素 ※ 对数组进行排序，下标为n&#x2F;2的元素一定为众数。  123456class Solution &amp;#123;    public int majorityElement(int[] nums) &amp;#123;        Arrays.sort(nums);        return nums[nums.length &#x2F; 2];    &amp;#125;&amp;#125;   ※">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-24T03:48:46.000Z">
+<meta property="article:modified_time" content="2020-10-14T02:56:45.994Z">
+<meta property="article:author" content="刘晨">
+<meta property="article:tag" content="数组">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/09/24/Leetcode-02-%E6%95%B0%E7%BB%84/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>02 数组 | 阿晨的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿晨的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">年度最佳摸鱼选手</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95"><span class="nav-number">1.</span> <span class="nav-text">简单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0"><span class="nav-number">1.1.</span> <span class="nav-text">169. 多数元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#217-%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">217. 存在重复元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#219-%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0-II"><span class="nav-number">1.3.</span> <span class="nav-text">219. 存在重复元素 II</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#283-%E7%A7%BB%E5%8A%A8%E9%9B%B6"><span class="nav-number">1.4.</span> <span class="nav-text">283. 移动零</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#350-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86-II"><span class="nav-number">1.5.</span> <span class="nav-text">350. 两个数组的交集 II</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#374-%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.6.</span> <span class="nav-text">374. 猜数字大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#485-%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD1%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">485. 最大连续1的个数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#496-%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-I"><span class="nav-number">1.8.</span> <span class="nav-text">496. 下一个更大元素 I</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#500-%E9%94%AE%E7%9B%98%E8%A1%8C"><span class="nav-number">1.9.</span> <span class="nav-text">500. 键盘行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#506-%E7%9B%B8%E5%AF%B9%E5%90%8D%E6%AC%A1"><span class="nav-number">1.10.</span> <span class="nav-text">506. 相对名次</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#509-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0"><span class="nav-number">1.11.</span> <span class="nav-text">509. 斐波那契数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#538-%E6%8A%8A%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E8%BD%AC%E6%8D%A2%E4%B8%BA%E7%B4%AF%E5%8A%A0%E6%A0%91"><span class="nav-number">1.12.</span> <span class="nav-text">538. 把二叉搜索树转换为累加树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#561-%E6%95%B0%E7%BB%84%E6%8B%86%E5%88%86-I"><span class="nav-number">1.13.</span> <span class="nav-text">561. 数组拆分 I</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#682-%E6%A3%92%E7%90%83%E6%AF%94%E8%B5%9B"><span class="nav-number">1.14.</span> <span class="nav-text">682. 棒球比赛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#704-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-number">1.15.</span> <span class="nav-text">704. 二分查找</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#832-%E7%BF%BB%E8%BD%AC%E5%9B%BE%E5%83%8F"><span class="nav-number">1.16.</span> <span class="nav-text">832. 翻转图像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1002-%E6%9F%A5%E6%89%BE%E5%B8%B8%E7%94%A8%E5%AD%97%E7%AC%A6"><span class="nav-number">1.17.</span> <span class="nav-text">1002. 查找常用字符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E7%AD%89"><span class="nav-number">2.</span> <span class="nav-text">中等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#73-%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6"><span class="nav-number">2.1.</span> <span class="nav-text">73. 矩阵置零</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#75-%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB"><span class="nav-number">2.2.</span> <span class="nav-text">75. 颜色分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#153-%E5%AF%BB%E6%89%BE%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-number">2.3.</span> <span class="nav-text">153. 寻找旋转排序数组中的最小值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#220-%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0-III"><span class="nav-number">2.4.</span> <span class="nav-text">220. 存在重复元素 III</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#238-%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF"><span class="nav-number">2.5.</span> <span class="nav-text">238. 除自身以外数组的乘积</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#289-%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F"><span class="nav-number">2.6.</span> <span class="nav-text">289. 生命游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#419-%E7%94%B2%E6%9D%BF%E4%B8%8A%E7%9A%84%E6%88%98%E8%88%B0"><span class="nav-number">2.7.</span> <span class="nav-text">419. 甲板上的战舰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#670-%E6%9C%80%E5%A4%A7%E4%BA%A4%E6%8D%A2"><span class="nav-number">2.8.</span> <span class="nav-text">670. 最大交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1004-%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD1%E7%9A%84%E4%B8%AA%E6%95%B0-III"><span class="nav-number">2.9.</span> <span class="nav-text">1004. 最大连续1的个数 III</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘晨"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">刘晨</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/Leetcode-02-%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="刘晨">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿晨的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02 数组
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-24 11:48:46" itemprop="dateCreated datePublished" datetime="2020-09-24T11:48:46+08:00">2020-09-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-14 10:56:45" itemprop="dateModified" datetime="2020-10-14T10:56:45+08:00">2020-10-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="简单"><a href="#简单" class="headerlink" title="简单"></a>简单</h3><hr>
+<h4 id="169-多数元素"><a href="#169-多数元素" class="headerlink" title="169. 多数元素"></a>169. 多数元素</h4><blockquote>
+<p>※ 对数组进行排序，下标为<code>n/2</code>的元素一定为众数。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">return</span> nums[nums.length / <span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。</p>
+</blockquote>
+<h4 id="217-存在重复元素"><a href="#217-存在重复元素" class="headerlink" title="217. 存在重复元素"></a>217. 存在重复元素</h4><blockquote>
+<p>※ 对数组中的元素进行遍历，并将遍历过的元素保存至<code>HashSet</code>中。对于某个新访问的元素，判断其是否存在于<code>HashSet</code>中，若存在，则说明数组中存在重复元素；若不存在，则将其保存至<code>HashSet</code>中，并继续进行遍历，直至遍历完所有元素。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.contains(num)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                set.add(num);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<blockquote>
+<p>※ 对数组进行排序，若数组中存在重复元素，则重复元素一定相邻。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] == nums[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(NlogN)$；空间复杂度：取决于排序算法，若为堆排序，则为$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：由<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/contains-duplicate/solution/cun-zai-zhong-fu-yuan-su-by-leetcode/">题解</a>得知，对于一些特定的<code>n</code>不太大的测试样例，方法一的运行速度可能会比方法二慢，这是因为哈希表在维护其属性时，需要一些额外的开销。</p>
+<p><strong>注</strong>：方法二对原数组进行了修改，通常情况下，除非调用方清楚输入数据会被修改，否则不应该随意修改输入数据。为此，可以先复制<code>nums</code>，然后对副本进行操作。</p>
+</blockquote>
+<h4 id="219-存在重复元素-II"><a href="#219-存在重复元素-II" class="headerlink" title="219. 存在重复元素 II"></a>219. 存在重复元素 II</h4><blockquote>
+<p>※ 对数组中的元素进行遍历，并将遍历过的元素及其下标保存至<code>HashMap</code>中。对于某个新访问的元素，判断其是否存在于<code>HashSet</code>中，并且满足下标之差的绝对值至多为<code>k</code>，若存在，则说明数组中存在满足约束的重复元素；若不存在，则将其及其下标保存至<code>HashMap</code>中，并继续进行遍历，直至遍历完所有元素。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsNearbyDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.get(nums[i]) != <span class="keyword">null</span> &amp;&amp; i - map.get(nums[i]) &lt;= k) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                map.put(nums[i], i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<blockquote>
+<p>※ 考虑到只需要在满足下标约束（即下标之差的绝对值至多为<code>k</code>）的元素中进行查找，因此可以维护一个大小为<code>k</code>的<code>HashSet</code>，并始终在该<code>Set</code>中进行查找。由此，空间复杂度将降为$O(min(N, K))$。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsNearbyDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.contains(nums[i])) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                set.add(nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (set.size() &gt; k) &#123;</span><br><span class="line">                set.remove(nums[i - k]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(min(N,K))$。</p>
+</blockquote>
+<h4 id="283-移动零"><a href="#283-移动零" class="headerlink" title="283. 移动零"></a>283. 移动零</h4><blockquote>
+<p>※ 借助快慢指针的思想，将快指针指向当前元素，慢指针指向可移动位置，快指针与慢指针之间的所有元素均为零。若当前元素不为零，则交换快慢指针所指元素。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; j &lt; nums.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[j] != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> num = nums[j];</span><br><span class="line">                nums[j] = nums[i];</span><br><span class="line">                nums[i++] = num;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="350-两个数组的交集-II"><a href="#350-两个数组的交集-II" class="headerlink" title="350. 两个数组的交集 II"></a>350. 两个数组的交集 II</h4><blockquote>
+<p>※ 首先，遍历长度较小的数组，并将数组中每个数字以及它们出现的次数存储在<code>Map</code>中；然后，遍历另一个数组，对于另一个数组中的每个数字，若<code>Map</code>中存在该数字，则将该数字添加到答案，并减少<code>Map</code>中该数字出现的次数。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] intersect(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums1.length &gt; nums2.length) &#123;</span><br><span class="line">            <span class="keyword">return</span> intersect(nums2, nums1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums1.length];</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums1) &#123;</span><br><span class="line">            map.put(num, map.getOrDefault(num, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums2.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> count = map.getOrDefault(nums2[i], <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                res[index++] = nums2[i];</span><br><span class="line">                map.put(nums2[i], count - <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Arrays.copyOfRange(res, <span class="number">0</span>, index); <span class="comment">// 如何复制数组？</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(M + N)$；空间复杂度：$O(min(M, N))$。</p>
+</blockquote>
+<h4 id="374-猜数字大小"><a href="#374-猜数字大小" class="headerlink" title="374. 猜数字大小"></a>374. 猜数字大小</h4><blockquote>
+<p>※ 首先能想到的方法便是依次遍历所有数字，但是这种方法的时间复杂度较高。若借助二分查找的思想，能够将时间复杂度优化至$O(logn)$。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> <span class="keyword">extends</span> <span class="title">GuessGame</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">guessNumber</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> min = <span class="number">1</span>, max = n;</span><br><span class="line">        <span class="keyword">int</span> mid = min + (max - min) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">while</span> (guess(mid) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (guess(mid) == <span class="number">1</span>) &#123;</span><br><span class="line">                min = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                max = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mid = min + (max - min) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="485-最大连续1的个数"><a href="#485-最大连续1的个数" class="headerlink" title="485. 最大连续1的个数"></a>485. 最大连续1的个数</h4><blockquote>
+<p>※ 遍历数组，用<code>count</code>记录当前连续<code>1</code>的个数，<code>maxCount</code>记录当前最大连续<code>1</code>的个数。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMaxConsecutiveOnes</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>, maxCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] == <span class="number">1</span>) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                maxCount = Math.max(count, maxCount);</span><br><span class="line">                count = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.max(count, maxCount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="496-下一个更大元素-I"><a href="#496-下一个更大元素-I" class="headerlink" title="496. 下一个更大元素 I"></a>496. 下一个更大元素 I</h4><blockquote>
+<p>※ 最先想到的方法是：首先，借助<code>Map</code>保存<code>nums1</code>中的元素以及每个元素对应的下一个更大元素（初始时均为<code>-1</code>）；然后，遍历<code>nums2</code>，判断当前数字是否包含在<code>Map</code>中，若存在，则借助内部循环找到当前元素的下一个更大元素，若不存在，则遍历下一数字；最后，将<code>Map</code>的值返回即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] nextGreaterElement(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums1.length; i++) &#123;</span><br><span class="line">            map.put(nums1[i], -<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums2.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(nums2[i])) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums2.length; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (nums2[j] &gt; nums2[i]) &#123;</span><br><span class="line">                        map.put(nums2[i], nums2[j]);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums1.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums1.length; i++) &#123;</span><br><span class="line">            res[i] = map.get(nums1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(M + N)$，其中<code>M</code>、<code>N</code>分别表示<code>nums1</code>、<code>nums2</code>的长度；空间复杂度：$O(M)$。</p>
+</blockquote>
+<blockquote>
+<p>※ 除此之外，题解中还给出了一种利用单调栈解决的方法，避免了内部循环所带来的重复遍历，按理说这种方法的时间复杂度应该要优于上一种方法，但事实证明，这种方法的运行时间更长。个人猜测可能与测试用例的设计有关。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] nextGreaterElement(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums1.length];</span><br><span class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums2.length; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; nums2[i] &gt; stack.peek()) &#123;</span><br><span class="line">                map.put(stack.pop(), nums2[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(nums2[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            map.put(stack.pop(), -<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums1.length; i++) &#123;</span><br><span class="line">            res[i] = map.get(nums1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>※ 时间复杂度：$O(M + N)$，其中<code>M</code>、<code>N</code>分别表示<code>nums1</code>、<code>nums2</code>的长度；空间复杂度：$O(N)$。</p>
+<h4 id="500-键盘行"><a href="#500-键盘行" class="headerlink" title="500. 键盘行"></a>500. 键盘行</h4><blockquote>
+<p>※ 将键盘上每一行的字母以集合的形式单独保存起来，然后将单词转换为集合，并判断其是否为某一行的子集。<span style="color:green">好久没用Python，都快忘了怎么用了。QAQ</span></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findWords</span>(<span class="params">self, words: List[str]</span>) -&gt; List[str]:</span></span><br><span class="line">        res = []</span><br><span class="line">        lines = [set(<span class="string">&#x27;QWERTYUIOP&#x27;</span>), set(<span class="string">&#x27;ASDFGHJKL&#x27;</span>), set(<span class="string">&#x27;ZXCVBNM&#x27;</span>)]</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">            word_set = set(word.upper())</span><br><span class="line">            <span class="keyword">if</span> word_set.issubset(lines[<span class="number">0</span>]) <span class="keyword">or</span> word_set.issubset(lines[<span class="number">1</span>]) <span class="keyword">or</span> word_set.issubset(lines[<span class="number">2</span>]):</span><br><span class="line">                res.append(word)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：应该是$O(N)$吧，其中<code>N</code>表示所有单词包含的字符个数；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="506-相对名次"><a href="#506-相对名次" class="headerlink" title="506. 相对名次"></a>506. 相对名次</h4><blockquote>
+<p>※ 首先，对<code>nums</code>进行复制，得到<code>nums_clone</code>；然后，对<code>nums_clone</code>进行排序，并利用<code>Map</code>保存每个元素的排名；最后，基于每个元素的排名给出它的名次。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String[] findRelativeRanks(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] nums_clone = nums.clone();</span><br><span class="line">        Arrays.sort(nums_clone);</span><br><span class="line">        String[] res = <span class="keyword">new</span> String[nums.length];</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            map.put(nums_clone[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            res[i] = toString(nums.length - map.get(nums[i]));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span> rank)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (rank == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Gold Medal&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rank == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Silver Medal&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (rank == <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Bronze Medal&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> String.valueOf(rank);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<h4 id="509-斐波那契数"><a href="#509-斐波那契数" class="headerlink" title="509. 斐波那契数"></a>509. 斐波那契数</h4><blockquote>
+<p>※ 比较经典的题目，一般情况下都能够将时间复杂度和空间复杂度分别优化至$O(n)$和$O(1)$。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (N == <span class="number">0</span> || N == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> N;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> pre1 = <span class="number">0</span>, pre2 = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; N; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> cur = pre1 + pre2;</span><br><span class="line">                pre1 = pre2;</span><br><span class="line">                pre2 = cur;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> pre2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>TODO</strong>：利用矩阵求幂的方法，可以将时间复杂度优化至$O(logN)$；利用公式法，可以将时间复杂度和空间复杂度均优化至$O(1)$，后面有时间可以试一下。</p>
+</blockquote>
+<h4 id="538-把二叉搜索树转换为累加树"><a href="#538-把二叉搜索树转换为累加树" class="headerlink" title="538. 把二叉搜索树转换为累加树"></a>538. 把二叉搜索树转换为累加树</h4><blockquote>
+<p>※ 对于二叉搜索树，其中序遍历是递增的；反过来，若先访问右子树，再访问根节点，最后访问左子树，则遍历是递减的（这正是我们所需要的）。基于此，只需反向中序遍历二叉搜索树，记录遍历过程中的节点值之和，并不断更新当前遍历节点的节点值，即可得到累加树。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">convertBST</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</span><br><span class="line">            convertBST(root.right);</span><br><span class="line">            sum += root.val;</span><br><span class="line">            root.val = sum;</span><br><span class="line">            convertBST(root.left);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>TODO</strong>：该题目同样可以利用<code>Morris</code>方法解决，后面有时间可以试一下。</p>
+</blockquote>
+<h4 id="561-数组拆分-I"><a href="#561-数组拆分-I" class="headerlink" title="561. 数组拆分 I"></a>561. 数组拆分 I</h4><blockquote>
+<p>※ 对数组进行排序，计算偶数下标对应的数字之和即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">arrayPairSum</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                res += nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="682-棒球比赛"><a href="#682-棒球比赛" class="headerlink" title="682. 棒球比赛"></a>682. 棒球比赛</h4><blockquote>
+<p>※ 遍历字符串数组，若当前字符串为整数，则保存至栈中；否则，依据当前字符串对应的规则对栈进行操作。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">calPoints</span><span class="params">(String[] ops)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String op : ops) &#123;</span><br><span class="line">            <span class="keyword">if</span> (op.equals(<span class="string">&quot;+&quot;</span>)) &#123;</span><br><span class="line">                <span class="keyword">int</span> top = stack.pop();</span><br><span class="line">                <span class="keyword">int</span> newtop = stack.peek() + top;</span><br><span class="line">                stack.push(top);</span><br><span class="line">                stack.push(newtop);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op.equals(<span class="string">&quot;D&quot;</span>)) &#123;</span><br><span class="line">                stack.push(<span class="number">2</span> * stack.peek());</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (op.equals(<span class="string">&quot;C&quot;</span>)) &#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                stack.push(Integer.valueOf(op));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            res += stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<h4 id="704-二分查找"><a href="#704-二分查找" class="headerlink" title="704. 二分查找"></a>704. 二分查找</h4><blockquote>
+<p>※ 简单的二分查找，难点在于各种变形，如存在重复元素，数组进行了旋转，找到某个元素最先或最后出现的位置。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] == target) &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target) &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="832-翻转图像"><a href="#832-翻转图像" class="headerlink" title="832. 翻转图像"></a>832. 翻转图像</h4><blockquote>
+<p>※ 没有什么骚操作，按照题意一步一步来即可。需要注意的是，对于宽度为奇数的情况，不要忘记对其中间位置的数字进行反转。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] flipAndInvertImage(<span class="keyword">int</span>[][] A) &#123;</span><br><span class="line">        <span class="keyword">int</span> rows = A.length, cols = A[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            <span class="comment">// for (int j = 0; j &lt; cols / 2; j++) &#123;</span></span><br><span class="line">            <span class="comment">//     int num = 1 - A[i][j];</span></span><br><span class="line">            <span class="comment">//     A[i][j] = 1 - A[i][cols - j - 1];</span></span><br><span class="line">            <span class="comment">//     A[i][cols - j - 1] = num;</span></span><br><span class="line">            <span class="comment">// &#125;</span></span><br><span class="line">            <span class="comment">// if (cols % 2 == 1) &#123;</span></span><br><span class="line">            <span class="comment">//     A[i][cols / 2] = 1 - A[i][cols / 2];</span></span><br><span class="line">            <span class="comment">// &#125;</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; (cols + <span class="number">1</span>) / <span class="number">2</span>; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> num = <span class="number">1</span> - A[i][j];</span><br><span class="line">                A[i][j] = <span class="number">1</span> - A[i][cols - j - <span class="number">1</span>];</span><br><span class="line">                A[i][cols - j - <span class="number">1</span>] = num;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> A;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="1002-查找常用字符"><a href="#1002-查找常用字符" class="headerlink" title="1002. 查找常用字符"></a>1002. 查找常用字符</h4><blockquote>
+<p>※ 依次遍历每个字符串，对字符串中每个字符出现的次数进行统计，最后，取每个字符出现次数的最小值即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">commonChars</span><span class="params">(String[] A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] min_count = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">        Arrays.fill(min_count, Integer.MAX_VALUE); <span class="comment">// Get 新技能</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span>[] count = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; A[i].length(); j++) &#123;</span><br><span class="line">                count[A[i].charAt(j) - <span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>; j++) &#123;</span><br><span class="line">                min_count[j] = Math.min(min_count[j], count[j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> LinkedList&lt;String&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; min_count[i]; j++) &#123;</span><br><span class="line">                res.add(String.valueOf((<span class="keyword">char</span>) (<span class="string">&#x27;a&#x27;</span> + i)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(NM)$，其中，<code>N</code>表示字符串的个数，<code>M</code>表示字符串的平均长度；空间复杂度：$O(1)$。</p>
+</blockquote>
+<hr>
+<h3 id="中等"><a href="#中等" class="headerlink" title="中等"></a>中等</h3><hr>
+<h4 id="73-矩阵置零"><a href="#73-矩阵置零" class="headerlink" title="73. 矩阵置零"></a>73. 矩阵置零</h4><blockquote>
+<p>※ 将每行和每列的第一个元素视为标记，用于表示该行或该列是否需要置零。对于第一行元素，可以额外声明一个变量，用于表示第一行是否需要置零。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setZeroes</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (matrix.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判断第一行是否需要置零</span></span><br><span class="line">        <span class="keyword">boolean</span> setZero = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix[<span class="number">0</span>].length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (matrix[<span class="number">0</span>][i] == <span class="number">0</span>) &#123;</span><br><span class="line">                setZero = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 判断第一列是否需要置零</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (matrix[i][<span class="number">0</span>] == <span class="number">0</span>) &#123;</span><br><span class="line">                matrix[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; matrix.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; matrix[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (matrix[i][j] == <span class="number">0</span>) &#123;</span><br><span class="line">                    matrix[i][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">                    matrix[<span class="number">0</span>][j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; matrix.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (matrix[i][<span class="number">0</span>] == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; matrix[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                    matrix[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix[<span class="number">0</span>].length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (matrix[<span class="number">0</span>][i] == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; matrix.length; j++) &#123;</span><br><span class="line">                    matrix[j][i] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="keyword">if</span> (setZero) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix[<span class="number">0</span>].length; i++) &#123;</span><br><span class="line">                matrix[<span class="number">0</span>][i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// MD，我是真的菜，看完解析做了三遍才做出来。。。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：该题目尤其需要注意置零时的顺序，即首先对第一行之外的行进行置零，然后对所有列进行置零，最后对第一行进行置零！</p>
+</blockquote>
+<h4 id="75-颜色分类"><a href="#75-颜色分类" class="headerlink" title="75. 颜色分类"></a>75. 颜色分类</h4><blockquote>
+<p>※ 利用指针<code>P_0</code>来交换<code>0</code>，<code>p_2</code>来交换<code>2</code>。从左向右遍历数组，设当前遍历到的位置为<code>i</code>，对应的元素为<code>nums[i]</code>。若<code>nums[i] = 0</code>，则将其与<code>nums[p_0]</code>进行交换，并将<code>p_0</code>向后移动一个位置；若<code>nums[i] = 2</code>，则将其与<code>nums[p_2]</code>进行交换，并将<code>p_2</code>向前移动一个位置。需要注意的是，当我们找到<code>2</code>时，需要不断将其与<code>nums[p_2]</code>进行交换，直至新的<code>nums[i]</code>不为<code>2</code>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> p_0 = <span class="number">0</span>, p_2 = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= p_2; i++) &#123; <span class="comment">// 这里应取到等于。</span></span><br><span class="line">            <span class="keyword">while</span> (i &lt;= p_2 &amp;&amp; nums[i] == <span class="number">2</span>) &#123;</span><br><span class="line">                nums[i] = nums[p_2];</span><br><span class="line">                nums[p_2--] = <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                nums[i] = nums[p_0];</span><br><span class="line">                nums[p_0++] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="153-寻找旋转排序数组中的最小值"><a href="#153-寻找旋转排序数组中的最小值" class="headerlink" title="153. 寻找旋转排序数组中的最小值"></a>153. 寻找旋转排序数组中的最小值</h4><blockquote>
+<p>※ 首先能够想到的便是利用二分搜索，问题在于如何更新状态。对于<code>left</code>、<code>mid</code>、<code>right</code>，它们之间的关系存在如下四种可能：<code>&lt; &lt;</code>、<code>&lt; &gt;</code>、<code>&gt; &lt;</code>、<code>&gt; &gt;</code>，分析出每种可能对应的状态更新，便能够轻松解决该题目。更详细的分析请参考<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/er-fen-cha-zhao-wei-shi-yao-zuo-you-bu-dui-cheng-z/">题解</a>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123; <span class="comment">// 能否取等号取决于 mid 能否等于 right</span></span><br><span class="line">            <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] &lt; nums[right]) &#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> nums[right];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="220-存在重复元素-III"><a href="#220-存在重复元素-III" class="headerlink" title="220. 存在重复元素 III"></a>220. 存在重复元素 III</h4><blockquote>
+<p>※ 基于桶排序的思想，将窗口当作桶来实现一个线性复杂度的解法。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsNearbyAlmostDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k, <span class="keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">        Map&lt;Long, Long&gt; map = <span class="keyword">new</span> HashMap&lt;Long, Long&gt;(); <span class="comment">// 注意需要用到 Long 类型，防止溢出。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">long</span> id = getBucketId(nums[i], t + <span class="number">1</span>); <span class="comment">// t + 1 !!!</span></span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(id)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (map.containsKey(id - <span class="number">1</span>) &amp;&amp; Math.abs(map.get(id - <span class="number">1</span>) - nums[i]) &lt;= t) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (map.containsKey(id + <span class="number">1</span>) &amp;&amp; Math.abs(map.get(id + <span class="number">1</span>) - nums[i]) &lt;= t) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(id, (<span class="keyword">long</span>) nums[i]);</span><br><span class="line">            <span class="keyword">if</span> (map.size() &gt; k) &#123;</span><br><span class="line">                map.remove(getBucketId(nums[i - k], t + <span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">getBucketId</span><span class="params">(<span class="keyword">long</span> num, <span class="keyword">long</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num &gt;= <span class="number">0</span> ? num / t : (num + <span class="number">1</span>) / t - <span class="number">1</span>; <span class="comment">// 注意判断条件为 num &gt;= 0 而非 num &gt; 0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$，对于任意一个元素，最多只需要进行三次搜索，一次插入和一次删除，这些操作均为常量时间复杂度的；空间复杂度：$O(min(N,K))$，需要开辟的额外空间取决于<code>HashMap</code>的大小，而<code>HashMap</code>的大小的上限同时由<code>N</code>和<code>K</code>决定。</p>
+</blockquote>
+<blockquote>
+<p><strong>TODO</strong>：该题目同样可以利用二叉搜索树解决，后面有时间可以试一下。</p>
+</blockquote>
+<h4 id="238-除自身以外数组的乘积"><a href="#238-除自身以外数组的乘积" class="headerlink" title="238. 除自身以外数组的乘积"></a>238. 除自身以外数组的乘积</h4><blockquote>
+<p>※ 初始化两个空数组<code>L</code>、<code>R</code>，对于<code>L</code>，其第<code>i</code>个元素表示<code>nums</code>中第<code>i</code>个元素之前所有数的乘积；对于<code>R</code>，其第<code>i</code>个元素表示<code>nums</code>中第<code>i</code>个元素之后所有数的乘积。借助上述思想，便可解决该题目。然而，上述思想的空间复杂度只有<code>O(N)</code>，达不到进阶的要求。为此，考虑将返回的结果数组视为<code>L</code>，通过一个常数维护<code>R</code>，从而达到<code>O(1)</code>空间复杂度。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        res[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            res[i] = res[i - <span class="number">1</span>] * nums[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> temp = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - <span class="number">1</span>; i &gt; -<span class="number">1</span>; i--) &#123;</span><br><span class="line">            res[i] = res[i] * temp;</span><br><span class="line">            temp *= nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="289-生命游戏"><a href="#289-生命游戏" class="headerlink" title="289. 生命游戏"></a>289. 生命游戏</h4><blockquote>
+<p>※ 该题目与<code>130. 被围绕的区域</code>类似，同样可以借助其它数字来表示“细胞”状态的更新，如<code>-1</code>表示细胞由活变死，<code>2</code>表示细胞由死变活。这里需要注意的是第<code>11</code>行代码，此时，<code>board[x][y] = -1</code>同样表示活细胞。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gameOfLife</span><span class="params">(<span class="keyword">int</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> rows = board.length, cols = board[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[][] directions = &#123;&#123;-<span class="number">1</span>, -<span class="number">1</span>&#125;, &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;-<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">0</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">1</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">1</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span>[] direction : directions) &#123;</span><br><span class="line">                    <span class="keyword">int</span> x = i + direction[<span class="number">0</span>];</span><br><span class="line">                    <span class="keyword">int</span> y = j + direction[<span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (-<span class="number">1</span> &lt; x &amp;&amp; x &lt; rows &amp;&amp; -<span class="number">1</span> &lt; y &amp;&amp; y &lt; cols &amp;&amp; (board[x][y] == <span class="number">1</span> || board[x][y] == -<span class="number">1</span>)) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == <span class="number">0</span> &amp;&amp; count == <span class="number">3</span>) &#123;</span><br><span class="line">                    board[i][j] = <span class="number">2</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (board[i][j] == <span class="number">1</span> &amp;&amp; (count &lt; <span class="number">2</span> || count &gt; <span class="number">3</span>)) &#123;</span><br><span class="line">                    board[i][j] = -<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == -<span class="number">1</span>) &#123;</span><br><span class="line">                    board[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (board[i][j] == <span class="number">2</span>) &#123;</span><br><span class="line">                    board[i][j] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="419-甲板上的战舰"><a href="#419-甲板上的战舰" class="headerlink" title="419. 甲板上的战舰"></a>419. 甲板上的战舰</h4><blockquote>
+<p>※ 完全没有思路，看了<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/battleships-in-a-board/solution/">题解</a>之后才会做，我真的是好菜啊。对二维矩阵进行扫描，扫描到<code>X</code>时，如果其上方或左方也是<code>X</code>，则不计数，否则计数加<code>1</code>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countBattleships</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; board.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; board[i - <span class="number">1</span>][j] == <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (j &gt; <span class="number">0</span> &amp;&amp; board[i][j - <span class="number">1</span>] == <span class="string">&#x27;X&#x27;</span>) &#123;</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    res++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="670-最大交换"><a href="#670-最大交换" class="headerlink" title="670. 最大交换"></a>670. 最大交换</h4><blockquote>
+<p>※ 自右向左统计大于（不包含等于）当前字符的最大字符的下标；然后，自左向右遍历字符，若当前字符的下标不等于大于其最大字符的下标，并且这两个字符不相等（该约束很重要！），则对它们进行交换并退出。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximumSwap</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] nums = String.valueOf(num).toCharArray();</span><br><span class="line">        <span class="keyword">char</span> max_c = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="keyword">int</span> max_i = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        arr[max_i] = max_i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - <span class="number">1</span>; i &gt; -<span class="number">1</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt; max_c) &#123;</span><br><span class="line">                max_c = nums[i];</span><br><span class="line">                max_i = i;</span><br><span class="line">            &#125;</span><br><span class="line">            arr[i] = max_i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] != i &amp;&amp; nums[arr[i]] != nums[i]) &#123;</span><br><span class="line">                <span class="keyword">char</span> c = nums[arr[i]];</span><br><span class="line">                nums[arr[i]] = nums[i];</span><br><span class="line">                nums[i] = c;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Integer.parseInt(String.valueOf(nums));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<h4 id="1004-最大连续1的个数-III"><a href="#1004-最大连续1的个数-III" class="headerlink" title="1004. 最大连续1的个数 III"></a>1004. 最大连续1的个数 III</h4><blockquote>
+<p>※ 该题目可以理解为：滑动窗口内最多有<code>K</code>个<code>0</code>，求滑动窗口的最大长度。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestOnes</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>, maxCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 滑动窗口表示的区间为[left, right)，左闭右开</span></span><br><span class="line">        <span class="keyword">while</span> (right &lt; A.length) &#123;</span><br><span class="line">            <span class="comment">// 窗口扩充一个元素，若为 0 则 count++；</span></span><br><span class="line">            <span class="keyword">if</span> (A[right++] == <span class="number">0</span>) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 当窗口内 0 的个数超过 K 时，开始收缩窗口。</span></span><br><span class="line">            <span class="keyword">while</span> (count &gt; K) &#123;</span><br><span class="line">                <span class="comment">// 若滑出窗口的元素是 0，则 count--；</span></span><br><span class="line">                <span class="keyword">if</span> (A[left++] == <span class="number">0</span>) &#123;</span><br><span class="line">                    count--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 此时 count &lt;= K，保存窗口的最大宽度；</span></span><br><span class="line">            maxCount = Math.max(maxCount, right - left);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxCount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"># 数组</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/24/Leetcode-01-%E6%A0%91/" rel="prev" title="01 树">
+                  <i class="fa fa-chevron-left"></i> 01 树
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/24/Leetcode-05-%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" rel="next" title="05 优先搜索">
+                  05 优先搜索 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘晨</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

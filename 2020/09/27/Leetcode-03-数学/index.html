@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="简单 191. 位1的个数 ※ 该题目有很多种解法，比较常见的一种便是利用移位。然而，对于二进制表示中0较多的情况，会进行很多不必要的移位操作。为此，可以利用布赖恩·克尼根方法。  1234567891011public class Solution &amp;#123;    &#x2F;&#x2F; you need to treat n as an unsigned value    public int hammin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03 数学">
+<meta property="og:url" content="http://example.com/2020/09/27/Leetcode-03-%E6%95%B0%E5%AD%A6/index.html">
+<meta property="og:site_name" content="阿晨的博客">
+<meta property="og:description" content="简单 191. 位1的个数 ※ 该题目有很多种解法，比较常见的一种便是利用移位。然而，对于二进制表示中0较多的情况，会进行很多不必要的移位操作。为此，可以利用布赖恩·克尼根方法。  1234567891011public class Solution &amp;#123;    &#x2F;&#x2F; you need to treat n as an unsigned value    public int hammin">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-27T10:39:26.000Z">
+<meta property="article:modified_time" content="2020-10-14T02:46:32.383Z">
+<meta property="article:author" content="刘晨">
+<meta property="article:tag" content="数学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/09/27/Leetcode-03-%E6%95%B0%E5%AD%A6/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>03 数学 | 阿晨的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">阿晨的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">年度最佳摸鱼选手</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95"><span class="nav-number">1.</span> <span class="nav-text">简单</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#191-%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">191. 位1的个数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#231-2%E7%9A%84%E5%B9%82"><span class="nav-number">1.2.</span> <span class="nav-text">231. 2的幂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#326-3%E7%9A%84%E5%B9%82"><span class="nav-number">1.3.</span> <span class="nav-text">326. 3的幂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#342-4%E7%9A%84%E5%B9%82"><span class="nav-number">1.4.</span> <span class="nav-text">342. 4的幂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#371-%E4%B8%A4%E6%95%B4%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="nav-number">1.5.</span> <span class="nav-text">371. 两整数之和</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#441-%E6%8E%92%E5%88%97%E7%A1%AC%E5%B8%81"><span class="nav-number">1.6.</span> <span class="nav-text">441. 排列硬币</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#461-%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB"><span class="nav-number">1.7.</span> <span class="nav-text">461. 汉明距离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#476-%E6%95%B0%E5%AD%97%E7%9A%84%E8%A1%A5%E6%95%B0"><span class="nav-number">1.8.</span> <span class="nav-text">476. 数字的补数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#504-%E4%B8%83%E8%BF%9B%E5%88%B6%E6%95%B0"><span class="nav-number">1.9.</span> <span class="nav-text">504. 七进制数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#728-%E8%87%AA%E9%99%A4%E6%95%B0"><span class="nav-number">1.10.</span> <span class="nav-text">728. 自除数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#860-%E6%9F%A0%E6%AA%AC%E6%B0%B4%E6%89%BE%E9%9B%B6"><span class="nav-number">1.11.</span> <span class="nav-text">860. 柠檬水找零</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#883-%E4%B8%89%E7%BB%B4%E5%BD%A2%E4%BD%93%E6%8A%95%E5%BD%B1%E9%9D%A2%E7%A7%AF"><span class="nav-number">1.12.</span> <span class="nav-text">883. 三维形体投影面积</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E7%AD%89"><span class="nav-number">2.</span> <span class="nav-text">中等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#89-%E6%A0%BC%E9%9B%B7%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">89. 格雷编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#319-%E7%81%AF%E6%B3%A1%E5%BC%80%E5%85%B3"><span class="nav-number">2.2.</span> <span class="nav-text">319. 灯泡开关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#338-%E6%AF%94%E7%89%B9%E4%BD%8D%E8%AE%A1%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">338. 比特位计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#357-%E8%AE%A1%E7%AE%97%E5%90%84%E4%B8%AA%E4%BD%8D%E6%95%B0%E4%B8%8D%E5%90%8C%E7%9A%84%E6%95%B0%E5%AD%97%E4%B8%AA%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">357. 计算各个位数不同的数字个数</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘晨"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">刘晨</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/27/Leetcode-03-%E6%95%B0%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="刘晨">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿晨的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03 数学
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-27 18:39:26" itemprop="dateCreated datePublished" datetime="2020-09-27T18:39:26+08:00">2020-09-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-14 10:46:32" itemprop="dateModified" datetime="2020-10-14T10:46:32+08:00">2020-10-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="简单"><a href="#简单" class="headerlink" title="简单"></a>简单</h3><hr>
+<h4 id="191-位1的个数"><a href="#191-位1的个数" class="headerlink" title="191. 位1的个数"></a>191. 位1的个数</h4><blockquote>
+<p>※ 该题目有很多种解法，比较常见的一种便是利用移位。然而，对于二进制表示中<code>0</code>较多的情况，会进行很多不必要的移位操作。为此，可以利用<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/hamming-distance/solution/yi-ming-ju-chi-by-leetcode/">布赖恩·克尼根</a>方法。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">// you need to treat n as an unsigned value</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">0</span>) &#123;</span><br><span class="line">            res++;</span><br><span class="line">            n = n &amp; (n - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：对于该题目，在<code>Python</code>中，可以直接利用内置函数<code>bin(x ^ y).count(&#39;1&#39;)</code>；在<code>Java</code>中，可以直接利用内置函数<code>Integer.bitCount(x ^ y)</code>进行解决。</p>
+</blockquote>
+<h4 id="231-2的幂"><a href="#231-2的幂" class="headerlink" title="231. 2的幂"></a>231. 2的幂</h4><blockquote>
+<p>※ 判断某个整数是否为<code>2</code>的幂，只需判断该整数的二进制表示中是否只有一个<code>1</code>，即<code>n &amp; (n - 1)</code>是否为<code>0</code>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPowerOfTwo</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> x = (<span class="keyword">long</span>) n;</span><br><span class="line">        <span class="keyword">return</span> (x &amp; (x - <span class="number">1</span>)) == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：刚开始做的时候没有考虑到<code>n = Integer.MIN_VALUE</code>的情况，对于该情况，<code>n &amp; (n - 1)</code>等于<code>0</code>但是并不满足<code>2</code>的幂。为此，可以将<code>n</code>转换为长整型。</p>
+</blockquote>
+<h4 id="326-3的幂"><a href="#326-3的幂" class="headerlink" title="326. 3的幂"></a>326. 3的幂</h4><blockquote>
+<p>※ 在整型范围内，<code>3</code>的整数幂最大为<code>1162261467</code>，即<code>3</code>的<code>19</code>次幂。由于<code>3</code>为质数，因此$3^{19}$的除数只有$3^{0}$、$3^{1}$、…、$3^{19}$，因此，只需判断$3^{19}$除以<code>n</code>余数是否为<code>0</code>即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPowerOfThree</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n &gt; <span class="number">0</span> &amp;&amp; <span class="number">1162261467</span> % n == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：对于求解<code>n</code>的幂，应该怎么办呢？这里给出两种方法：</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/power-of-three/solution/3de-mi-by-leetcode/">基准转换法</a>，首先将<code>num</code>转换为<code>n</code>进制，然后利用正则表达式判断转换后的数字是否以<code>1(^1)</code>开头，后面跟着<code>0</code>或多个<code>0(0*)</code>。该种方法的时间复杂度为$O(log_{n}num)$，空间复杂度为$O(log_{n}num)$。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/power-of-three/solution/3de-mi-by-leetcode/">运算法</a>，若<code>num</code>为<code>n</code>的幂，则$i=log_{n}num=log_a(num)/log_a{n}$为整数，因此，只需判断<code>i%1</code>是否为整数即可。该种方法的时间复杂度为<code>Unknown</code>（取决于<code>Math.log()</code>的耗时），空间复杂度为$O(1)$。需要注意的是，<code>Math.log()</code>返回的是<code>double</code>类型的数值，可能会存在一定的误差，我们还需要将该误差考虑在内。</p>
+</blockquote>
+<h4 id="342-4的幂"><a href="#342-4的幂" class="headerlink" title="342. 4的幂"></a>342. 4的幂</h4><blockquote>
+<p>※ 该题目与<code>231. 2的幂</code>类似，均利用了布赖恩·克尼根方法，只是多了一步与操作，用于判断数字为<code>2</code>的偶数次幂还是奇数次幂。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPowerOfFour</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num &gt; <span class="number">0</span> &amp;&amp; (num &amp; (num - <span class="number">1</span>)) == <span class="number">0</span> &amp;&amp; ((num &amp; <span class="number">0xaaaaaaaa</span>) == <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="371-两整数之和"><a href="#371-两整数之和" class="headerlink" title="371. 两整数之和"></a>371. 两整数之和</h4><blockquote>
+<p>※ 利用异或<code>^</code>运算（<code>0001^0010=0011</code>），可以得到两个整数相加后的无进位结果；利用与<code>&amp;</code>运算（<code>(0001 &amp; 0010) &lt;&lt; 1 = 0000</code>），可以得到两个整数相加时的进位信息。利用上述性质即可在不使用<code>+</code>的前提下计算出两整数之和。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (b != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> sum = a ^ b;</span><br><span class="line">            <span class="keyword">int</span> car = (a &amp; b) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">            a = sum;</span><br><span class="line">            b = car;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：可能是$O(N)$吧；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="441-排列硬币"><a href="#441-排列硬币" class="headerlink" title="441. 排列硬币"></a>441. 排列硬币</h4><blockquote>
+<p>※ 该题目利用一元二次方程的求根公式即可轻松解决，不过需要注意的是<code>Math.sqrt()</code>函数的参数范围。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">arrangeCoins</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 当 n = 1804289383 时 Math.sqrt(2 * n) 将会溢出，具体为什么俺也不清楚。。。</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) (Math.sqrt(<span class="number">2</span>) * Math.sqrt(n + <span class="number">0.125</span>) - <span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="461-汉明距离"><a href="#461-汉明距离" class="headerlink" title="461. 汉明距离"></a>461. 汉明距离</h4><blockquote>
+<p>※ 该题目与<code>191. 位1的个数</code>类似，均利用了布赖恩·克尼根方法，只是多了一步与操作。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingDistance</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, n = x ^ y;</span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">0</span>) &#123;</span><br><span class="line">            res++;</span><br><span class="line">            n = n &amp; (n - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="476-数字的补数"><a href="#476-数字的补数" class="headerlink" title="476. 数字的补数"></a>476. 数字的补数</h4><blockquote>
+<p>※ 对于正整数<code>1</code>，其去掉前缀<code>0</code>之后的二进制表示形式为<code>1</code>，对应的补数为<code>0</code>；对于正整数<code>5</code>，其去掉前缀<code>0</code>之后的二进制表示形式为<code>101</code>，对应的补数为<code>010</code>；可以发现，<code>0 + 1 = 1</code>、<code>101 + 010 = 111</code>。因此，可以事先计算出输入正整数去掉前缀<code>0</code>之后的二进制表示形式的位数<code>count</code>，再令<code>count</code>个<code>1</code>减去正整数即可得到它的补数。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findComplement</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>, base = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (base &lt; num) &#123;</span><br><span class="line">            count++;</span><br><span class="line">            base = (base &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1</span> &lt;&lt; (count - <span class="number">1</span>)) - <span class="number">1</span> + (<span class="number">1</span> &lt;&lt; (count - <span class="number">1</span>)) - num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：在解决该题目时，应时刻防止数字溢出！</p>
+</blockquote>
+<h4 id="504-七进制数"><a href="#504-七进制数" class="headerlink" title="504. 七进制数"></a>504. 七进制数</h4><blockquote>
+<p>※ 该题目比较简单，不过需要注意的是当<code>n = 0</code>的特殊情况！</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">convertToBase7</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (num == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> sign = num &gt;= <span class="number">0</span> ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">        num *= sign;</span><br><span class="line">        <span class="keyword">while</span> (num != <span class="number">0</span>) &#123;</span><br><span class="line">            sb.append(String.valueOf(num % <span class="number">7</span>));</span><br><span class="line">            num /= <span class="number">7</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sign == -<span class="number">1</span>) &#123;</span><br><span class="line">            sb.append(<span class="string">&quot;-&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.reverse();</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(logN)$；空间复杂度：$O(1)$吧。</p>
+</blockquote>
+<h4 id="728-自除数"><a href="#728-自除数" class="headerlink" title="728. 自除数"></a>728. 自除数</h4><blockquote>
+<p>※ 首先想到的方法便是暴力求解，但是感觉暴力求解太<code>LOW</code>了。本以为题解会有更加牛逼的方法，没想到用的居然也是暴力法。。。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">selfDividingNumbers</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num = left; num &lt;= right; num++) &#123;</span><br><span class="line">            <span class="keyword">int</span> n = num;</span><br><span class="line">            <span class="keyword">while</span> (n != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (n % <span class="number">10</span> == <span class="number">0</span> || num % (n % <span class="number">10</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                n /= <span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">                res.add(num);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="860-柠檬水找零"><a href="#860-柠檬水找零" class="headerlink" title="860. 柠檬水找零"></a>860. 柠檬水找零</h4><blockquote>
+<p>※ 每当收到一张<code>5</code>元钞票时，将<code>5</code>元钞票的数量加一；收到一张<code>10</code>元钞票时，将<code>10</code>元钞票的数量加一，<code>5</code>元钞票的数量减一；收到一张<code>20</code>元钞票时，优先使用一张<code>5</code>元钞票和一张<code>10</code>元钞票找零，若没有足够的<code>10</code>元钞票，再考虑使用三张<code>5</code>元钞票。在上述过程中，若出现了剩余钞票数量不足的情况，则说明无法找零。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">lemonadeChange</span><span class="params">(<span class="keyword">int</span>[] bills)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> nums_of_five = <span class="number">0</span>, nums_of_ten = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bills.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bills[i] == <span class="number">5</span>) &#123;</span><br><span class="line">                nums_of_five++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (bills[i] == <span class="number">10</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums_of_five == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    nums_of_five--;</span><br><span class="line">                    nums_of_ten++;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums_of_five &gt; <span class="number">0</span> &amp;&amp; nums_of_ten &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    nums_of_five--;</span><br><span class="line">                    nums_of_ten--;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums_of_five &gt; <span class="number">2</span>) &#123;</span><br><span class="line">                    nums_of_five -= <span class="number">3</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="883-三维形体投影面积"><a href="#883-三维形体投影面积" class="headerlink" title="883. 三维形体投影面积"></a>883. 三维形体投影面积</h4><blockquote>
+<p>※ 对于三维形体的俯视图投影面积，等于“高度”不为<code>0</code>的元素的个数；对于三维形体的主视图投影面积，等于每一行元素的最大值之和；对于三维形体的侧视图投影面积，等于每一列元素的最大值之和。为了获取每一行和每一列元素的最大值，最先想到的是遍历二维数组两次的方式，后来在题解中发现了一种更为巧妙的方法。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">projectionArea</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 每一行每一列的最大值相加，再加上不为 0 的元素的个数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grid.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> row_max = <span class="number">0</span>, col_max = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; grid.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    res++;</span><br><span class="line">                &#125;</span><br><span class="line">                row_max = Math.max(row_max, grid[i][j]); <span class="comment">// 妙</span></span><br><span class="line">                col_max = Math.max(col_max, grid[j][i]); <span class="comment">// 啊</span></span><br><span class="line">            &#125;</span><br><span class="line">            res += (row_max + col_max);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<hr>
+<h3 id="中等"><a href="#中等" class="headerlink" title="中等"></a>中等</h3><hr>
+<h4 id="89-格雷编码"><a href="#89-格雷编码" class="headerlink" title="89. 格雷编码"></a>89. 格雷编码</h4><blockquote>
+<p>※ 设<code>n</code>阶格雷编码集合为<code>G(n)</code>，则<code>G(n+1)</code>阶格雷编码为：给<code>G(n)</code>阶格雷编码中的每个元素的二进制表示前添加前缀<code>0</code>；倒序为<code>G(n)</code>阶格雷编码中的每个元素的二进制表示前添加前缀<code>1</code>。根据上述规律，即可从<code>0</code>阶格雷编码推导至任意阶格雷编码。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">        res.add(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">int</span> head = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = res.size() - <span class="number">1</span>; j &gt; -<span class="number">1</span>; j--) &#123;</span><br><span class="line">                res.add(head + res.get(j));</span><br><span class="line">            &#125;</span><br><span class="line">            head &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N^2)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="319-灯泡开关"><a href="#319-灯泡开关" class="headerlink" title="319. 灯泡开关"></a>319. 灯泡开关</h4><blockquote>
+<p>※ 对于第<code>i</code>个灯泡，只有当<code>i</code>为完全平方数时，经过<code>N</code>轮之后其才会变为开启状态；这是因为完全平方数的因子数有奇数个，而灯泡经过奇数次操作之后会变为相反的状态。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bulbSwitch</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)Math.sqrt(n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="338-比特位计数"><a href="#338-比特位计数" class="headerlink" title="338. 比特位计数"></a>338. 比特位计数</h4><blockquote>
+<p>※ 对于<code>1</code>来说，其二进制表示中<code>1</code>的数目等于<code>0</code>的二进制表示中<code>1</code>的数目加<code>1</code>；对于<code>2</code>和<code>3</code>来说，它们的二进制表示中<code>1</code>的数目等于<code>0</code>和<code>1</code>的二进制表示中<code>1</code>的数目加<code>1</code>；对于<code>4</code>、<code>5</code>、<code>6</code>和<code>7</code>来说，它们的二进制表示中<code>1</code>的数目等于<code>0</code>、<code>1</code>、<code>2</code>和<code>3</code>的二进制表示中<code>1</code>的数目加<code>1</code>。找到该规律后，便可以利用动态规划进行解决。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> d = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</span><br><span class="line">            res[i] = res[i - d] + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> ((i + <span class="number">1</span>) / <span class="number">2</span> == d) &#123;</span><br><span class="line">                d *= <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<h4 id="357-计算各个位数不同的数字个数"><a href="#357-计算各个位数不同的数字个数" class="headerlink" title="357. 计算各个位数不同的数字个数"></a>357. 计算各个位数不同的数字个数</h4><blockquote>
+<p>※ 比较简单的排列组合类型问题，只是存在一些边界情况需要考虑，如<code>n = 0</code>或<code>n &gt; 10</code>，前者有<code>10</code>种可能结果，后者始终有<code>8877691</code>种可能结果（因为只有<code>10</code>个阿拉伯数字，第<code>10+</code>位无论是哪个数字定会重复）。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countNumbersWithUniqueDigits</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// if (n == 0) &#123;</span></span><br><span class="line">        <span class="comment">//     return 1;</span></span><br><span class="line">        <span class="comment">// &#125; else &#123;</span></span><br><span class="line">        <span class="comment">//     int res = 10;</span></span><br><span class="line">        <span class="comment">//     int a = 9, b = 9;</span></span><br><span class="line">        <span class="comment">//     int count = n &gt; 10 ? 10 : n; // 很重要！！！</span></span><br><span class="line">        <span class="comment">//     for (int i = 1; i &lt; count; i++) &#123;</span></span><br><span class="line">        <span class="comment">//         res += (a * b);</span></span><br><span class="line">        <span class="comment">//         a *= b--;</span></span><br><span class="line">        <span class="comment">//         // b--;</span></span><br><span class="line">        <span class="comment">//     &#125;</span></span><br><span class="line">        <span class="comment">//     return res;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (n &gt;= <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">8877691</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">int</span> a = <span class="number">9</span>, b = <span class="number">9</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">                res += (a * b);</span><br><span class="line">                a *= b--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/09/24/Leetcode-05-%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" rel="prev" title="05 优先搜索">
+                  <i class="fa fa-chevron-left"></i> 05 优先搜索
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/28/Leetcode-04-%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="next" title="04 字符串">
+                  04 字符串 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘晨</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
