@@ -407,21 +407,6 @@ class Solution {
 > ※ 二叉搜索树中第`K`小的元素对应了二叉搜索树中序遍历的第`K`个元素，因此，只需对二叉搜索树进行中序遍历，并对遍历过的节点进行计数，待遍历到第`K`个节点时，返回该节点的值即可。
 
 ```java
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     private int key = 0, res = 0;
     public int kthSmallest(TreeNode root, int k) {
