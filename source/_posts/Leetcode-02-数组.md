@@ -482,6 +482,37 @@ class Solution {
 
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
+#### 1002. 查找常用字符
+
+> ※ 依次遍历每个字符串，对字符串中每个字符出现的次数进行统计，最后，取每个字符出现次数的最小值即可。
+
+```java
+class Solution {
+    public List<String> commonChars(String[] A) {
+        int[] min_count = new int[26];
+        Arrays.fill(min_count, Integer.MAX_VALUE); // Get 新技能
+        for (int i = 0; i < A.length; i++) {
+            int[] count = new int[26];
+            for (int j = 0; j < A[i].length(); j++) {
+                count[A[i].charAt(j) - 'a']++;
+            }
+            for (int j = 0; j < 26; j++) {
+                min_count[j] = Math.min(min_count[j], count[j]);
+            }
+        }
+        List<String> res = new LinkedList<String>();
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < min_count[i]; j++) {
+                res.add(String.valueOf((char) ('a' + i)));
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NM)$，其中，`N`表示字符串的个数，`M`表示字符串的平均长度；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等

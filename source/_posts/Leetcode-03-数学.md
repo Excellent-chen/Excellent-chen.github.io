@@ -217,6 +217,70 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 860. 柠檬水找零
+
+> ※ 每当收到一张`5`元钞票时，将`5`元钞票的数量加一；收到一张`10`元钞票时，将`10`元钞票的数量加一，`5`元钞票的数量减一；收到一张`20`元钞票时，优先使用一张`5`元钞票和一张`10`元钞票找零，若没有足够的`10`元钞票，再考虑使用三张`5`元钞票。在上述过程中，若出现了剩余钞票数量不足的情况，则说明无法找零。
+
+```java
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        int nums_of_five = 0, nums_of_ten = 0;
+        for (int i = 0; i < bills.length; i++) {
+            if (bills[i] == 5) {
+                nums_of_five++;
+            } else if (bills[i] == 10) {
+                if (nums_of_five == 0) {
+                    return false;
+                } else {
+                    nums_of_five--;
+                    nums_of_ten++;
+                }
+
+            } else {
+                if (nums_of_five > 0 && nums_of_ten > 0) {
+                    nums_of_five--;
+                    nums_of_ten--;
+                } else if (nums_of_five > 2) {
+                    nums_of_five -= 3;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
+#### 883. 三维形体投影面积
+
+> ※ 对于三维形体的俯视图投影面积，等于“高度”不为`0`的元素的个数；对于三维形体的主视图投影面积，等于每一行元素的最大值之和；对于三维形体的侧视图投影面积，等于每一列元素的最大值之和。为了获取每一行和每一列元素的最大值，最先想到的是遍历二维数组两次的方式，后来在题解中发现了一种更为巧妙的方法。
+
+```java
+class Solution {
+    public int projectionArea(int[][] grid) {
+        int res = 0;
+        // 每一行每一列的最大值相加，再加上不为 0 的元素的个数
+        for (int i = 0; i < grid.length; i++) {
+            int row_max = 0, col_max = 0;
+            for (int j = 0; j < grid.length; j++) {
+                if (grid[i][j] > 0) {
+                    res++;
+                }
+                row_max = Math.max(row_max, grid[i][j]); // 妙
+                col_max = Math.max(col_max, grid[j][i]); // 啊
+            }
+            res += (row_max + col_max);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等

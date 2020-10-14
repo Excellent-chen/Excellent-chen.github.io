@@ -402,6 +402,56 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 230. 二叉搜索树中第K小的元素
+
+> ※ 二叉搜索树中第`K`小的元素对应了二叉搜索树中序遍历的第`K`个元素，因此，只需对二叉搜索树进行中序遍历，并对遍历过的节点进行计数，待遍历到第`K`个节点时，返回该节点的值即可。
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int key = 0, res = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        inOrderTraversal(root, k);
+        return res;
+    }
+    private void inOrderTraversal(TreeNode root, int k) {
+        if (root == null) {
+            return;
+        }
+        inOrderTraversal(root.left, k);
+        key++;
+        // if (key == k) {
+        //     res = root.val;
+        //     return;
+        // }
+        if (key == k) {
+            res = root.val;
+        } else if (key > k) {
+            return;
+        }
+        inOrderTraversal(root.right, k);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
+> **TODO**：第`34`行引入的条件语句能够缩短递归执行时间吗？
+
 #### 513. 找树左下角的值
 
 > ※ 最先想到的方法是：从上往下，从左往右依次遍历二叉树每一层的节点，在遍历每一层节点之前，先用一个临时变量保存当前层的第一个节点的值，直至遍历到最后一层。然而，这样的方法需要额外定义两个临时变量，并且程序结构较为复杂，是否存在更为简单明了的方法？答案是肯定的（见代码）。
