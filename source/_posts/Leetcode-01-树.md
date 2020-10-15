@@ -437,6 +437,46 @@ class Solution {
 
 > **TODO**：第`34`行引入的条件语句能够缩短递归执行时间吗？
 
+#### 429. N叉树的层序遍历
+
+> ※ 该题目和二叉树的层次遍历类似，均采用了相同的框架，只是在向队列中添加节点时有所不同（这里直接调用了`addAll()`函数，关于该函数，后面有时间可以仔细看一下）。
+
+```java
+class Solution {
+    public List<List<Integer>> levelOrder(Node root) {
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        if (root == null) {
+            return res;
+        }
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            List<Integer> list = new LinkedList<Integer>();
+            for (int i = 0; i < count; i++) {
+                Node node = queue.poll();
+                list.add(node.val);
+                // Way 1:
+                // List<Node> children = node.children;
+                // for (int i = 0; i < children.size(); i++) {
+                //     queue.offer(children.get(i));
+                // }
+                // Way 2:
+                // for (Node child : node.children) {
+                //     queue.offer(child);
+                // }
+                // Way 3:
+                queue.addAll(node.children);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 513. 找树左下角的值
 
 > ※ 最先想到的方法是：从上往下，从左往右依次遍历二叉树每一层的节点，在遍历每一层节点之前，先用一个临时变量保存当前层的第一个节点的值，直至遍历到最后一层。然而，这样的方法需要额外定义两个临时变量，并且程序结构较为复杂，是否存在更为简单明了的方法？答案是肯定的（见代码）。

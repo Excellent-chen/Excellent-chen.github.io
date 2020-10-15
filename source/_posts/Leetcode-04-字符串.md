@@ -258,6 +258,35 @@ class Solution {
 
 > ※ 时间复杂度：$O(M+N)$；空间复杂度：$O(N)$。
 
+#### 821. 字符的最短距离
+
+> ※ 首先，从左向右遍历字符串，记录上一个字符`C`出现的位置`pre`，并记录`i - pre`；然后，从右向左遍历字符串，记录下一个字符`C`出现的位置`post`，并记录`post - i`；则字符的最短距离即为`Math.min(i - pre, post - i)`。
+
+```java
+class Solution {
+    public int[] shortestToChar(String S, char C) {
+        int[] res = new int[S.length()];
+        int pre = -10000;
+        for (int i = 0; i < S.length(); i++) {
+            if (S.charAt(i) == C) {
+                pre = i;
+            }
+            res[i] = i - pre;
+        }
+        int post = 10000;
+        for (int i = S.length() - 1; i > -1; i--) {
+            if (S.charAt(i) == C) {
+                post = i;
+            }
+            res[i] = Math.min(res[i], post - i);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等
