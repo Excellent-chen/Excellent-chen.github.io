@@ -452,7 +452,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-14 10:46:32" itemprop="dateModified" datetime="2020-10-14T10:46:32+08:00">2020-10-14</time>
+        <time title="修改时间：2020-10-16 11:30:45" itemprop="dateModified" datetime="2020-10-16T11:30:45+08:00">2020-10-16</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -619,6 +619,14 @@
 <blockquote>
 <p>※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。</p>
 </blockquote>
+<h4 id="807-保持城市天际线"><a href="#807-保持城市天际线" class="headerlink" title="807. 保持城市天际线"></a>807. 保持城市天际线</h4><blockquote>
+<p>※ 该题目与<code>883. 三维形体投影面积</code>类似，均利用了投影的性质。首先，对二维数组进行遍历，求出每一行、每一列的最大值；然后，再次对二维数组进行遍历，对于每一个元素<code>grid[i][j]</code>，其可以增加的最大高度等于<code>Math.min(row_max[i], col_max[j]) - grid[i][j]</code>；最后，将所有元素可以增加的最大高度累加在一起，得到最终结果。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxIncreaseKeepingSkyline</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> row = grid.length, col = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[] row_max = <span class="keyword">new</span> <span class="keyword">int</span>[row];</span><br><span class="line">        <span class="keyword">int</span>[] col_max = <span class="keyword">new</span> <span class="keyword">int</span>[col];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; col; j++) &#123;</span><br><span class="line">                row_max[i] = Math.max(row_max[i], grid[i][j]);</span><br><span class="line">                col_max[j] = Math.max(col_max[j], grid[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; col; j++) &#123;</span><br><span class="line">                res += Math.min(row_max[i], col_max[j]) - grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。</p>
+</blockquote>
 <hr>
 
       
@@ -782,7 +790,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-14 10:56:45" itemprop="dateModified" datetime="2020-10-14T10:56:45+08:00">2020-10-14</time>
+        <time title="修改时间：2020-10-16 11:30:17" itemprop="dateModified" datetime="2020-10-16T11:30:17+08:00">2020-10-16</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -965,6 +973,14 @@
 <blockquote>
 <p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。</p>
 </blockquote>
+<h4 id="977-有序数组的平方"><a href="#977-有序数组的平方" class="headerlink" title="977. 有序数组的平方"></a>977. 有序数组的平方</h4><blockquote>
+<p>※ 定义两个指针<code>i</code>、<code>j</code>，初始时分别指向数组的第<code>0</code>、<code>A.length - 1</code>个元素；比较两个指针所指元素的平方，选择较大的那个逆序放入结果数组中，并移动指针；重复上述过程，直至<code>i &gt; j</code>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] sortedSquares(<span class="keyword">int</span>[] A) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[A.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = A.length - <span class="number">1</span>, pos = A.length - <span class="number">1</span>; i &lt;= j; pos--) &#123;</span><br><span class="line">            <span class="keyword">int</span> left = A[i] * A[i], right = A[j] * A[j];</span><br><span class="line">            <span class="keyword">if</span> (left &gt; right) &#123;</span><br><span class="line">                res[pos] = left;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res[pos] = right;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
 <h4 id="1002-查找常用字符"><a href="#1002-查找常用字符" class="headerlink" title="1002. 查找常用字符"></a>1002. 查找常用字符</h4><blockquote>
 <p>※ 依次遍历每个字符串，对字符串中每个字符出现的次数进行统计，最后，取每个字符出现次数的最小值即可。</p>
 </blockquote>
@@ -972,6 +988,14 @@
 
 <blockquote>
 <p>※ 时间复杂度：$O(NM)$，其中，<code>N</code>表示字符串的个数，<code>M</code>表示字符串的平均长度；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="1184-公交站间的距离"><a href="#1184-公交站间的距离" class="headerlink" title="1184. 公交站间的距离"></a>1184. 公交站间的距离</h4><blockquote>
+<p>※ 按照题目意思，分别从前往后、从后往前对数组进行遍历并累加，取两次累加的最小值作为最终结果即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">distanceBetweenBusStops</span><span class="params">(<span class="keyword">int</span>[] distance, <span class="keyword">int</span> start, <span class="keyword">int</span> destination)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> forward = <span class="number">0</span>, backward = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i != destination; i = (i + <span class="number">1</span>) % distance.length) &#123;</span><br><span class="line">            forward += distance[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = destination; i != start; i = (i + <span class="number">1</span>) % distance.length) &#123;</span><br><span class="line">            backward += distance[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.min(forward, backward);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
 </blockquote>
 <hr>
 <h3 id="中等"><a href="#中等" class="headerlink" title="中等"></a>中等</h3><hr>
