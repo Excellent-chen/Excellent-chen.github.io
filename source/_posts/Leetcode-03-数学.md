@@ -385,4 +385,33 @@ class Solution {
 
 > ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
 
+#### 807. 保持城市天际线
+
+> ※ 该题目与`883. 三维形体投影面积`类似，均利用了投影的性质。首先，对二维数组进行遍历，求出每一行、每一列的最大值；然后，再次对二维数组进行遍历，对于每一个元素`grid[i][j]`，其可以增加的最大高度等于`Math.min(row_max[i], col_max[j]) - grid[i][j]`；最后，将所有元素可以增加的最大高度累加在一起，得到最终结果。
+
+```java
+class Solution {
+    public int maxIncreaseKeepingSkyline(int[][] grid) {
+        int row = grid.length, col = grid[0].length;
+        int[] row_max = new int[row];
+        int[] col_max = new int[col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                row_max[i] = Math.max(row_max[i], grid[i][j]);
+                col_max[j] = Math.max(col_max[j], grid[i][j]);
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                res += Math.min(row_max[i], col_max[j]) - grid[i][j];
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。
+
 -----

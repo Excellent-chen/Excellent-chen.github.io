@@ -482,6 +482,31 @@ class Solution {
 
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
+#### 977. 有序数组的平方
+
+> ※ 定义两个指针`i`、`j`，初始时分别指向数组的第`0`、`A.length - 1`个元素；比较两个指针所指元素的平方，选择较大的那个逆序放入结果数组中，并移动指针；重复上述过程，直至`i > j`。
+
+```java
+class Solution {
+    public int[] sortedSquares(int[] A) {
+        int[] res = new int[A.length];
+        for (int i = 0, j = A.length - 1, pos = A.length - 1; i <= j; pos--) {
+            int left = A[i] * A[i], right = A[j] * A[j];
+            if (left > right) {
+                res[pos] = left;
+                i++;
+            } else {
+                res[pos] = right;
+                j--;
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 1002. 查找常用字符
 
 > ※ 依次遍历每个字符串，对字符串中每个字符出现的次数进行统计，最后，取每个字符出现次数的最小值即可。
@@ -512,6 +537,27 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(NM)$，其中，`N`表示字符串的个数，`M`表示字符串的平均长度；空间复杂度：$O(1)$。
+
+#### 1184. 公交站间的距离
+
+> ※ 按照题目意思，分别从前往后、从后往前对数组进行遍历并累加，取两次累加的最小值作为最终结果即可。
+
+```java
+class Solution {
+    public int distanceBetweenBusStops(int[] distance, int start, int destination) {
+        int forward = 0, backward = 0;
+        for (int i = start; i != destination; i = (i + 1) % distance.length) {
+            forward += distance[i];
+        }
+        for (int i = destination; i != start; i = (i + 1) % distance.length) {
+            backward += distance[i];
+        }
+        return Math.min(forward, backward);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
 -----
 
