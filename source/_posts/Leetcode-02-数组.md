@@ -559,6 +559,46 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 1470. 重新排列数组
+
+> ※ 该题目比较简单，按照题意一个一个遍历即可。
+
+```java
+class Solution {
+    public int[] shuffle(int[] nums, int n) {
+        int[] res = new int[2 * n];
+        for (int i = 0; i < n; i++) {
+            res[2 * i] = nums[i];
+            res[2 * i + 1] = nums[i + n];
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
+> **TODO**：该题目的空间复杂度最优可以降至`O(1)`，后面有时间可以试一下。
+
+#### 1480. 一维数组的动态和
+
+> ※ 该题目比较简单，利用一个临时变量，便可实现`O(1)`空间复杂度。
+
+```java
+class Solution {
+    public int[] runningSum(int[] nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            nums[i] = sum;
+        }
+        return nums;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等
