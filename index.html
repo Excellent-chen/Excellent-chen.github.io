@@ -790,7 +790,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-16 11:30:17" itemprop="dateModified" datetime="2020-10-16T11:30:17+08:00">2020-10-16</time>
+        <time title="修改时间：2020-10-17 10:18:35" itemprop="dateModified" datetime="2020-10-17T10:18:35+08:00">2020-10-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -993,6 +993,25 @@
 <p>※ 按照题目意思，分别从前往后、从后往前对数组进行遍历并累加，取两次累加的最小值作为最终结果即可。</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">distanceBetweenBusStops</span><span class="params">(<span class="keyword">int</span>[] distance, <span class="keyword">int</span> start, <span class="keyword">int</span> destination)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> forward = <span class="number">0</span>, backward = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i != destination; i = (i + <span class="number">1</span>) % distance.length) &#123;</span><br><span class="line">            forward += distance[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = destination; i != start; i = (i + <span class="number">1</span>) % distance.length) &#123;</span><br><span class="line">            backward += distance[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.min(forward, backward);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="1470-重新排列数组"><a href="#1470-重新排列数组" class="headerlink" title="1470. 重新排列数组"></a>1470. 重新排列数组</h4><blockquote>
+<p>※ 该题目比较简单，按照题意一个一个遍历即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] shuffle(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span> * n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            res[<span class="number">2</span> * i] = nums[i];</span><br><span class="line">            res[<span class="number">2</span> * i + <span class="number">1</span>] = nums[i + n];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<blockquote>
+<p><strong>TODO</strong>：该题目的空间复杂度最优可以降至<code>O(1)</code>，后面有时间可以试一下。</p>
+</blockquote>
+<h4 id="1480-一维数组的动态和"><a href="#1480-一维数组的动态和" class="headerlink" title="1480. 一维数组的动态和"></a>1480. 一维数组的动态和</h4><blockquote>
+<p>※ 该题目比较简单，利用一个临时变量，便可实现<code>O(1)</code>空间复杂度。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] runningSum(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            sum += nums[i];</span><br><span class="line">            nums[i] = sum;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
