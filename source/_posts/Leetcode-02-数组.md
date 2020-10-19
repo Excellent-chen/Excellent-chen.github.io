@@ -559,6 +559,33 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 1431. 拥有最多糖果的孩子
+
+> ※ 对于每一个孩子，只要其拥有的糖果数量加上额外的糖果数量大于所有孩子拥有的糖果数量的最大值，即可用于最多糖果。
+
+```java
+class Solution {
+    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+        int max = 0;
+        for (int i = 0; i < candies.length; i++) {
+            max = Math.max(max, candies[i]);
+        }
+        List<Boolean> res = new ArrayList<Boolean>();
+        for (int i = 0; i < candies.length; i++) {
+            // if (candies[i] + extraCandies >= max) {
+            //     res.add(true);
+            // } else {
+            //     res.add(false);
+            // }
+            res.add(candies[i] + extraCandies >= max);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 1470. 重新排列数组
 
 > ※ 该题目比较简单，按照题意一个一个遍历即可。
@@ -593,6 +620,24 @@ class Solution {
             nums[i] = sum;
         }
         return nums;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
+#### 1486. 数组异或操作
+
+> ※ 按照题意，依次对数字进行异或操作即可。
+
+```java
+class Solution {
+    public int xorOperation(int n, int start) {
+        int res = 0;
+        for (int i = start; i < start + 2 * n; i += 2) {
+            res ^= i;
+        }
+        return res;
     }
 }
 ```

@@ -287,6 +287,55 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 844. 比较含退格的字符串
+
+> ※ 首先能想到的方法便是利用栈进行解决，在查看<a href="https://leetcode-cn.com/problems/backspace-string-compare/solution/bi-jiao-han-tui-ge-de-zi-fu-chuan-by-leetcode-solu/">题解</a>之后，发现可以借助双指针将空间复杂度优化至`O(1)`。
+
+```java
+class Solution {
+    public boolean backspaceCompare(String S, String T) {
+        int p = 0, q = 0;
+        int i = S.length() - 1, j = T.length() - 1;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (S.charAt(i) == '#') {
+                    p++;
+                } else if (p > 0) {
+                    p--;
+                } else {
+                    break;
+                }
+                i--;
+            }
+            while (j >= 0) {
+                if (T.charAt(j) == '#') {
+                    q++;
+                } else if (q > 0) {
+                    q--;
+                } else {
+                    break;
+                }
+                j--;
+            }
+            if (i >= 0 && j >= 0) {
+                if (S.charAt(i) != T.charAt(j)) {
+                    return false;
+                }
+            } else {
+                if (i >= 0 || j >= 0) {
+                    return false;
+                }
+            }
+            i--;
+            j--;
+        }
+        return true;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(M + N)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等

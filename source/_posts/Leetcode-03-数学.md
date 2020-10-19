@@ -281,6 +281,28 @@ class Solution {
 
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
+#### 1512. 好数对的数目
+
+> ※ 遍历所有可能的`(i, j)`二元组，并判断它们对应的数值是否满足`nums[i] == nums[j]`即可。
+
+```java
+class Solution {
+    public int numIdenticalPairs(int[] nums) {
+        int res = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。
+
 -----
 
 ### 中等
