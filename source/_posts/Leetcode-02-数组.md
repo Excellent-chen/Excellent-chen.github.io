@@ -924,6 +924,29 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 739. 每日温度
+
+> ※ 该题目与`496. 下一个更大元素 I`类似，同样利用了“单调栈”的思想，只是这里将元素的下标保存至栈中，而非元素本身。
+
+```java
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        int[] res = new int[T.length];
+        Stack<Integer> stack = new Stack<Integer>();
+        for (int i = 0; i < T.length; i++) {
+            while (!stack.isEmpty() && T[i] > T[stack.peek()]) {
+                int pos = stack.pop();
+                res[pos] = i - pos;
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 1004. 最大连续1的个数 III
 
 > ※ 该题目可以理解为：滑动窗口内最多有`K`个`0`，求滑动窗口的最大长度。

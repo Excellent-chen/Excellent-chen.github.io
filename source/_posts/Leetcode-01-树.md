@@ -402,6 +402,40 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 199. 二叉树的右视图
+
+> ※ 对二叉树进行从右往左的层次遍历，遍历每一层节点之前，先保留当前层最右边的节点的值。
+
+```java
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new LinkedList<Integer>();
+        if (root == null) {
+            return res;
+        }
+        Deque<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+            res.add(queue.peek().val);
+            while (count > 0) {
+                count--;
+                TreeNode node = queue.poll();
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 230. 二叉搜索树中第K小的元素
 
 > ※ 二叉搜索树中第`K`小的元素对应了二叉搜索树中序遍历的第`K`个元素，因此，只需对二叉搜索树进行中序遍历，并对遍历过的节点进行计数，待遍历到第`K`个节点时，返回该节点的值即可。
