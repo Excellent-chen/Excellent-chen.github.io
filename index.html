@@ -186,20 +186,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -231,6 +231,147 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/20/Java-01-%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="刘晨">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿晨的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/20/Java-01-%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Java基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-10-20 20:24:36 / 修改时间：21:58:00" itemprop="dateCreated datePublished" datetime="2020-10-20T20:24:36+08:00">2020-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="Day-001"><a href="#Day-001" class="headerlink" title="Day 001"></a>Day 001</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ <code>Java</code>是一种介于编译型与解释型之间的语言，在将其源码编译成一种类似于抽象CPU指令的字节码后，通过虚拟机加载并执行，即可实现“一次编译，到处运行”的效果。<strong>注</strong>：SUN公司制定了一系列的虚拟机规范，但是从实践的角度来看，<code>JVM</code>的兼容性做得最好，低版本的<code>Java</code>字节码完全可以在高版本的<code>JVM</code>上运行。</p>
+<p>※ 简单来说，<code>JRE(Java Runtime Environment)</code>是<code>Java</code>的运行环境，包含了<code>JVM</code>标准实现及<code>Java</code>核心类库；<code>JDK(Java Development Kit)</code>是<code>Java</code>的开发工具包，既包含了<code>Java</code>的运行环境，又包含了<code>Java</code>的编译环境。它们之间的关系如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌─    ┌──────────────────────────────────┐</span><br><span class="line">│     │     Compiler, debugger, etc.     │</span><br><span class="line">│     └──────────────────────────────────┘</span><br><span class="line">JDK┌─ ┌──────────────────────────────────┐</span><br><span class="line">│  │  │                                  │</span><br><span class="line">│ JRE │      JVM + Runtime Library       │</span><br><span class="line">│  │  │                                  │</span><br><span class="line">└─ └─ └──────────────────────────────────┘</span><br><span class="line">   ┌───────┐┌───────┐┌───────┐┌───────┐</span><br><span class="line">   │Windows││ Linux ││ macOS ││others │</span><br><span class="line">   └───────┘└───────┘└───────┘└───────┘</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ 在<code>JAVA_HOME</code>的<code>bin</code>目录下存在很多可执行文件，其中：<code>java</code>用于解析字节码文件使其得到运行；<code>javac</code>用于将源码文件编译为字节码文件；<code>javadoc</code>用于从源码文件中自动提取注释并生成文档；<code>jar</code>用于将一组字节码文件打包成一个<code>.jar</code>文件，便于发布；<code>jdb</code>用于开发阶段的运行调试。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ <code>Java</code>程序总是从<code>public static void main(String[] args)</code>方法开始执行。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Java 程序规定的方法必须为静态方法，方法名必须为 main，方法内的参数必须为 String 数组。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello, chen!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 一个源码文件<span style="color:red">只能</span>定义一个<code>public</code>类型的<code>class</code>，并且<code>class</code>名称要和文件名完全一致。</p>
+</blockquote>
+<h4 id="Day-002"><a href="#Day-002" class="headerlink" title="Day 002"></a>Day 002</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ 基本数据类型是指CPU可以直接进行运算的类型，<code>Java</code>定义了以下几种基本数据类型：整数类型，包括<code>byte</code>、<code>short</code>、<code>int</code>、<code>long</code>；浮点数类型，包括<code>float</code>、<code>double</code>；字符类型，包括<code>char</code>；布尔类型，包括<code>boolean</code>。<strong>注</strong>：理论上存储布尔类型只需要一位，但是<code>JVM</code>内部通常会把<code>boolean</code>表示为<span style="color:red"><code>4</code></span>字节整数。除上述基本数据类型外，其余变量均属于引用类型，包括最常用的<code>String</code>字符串。</p>
+<p>※ 可以使用<code>final</code>关键字来定义常量：<code>final double PI = 3.14</code>。常量一经定义，便不可再次赋值。</p>
+<p>※ 若变量类型的名字太长，写起来比较麻烦，可以使用<code>var</code>关键字：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StringBuilder sb = new StringBuilder();</span></span><br><span class="line"><span class="keyword">var</span> sb = <span class="keyword">new</span> StringBuilder();</span><br></pre></td></tr></table></figure>
+
+<p>编译器会根据赋值语句自动推断出变量<code>sb</code>的类型为<code>StringBuilder</code>。因此，使用<code>var</code>定义变量，仅仅是少写了变量类型而已。</p>
+<p>※ 定义变量时，应遵循作用域最小化原则，尽量将变量定义在尽可能小的作用域，并且最好不要重复使用变量名。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ 整数的数值表示不但是精确的，而且运算也是精确的。<strong>注</strong>：除数为<code>0</code>在编译时并不会报错，在运行时才会报错。此外，溢出不会报错！</p>
+<p>※ 利用右移运算符<code>&gt;&gt;</code>对一个<span style="color:red">负数</span>进行右移操作时，高位总是补<code>1</code>；利用右移运算符<code>&gt;&gt;&gt;</code>对<span style="color:red">整数</span>进行右移操作时，高位总是补<code>0</code>。<strong>注</strong>：对<code>byte</code>和<code>short</code>进行移位时，首先会将它们转换为<code>int</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ 整数运算在除数为<code>0</code>时会报错，而浮点数运算在除数为<code>0</code>时不会报错，只是会返回几个特殊值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> d1 = <span class="number">0.0</span> / <span class="number">0</span>; <span class="comment">// NaN: Not a Number</span></span><br><span class="line"><span class="keyword">double</span> d2 = <span class="number">1.0</span> / <span class="number">0</span>; <span class="comment">// Infinity: 无穷大</span></span><br><span class="line"><span class="keyword">double</span> d3 = -<span class="number">1.0</span> / <span class="number">0</span>; <span class="comment">// -Infinity: 无穷小</span></span><br></pre></td></tr></table></figure>
+
+<p>※ 可以将浮点数强制转换为整数。转换后，浮点数的小数部分将<span style="color:red">被舍弃</span>，若整数部分超过了整型能表示的最大范围，将返回整型的最大值。<strong>注</strong>：若想要四舍五入，只需在转换前为浮点数加<code>0.5</code>即可。</p>
+</blockquote>
+<blockquote>
+<!-- Part 004 -->
+
+<p>※ <code>Java</code>中的三元运算符为<code>b ? x : y</code>；<code>Python</code>中的三元运算符为：<code>x if b else y</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 005 -->
+
+<p>※ <code>Java</code>在内存中总是使用<code>Unicode</code>表示字符。关于<code>Unicode</code>和<code>UTF-8</code>之间的关系，可以自行参考<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23374078">知乎</a>。</p>
+<p>※ 在使用<code>+</code>连接任意字符串和其它数据类型时，编译器会先将其它数据类型转换为字符串，之后再进行连接。</p>
+<p>※ 引用类型的变量可以指向一个空值<code>null</code>，它表示该变量不指向任何对象。<strong>注</strong>：要区分空值<code>null</code>和空字符串<code>&quot;&quot;</code>，后者属于有效的字符串对象。</p>
+</blockquote>
+<blockquote>
+<!-- Part 006 -->
+
+<p>※ 数组初始化存在如下三种方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] ns = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span>[] ns = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] ns = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注</strong>：数组属于引用类型，并且一旦创建后大小便不可变。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
