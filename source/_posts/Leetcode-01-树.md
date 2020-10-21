@@ -566,6 +566,41 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 1302. 层数最深叶子节点的和
+
+> ※ 对二叉树进行层次遍历，每遍历一层便将该层所有节点的和保存至`res`中，待程序运行结束时，`res`中保存的便为二叉树最深叶子节点的和。
+
+```java
+class Solution {
+    public int deepestLeavesSum(TreeNode root) {
+        int res = 0;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if (root == null) {
+            return res;
+        }
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            res = 0;
+            int count = queue.size();
+            while (count > 0) {
+                count--;
+                TreeNode node = queue.poll();
+                res += node.val;
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 -----
 
 ### 困难

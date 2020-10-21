@@ -336,6 +336,34 @@ class Solution {
 
 > ※ 时间复杂度：$O(M + N)$；空间复杂度：$O(1)$。
 
+#### 925. 长按键入
+
+> ※ 由<a href="https://leetcode-cn.com/problems/long-pressed-name/solution/chang-an-jian-ru-by-leetcode-solution/">题解</a>知，字符串`typed`中的每个字符，有且只有两种用途：（1）作为`name`字符串的一部分，此时会匹配`name`中的一个字符；（2）作为长按键入的一部分，此时应与前一个字符相同。若`typed`中存在一个字符使得以上两个条件均不满足，则应当直接返回`false`；否则，当`typed`扫描完毕后，再检查`name`中的每个字符是否都被匹配了即可。
+
+```java
+class Solution {
+    public boolean isLongPressedName(String name, String typed) {
+        int i = 0, j = 0;
+        // 这里只需要判断 j 是否小于 typed.length() 即可，无需再判断 i 是否小于 name.length()。
+        while (j < typed.length()) {
+            if (i< name.length() && name.charAt(i) == typed.charAt(j)) {
+                i++;
+                j++;
+            } else if (j > 0 && typed.charAt(j - 1) == typed.charAt(j)) {
+                j++;
+            } else {
+                return false;
+            }
+        }
+        // 这里不应该直接返回 true，而是应该判断 i 是否已经遍历完了 name 中所有的字符。
+        // 若直接返回 true，则测试用例 name = pyplrz，typed = ppyypllr 将会返回 true。
+        return i == name.length();
+    }
+}
+```
+
+> ※ 时间复杂度：$O(M + N)$；空间复杂度：$O(1)$。
+
 -----
 
 ### 中等
