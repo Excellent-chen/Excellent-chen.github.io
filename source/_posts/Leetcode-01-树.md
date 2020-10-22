@@ -536,6 +536,40 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 654. 最大二叉树
+
+> ※ 该题目比较简单，利用递归即可进行求解。
+
+```java
+class Solution {
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        return buildTree(nums, 0, nums.length - 1);
+    }
+    private TreeNode buildTree(int[] nums, int l, int r) {
+        if (l > r) {
+            return null;
+        }
+        int index = getMaxIndex(nums, l, r);
+        TreeNode node = new TreeNode(nums[index]);
+        node.left = buildTree(nums, l, index - 1);
+        node.right = buildTree(nums, index + 1, r);
+        return node;
+    }
+    private int getMaxIndex(int[] nums, int l, int r) {
+        int max_value = Integer.MIN_VALUE, max_index = -1;
+        for (int i = l; i <= r; i++) {
+            if (max_value < nums[i]) {
+                max_value = nums[i];
+                max_index = i;
+            }
+        }
+        return max_index;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。
+
 #### 701. 二叉搜索树中的插入操作
 
 > ※ 遍历当前节点，假设当前节点的值小于待插入的值，若当前节点的右孩子不为空，则继续遍历当前节点的右孩子；若当前节点的右孩子为空，则直接为当前节点新建一个右孩子，并将右孩子的值赋值为待插入的值。反之亦然。
