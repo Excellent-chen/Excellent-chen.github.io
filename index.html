@@ -1418,7 +1418,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-21 09:10:16" itemprop="dateModified" datetime="2020-10-21T09:10:16+08:00">2020-10-21</time>
+        <time title="修改时间：2020-10-22 09:45:15" itemprop="dateModified" datetime="2020-10-22T09:45:15+08:00">2020-10-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1585,6 +1585,14 @@
 
 <blockquote>
 <p>※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。</p>
+</blockquote>
+<h4 id="654-最大二叉树"><a href="#654-最大二叉树" class="headerlink" title="654. 最大二叉树"></a>654. 最大二叉树</h4><blockquote>
+<p>※ 该题目比较简单，利用递归即可进行求解。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">constructMaximumBinaryTree</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buildTree(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> TreeNode <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l &gt; r) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> index = getMaxIndex(nums, l, r);</span><br><span class="line">        TreeNode node = <span class="keyword">new</span> TreeNode(nums[index]);</span><br><span class="line">        node.left = buildTree(nums, l, index - <span class="number">1</span>);</span><br><span class="line">        node.right = buildTree(nums, index + <span class="number">1</span>, r);</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getMaxIndex</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max_value = Integer.MIN_VALUE, max_index = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (max_value &lt; nums[i]) &#123;</span><br><span class="line">                max_value = nums[i];</span><br><span class="line">                max_index = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_index;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。</p>
 </blockquote>
 <h4 id="701-二叉搜索树中的插入操作"><a href="#701-二叉搜索树中的插入操作" class="headerlink" title="701. 二叉搜索树中的插入操作"></a>701. 二叉搜索树中的插入操作</h4><blockquote>
 <p>※ 遍历当前节点，假设当前节点的值小于待插入的值，若当前节点的右孩子不为空，则继续遍历当前节点的右孩子；若当前节点的右孩子为空，则直接为当前节点新建一个右孩子，并将右孩子的值赋值为待插入的值。反之亦然。</p>
