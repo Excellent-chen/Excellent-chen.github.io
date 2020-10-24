@@ -2,9 +2,9 @@
 title: 06 动态规划
 date: 2020-10-24 16:26:43
 categories:
-Leetcode
+- Leetcode
 tags:
-动态规划
+- 动态规划
 ---
 
 ### 中等
