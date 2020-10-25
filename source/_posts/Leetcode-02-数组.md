@@ -978,3 +978,37 @@ class Solution {
 ```
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
+#### 5547. 等差子数组
+
+> ※ 依次拷贝每一个子数组，并对子数组进行排序，然后依次判断子数组中的每个元素是否满足等差数列的性质`2 * A[i] == A[i + 1] + A[i - 1]`即可。**注**：当子数组的长度小于`3`时必为等差数组。
+
+```java
+class Solution {
+    public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        int len = l.length;
+        List<Boolean> res = new LinkedList<Boolean>();
+        for (int i = 0; i < len; i++) {
+            int[] subArray = Arrays.copyOfRange(nums, l[i], r[i] + 1);
+            Arrays.sort(subArray);
+            if (subArray.length < 3) {
+                res.add(true);
+            } else {
+                boolean sign = true;
+                for (int j = 1; j <subArray.length - 1; j++) {
+                    if (2 * subArray[j] != subArray[j - 1] + subArray[j + 1]) {
+                        sign = false;
+                        break;
+                    }
+                }
+                res.add(sign);
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：待定；空间复杂度：待定。
+
+-----
