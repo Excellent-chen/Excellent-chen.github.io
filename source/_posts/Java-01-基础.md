@@ -205,9 +205,9 @@ switch (fruit) {
 
 > <!-- Part 002 -->
 >
-> ※ 没有在构造方法中初始化属性时，基本数据类型的属性用默认值，引用类型的属性用`null`。
+> ※ 没有在构造方法中初始化字段时，基本数据类型的字段用默认值，引用类型的字段用`null`。
 >
-> ※ 创建对象实例时，将先会对属性进行初始化，如`String name = "chen"`；然后对构造方法进行初始化。
+> ※ 创建对象实例时，将先会对字段进行初始化，如`String name = "chen"`；然后对构造方法进行初始化。
 >
 > ※ 一个构造方法可以调用其它构造方法，这样做的目的是便于代码复用。调用其它构造方法的语法为：`this(...)`。
 >
@@ -219,11 +219,11 @@ switch (fruit) {
 
 > <!-- Part 004 -->
 >
-> ※ 子类将自动获得父类所有属性，<span style="color:red">严禁</span>定义与父类重名的字段。
+> ※ 子类将自动获得父类所有字段，<span style="color:red">严禁</span>定义与父类重名的字段。
 >
 > ※ 在定义类时，若没有明确指明所继承的类，编译器将会自动为其加上`extends Object`。
 >
-> ※ 子类无法继承父类中被`private`修饰的属性，为此，可以将`private`修改为`protected`。
+> ※ 子类无法继承父类中被`private`修饰的字段，为此，可以将`private`修改为`protected`。
 >
 > ※ 若父类没有默认的构造方法，那么子类必须显示调用`super()`并给出参数，以便编译器定位到父类中合适的构造方法。**注**：子类默认的构造方法是编译器自动生成而非从父类中继承的。
 >
@@ -269,3 +269,51 @@ switch (fruit) {
 > ※ 利用`static`修饰的方法，称为静态方法。**注**：由于静态方法属于类而不属于实例，因此其内部无法访问实例字段，也无法访问`this`变量，<span style="color:red">只能</span>访问静态字段。**TODO**：为什么？
 >
 > ※ 接口可以定义静态字段，而且静态字段必须为`final`类型。由于接口的字段只能是`public static final`类型，因此可以将这些修饰符都去掉。
+
+> <!-- Part 009 -->
+>
+> ※ 包主要用于解决类名冲突。
+>
+> ※ 包可以是多层结构，用`.`隔开。**注**：`java.util`和`java.util.zip`之间没有任何继承关系。
+>
+> ※ 位于同一个包的类，可以访问包作用域的字段和方法。其中，<span style="color:blue">包作用域</span>是指一个类允许访问同一个包中没有被`public`、`private`修饰的类，以及没有被`public`、`protected`、`private`修饰的字段和方法。
+>
+> ※ 当编译器遇到一个类名时，若该类名为完整类名，则会直接根据完整类名查找；若该类名为简单类名，则会按照如下顺序依次查找：当前`package`；`import`的包；`java.lang`中的包。**注**：编写类时，编译器会自动帮我们做两个`import`的动作：自动`import`当前包的其它类；自动`import java.lang.*`。
+
+> <!-- Part 010 -->
+>
+> ※ 定义为`public`的类和接口可以被其它任何类访问；定义为`public`的字段和方法可以被其它类访问，前提是有访问类的权限。
+>
+
+> <!-- Part 011 -->
+>
+> ※ `Java`的内部类可以分为`Inner Class`、`Anonymous Class`和`Static Nested Class`。其中，`Inner Class`和`Anonymous Class`本质上是相同的，都必须依附于`Outer Class`的实例，即隐含地持有`Outer.this`实例，并拥有`Outer Class`的`private`访问权限；`Static Nested Class`为独立类，不依附于`Outer Class`的实例，但拥有`Outer Class`的`private`访问权限。
+
+> <!-- Part 012 -->
+>
+> ※ `classpath`是一组目录的集合，用于指示`JVM`搜索`.class`的路径及顺序。
+>
+> ※ `classpath`的设置方式有两种：在系统环境变量中设置；在启动`JVM`时设置。不推荐前者，因为那样会污染整个系统环境。利用后者设置`classpath`的方式如下：
+
+```shell
+java -classpath .;C:\work\project\bin;C:\sgared abc.xyz.Hello
+java -cp .;C:\work\project\bin;C:\sgared abc.xyz.Hello
+```
+
+> 若没有设置系统环境变量，也没有传入`-cp`参数，那么`JVM`默认的`classpath`为`.`，即当前目录。
+>
+> ※ `jar`用于将`package`组织的目录层级，以及各个目录下的所有文件（包括`.class`文件和其它文件）都打包成一个`jar`文件。
+>
+> ※ `jar`可以包含一个特殊的`/META-INF/MANIFEST.MF`纯文本文件，用于提供基本信息，如`Main-Class`，这样可以直接运行`jar`。
+
+> <!-- Part 013 -->
+>
+> ※ `jar`只是存放`.class`的容器，但是并不关心它们之间的依赖，从`Java 9`开始引入的模块便是为了解决依赖这一问题。**注**：模块的后缀名为`jmod`。
+>
+> ※ 将一堆`class`封装为`jar`只是一个打包的过程，而把一堆`class`封装为模块不但需要打包，还需将依赖关系写入至`module-info.java`中，并且还可以包含二进制代码（通常是`JNI`扩展）。此外，模块支持多版本，即在同一个模块中可以为不同的`JVM`提供不同的版本。
+>
+> ※ 利用模块，可以按需打包`jre`。关于如何编写模块，运行模块及打包`JRE`，可以自行参考<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1281795926523938">教程</a>。
+
+#### Day 006
+
+> ※ 
