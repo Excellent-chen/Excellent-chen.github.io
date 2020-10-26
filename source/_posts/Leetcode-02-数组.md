@@ -1011,4 +1011,50 @@ class Solution {
 
 > ※ 时间复杂度：待定；空间复杂度：待定。
 
+#### 5548. 最小体力消耗路径
+
+> ※ 假设当前最短路径的长度为`limit`，对二维数组进行广度优先搜索，并且只扩展“长度”小于等于`limit`的边，若能够扩展到目的节点，则缩小`limit`，否则扩大`limit`。
+
+```java
+class Solution {
+    private int[][] directions = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    public int minimumEffortPath(int[][] heights) {
+        int l = 0, r = 1000000;
+        int rows = heights.length, cols = heights[0].length;
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            Deque<int[]> queue = new LinkedList<int[]>();
+            boolean[][] visited = new boolean[rows][cols];
+            visited[0][0] = true;
+            queue.add(new int[]{0, 0});
+            while (!queue.isEmpty()) {
+                int[] pos = queue.poll();
+                int x = pos[0], y = pos[1];
+                for (int[] direction : directions) {
+                    int nx = x + direction[0];
+                    int ny = y + direction[1];
+                    if (-1 < nx && nx < rows && -1 < ny && ny < cols && !visited[nx][ny]) {
+                        if (Math.abs(heights[nx][ny] - heights[x][y]) <= m) {
+                            visited[nx][ny] = true;
+                            queue.offer(new int[]{nx, ny});
+                        }
+                        if (visited[rows - 1][cols - 1]) {
+                            break;
+                        }
+                    }
+                }
+            }
+            if (visited[rows - 1][cols - 1]) {
+                r = m - 1;
+            } else {
+                l = m + 1;
+            }
+        }
+        return l;
+    }
+}
+```
+
+> ※ 时间复杂度：待定；空间复杂度：待定。
+
 -----
