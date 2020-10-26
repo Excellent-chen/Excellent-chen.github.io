@@ -30,7 +30,7 @@
 <meta property="og:description" content="Day 001   ※ Java是一种介于编译型与解释型之间的语言，在将其源码编译成一种类似于抽象CPU指令的字节码后，通过虚拟机加载并执行，即可实现“一次编译，到处运行”的效果。注：SUN公司制定了一系列的虚拟机规范，但是从实践的角度来看，JVM的兼容性做得最好，低版本的Java字节码完全可以在高版本的JVM上运行。 ※ 简单来说，JRE(Java Runtime Environment)是Ja">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-20T12:24:36.000Z">
-<meta property="article:modified_time" content="2020-10-22T13:44:28.801Z">
+<meta property="article:modified_time" content="2020-10-26T07:05:55.333Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-002"><span class="nav-number">2.</span> <span class="nav-text">Day 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-003"><span class="nav-number">3.</span> <span class="nav-text">Day 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-004"><span class="nav-number">4.</span> <span class="nav-text">Day 004</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-005"><span class="nav-number">5.</span> <span class="nav-text">Day 005</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-002"><span class="nav-number">2.</span> <span class="nav-text">Day 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-003"><span class="nav-number">3.</span> <span class="nav-text">Day 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-004"><span class="nav-number">4.</span> <span class="nav-text">Day 004</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-005"><span class="nav-number">5.</span> <span class="nav-text">Day 005</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-006"><span class="nav-number">6.</span> <span class="nav-text">Day 006</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -277,7 +277,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-22 21:44:28" itemprop="dateModified" datetime="2020-10-22T21:44:28+08:00">2020-10-22</time>
+        <time title="修改时间：2020-10-26 15:05:55" itemprop="dateModified" datetime="2020-10-26T15:05:55+08:00">2020-10-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -416,8 +416,8 @@
 <blockquote>
 <!-- Part 002 -->
 
-<p>※ 没有在构造方法中初始化属性时，基本数据类型的属性用默认值，引用类型的属性用<code>null</code>。</p>
-<p>※ 创建对象实例时，将先会对属性进行初始化，如<code>String name = &quot;chen&quot;</code>；然后对构造方法进行初始化。</p>
+<p>※ 没有在构造方法中初始化字段时，基本数据类型的字段用默认值，引用类型的字段用<code>null</code>。</p>
+<p>※ 创建对象实例时，将先会对字段进行初始化，如<code>String name = &quot;chen&quot;</code>；然后对构造方法进行初始化。</p>
 <p>※ 一个构造方法可以调用其它构造方法，这样做的目的是便于代码复用。调用其它构造方法的语法为：<code>this(...)</code>。</p>
 <p>※ 若自定义了构造方法，编译器将不再自动创建默认构造方法；若想要既能使用带参数的构造方法，又想要保留不带参数的构造方法，只能将两个构造方法都定义出来。</p>
 </blockquote>
@@ -429,9 +429,9 @@
 <blockquote>
 <!-- Part 004 -->
 
-<p>※ 子类将自动获得父类所有属性，<span style="color:red">严禁</span>定义与父类重名的字段。</p>
+<p>※ 子类将自动获得父类所有字段，<span style="color:red">严禁</span>定义与父类重名的字段。</p>
 <p>※ 在定义类时，若没有明确指明所继承的类，编译器将会自动为其加上<code>extends Object</code>。</p>
-<p>※ 子类无法继承父类中被<code>private</code>修饰的属性，为此，可以将<code>private</code>修改为<code>protected</code>。</p>
+<p>※ 子类无法继承父类中被<code>private</code>修饰的字段，为此，可以将<code>private</code>修改为<code>protected</code>。</p>
 <p>※ 若父类没有默认的构造方法，那么子类必须显示调用<code>super()</code>并给出参数，以便编译器定位到父类中合适的构造方法。<strong>注</strong>：子类默认的构造方法是编译器自动生成而非从父类中继承的。</p>
 <p>※ 将子类类型的实例赋值给父类变量，称为<span style="color:blue">向上转型</span>；将父类类型的实例强制赋值给子类变量，称为<span style="color:blue">向下转型</span>。由于子类类型的功能比父类类型多，因此向下转型很可能会失败。为了避免出错，可以借助<code>instanceof</code>操作符，该操作符用于判断变量所指向的实例是否为指定类型或指定类型的子类。<strong>注</strong>：若一个引用变量为<code>null</code>，那么对任何<code>instanceof</code>的判断都为<code>false</code>。</p>
 </blockquote>
@@ -492,6 +492,47 @@
 <p>※ 利用<code>static</code>修饰的字段，称为静态字段。对于静态字段，类的所有实例都会共享它。</p>
 <p>※ 利用<code>static</code>修饰的方法，称为静态方法。<strong>注</strong>：由于静态方法属于类而不属于实例，因此其内部无法访问实例字段，也无法访问<code>this</code>变量，<span style="color:red">只能</span>访问静态字段。<strong>TODO</strong>：为什么？</p>
 <p>※ 接口可以定义静态字段，而且静态字段必须为<code>final</code>类型。由于接口的字段只能是<code>public static final</code>类型，因此可以将这些修饰符都去掉。</p>
+</blockquote>
+<blockquote>
+<!-- Part 009 -->
+
+<p>※ 包主要用于解决类名冲突。</p>
+<p>※ 包可以是多层结构，用<code>.</code>隔开。<strong>注</strong>：<code>java.util</code>和<code>java.util.zip</code>之间没有任何继承关系。</p>
+<p>※ 位于同一个包的类，可以访问包作用域的字段和方法。其中，<span style="color:blue">包作用域</span>是指一个类允许访问同一个包中没有被<code>public</code>、<code>private</code>修饰的类，以及没有被<code>public</code>、<code>protected</code>、<code>private</code>修饰的字段和方法。</p>
+<p>※ 当编译器遇到一个类名时，若该类名为完整类名，则会直接根据完整类名查找；若该类名为简单类名，则会按照如下顺序依次查找：当前<code>package</code>；<code>import</code>的包；<code>java.lang</code>中的包。<strong>注</strong>：编写类时，编译器会自动帮我们做两个<code>import</code>的动作：自动<code>import</code>当前包的其它类；自动<code>import java.lang.*</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 010 -->
+
+<p>※ 定义为<code>public</code>的类和接口可以被其它任何类访问；定义为<code>public</code>的字段和方法可以被其它类访问，前提是有访问类的权限。</p>
+</blockquote>
+<blockquote>
+<!-- Part 011 -->
+
+<p>※ <code>Java</code>的内部类可以分为<code>Inner Class</code>、<code>Anonymous Class</code>和<code>Static Nested Class</code>。其中，<code>Inner Class</code>和<code>Anonymous Class</code>本质上是相同的，都必须依附于<code>Outer Class</code>的实例，即隐含地持有<code>Outer.this</code>实例，并拥有<code>Outer Class</code>的<code>private</code>访问权限；<code>Static Nested Class</code>为独立类，不依附于<code>Outer Class</code>的实例，但拥有<code>Outer Class</code>的<code>private</code>访问权限。</p>
+</blockquote>
+<blockquote>
+<!-- Part 012 -->
+
+<p>※ <code>classpath</code>是一组目录的集合，用于指示<code>JVM</code>搜索<code>.class</code>的路径及顺序。</p>
+<p>※ <code>classpath</code>的设置方式有两种：在系统环境变量中设置；在启动<code>JVM</code>时设置。不推荐前者，因为那样会污染整个系统环境。利用后者设置<code>classpath</code>的方式如下：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -classpath .;C:\work\project\bin;C:\sgared abc.xyz.Hello</span><br><span class="line">java -cp .;C:\work\project\bin;C:\sgared abc.xyz.Hello</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>若没有设置系统环境变量，也没有传入<code>-cp</code>参数，那么<code>JVM</code>默认的<code>classpath</code>为<code>.</code>，即当前目录。</p>
+<p>※ <code>jar</code>用于将<code>package</code>组织的目录层级，以及各个目录下的所有文件（包括<code>.class</code>文件和其它文件）都打包成一个<code>jar</code>文件。</p>
+<p>※ <code>jar</code>可以包含一个特殊的<code>/META-INF/MANIFEST.MF</code>纯文本文件，用于提供基本信息，如<code>Main-Class</code>，这样可以直接运行<code>jar</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 013 -->
+
+<p>※ <code>jar</code>只是存放<code>.class</code>的容器，但是并不关心它们之间的依赖，从<code>Java 9</code>开始引入的模块便是为了解决依赖这一问题。<strong>注</strong>：模块的后缀名为<code>jmod</code>。</p>
+<p>※ 将一堆<code>class</code>封装为<code>jar</code>只是一个打包的过程，而把一堆<code>class</code>封装为模块不但需要打包，还需将依赖关系写入至<code>module-info.java</code>中，并且还可以包含二进制代码（通常是<code>JNI</code>扩展）。此外，模块支持多版本，即在同一个模块中可以为不同的<code>JVM</code>提供不同的版本。</p>
+<p>※ 利用模块，可以按需打包<code>jre</code>。关于如何编写模块，运行模块及打包<code>JRE</code>，可以自行参考<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1281795926523938">教程</a>。</p>
+</blockquote>
+<h4 id="Day-006"><a href="#Day-006" class="headerlink" title="Day 006"></a>Day 006</h4><blockquote>
+<p>※ </p>
 </blockquote>
 
     </div>
