@@ -476,4 +476,36 @@ class Solution {
 
 > ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。
 
+#### 1637. 两点之间不包含任何点的最宽垂直面积
+
+> ※ 该题目比较简单，对`points`进行排序，比较两个相邻`point`的`x`坐标之间的差值，并保留最大差值即可。
+
+```java
+class Solution {
+    public int maxWidthOfVerticalArea(int[][] points) {
+        int res = 0;
+        Arrays.sort(points, (P1, P2) -> P1[0] - P2[0]); // 如何对二维数组进行排序？
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i + 1][0] - points[i][0] > res) {
+                res = points[i + 1][0] - points[i][0];
+            }
+        }
+        return res;
+    }
+}
+```
+
+```python
+class Solution:
+    def maxWidthOfVerticalArea(self, points: List[List[int]]) -> int:
+        res = 0
+        points.sort()
+        for i in range(len(points) - 1):
+            if points[i + 1][0] - points[i][0] > res:
+                res = points[i + 1][0] - points[i][0]
+        return res
+```
+
+> ※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。
+
 -----
