@@ -398,11 +398,19 @@ public void setValue(Type value);
 
 > <!-- Part 008 -->
 >
-> ※ `Java.math.BigInteger`用于表示任意大小的整数，其内部用一个`int[]`来进行模拟。我们可以将`BigInteger`转换为基本类型，若其表示的数值超过了基本类型的范围，将丢失高位信息。如果想要将其准确地转换为基本类型，可以使用`intValueExact()`、`longValueExact()`等方法，在数值超出基本类型的范围时，将抛出`ArithmeticException`异常。**注**：若`BigInteger`的数值超过了`float`的最大范围，`floatValue()`将会返回`Infinity`。
+> ※ `Java.math.BigInteger`用于表示任意大小的整数，其内部用一个`int[]`来进行模拟。
+>
+> ※ 我们可以将`BigInteger`转换为基本类型，若其表示的数值超过了基本类型的范围，将丢失高位信息。若想要将其准确地转换为基本类型，可以使用`intValueExact()`等方法，这样，在数值超出基本类型的范围时，将抛出`ArithmeticException`异常。**注**：若`BigInteger`的数值超过了`float`的最大范围，`floatValue()`将会返回`Infinity`。
 
 > <!-- Part 009 -->
 >
-> ※ `Java.math.BigDecimal`用于表示任意大小并且精度完全准确的浮点数。利用`scale()`方法，可以获取`BigDecimal`的小数位数；利用``
+> ※ `Java.math.BigDecimal`用于表示任意大小并且精度完全准确的浮点数。
+>
+> ※ 利用`scale()`方法，可以获取`BigDecimal`的小数位数；利用`setScale()`方法，可以对一个`BigDecimal`设置它的`scale`，若精度比原始值低，将按照指定的方法进行四舍五入或直接截断；利用`stripTrailingZeros()`方法，可以将`BigDecimal`格式化为一个相等的，但去掉了末尾`0`的`BigDecimal`。**注**：若一个`BigDecimal`的`scale()`返回负数，如`-2`，表示这个数为整数，并且末尾有`2`个`0`。
+>
+> ※ 对`BigDecimal`做加、减、乘时，精度不会丢失，但是做除法时，存在无法除尽的情况，这时，就必须指定精度以及如何进行截断；或者利用`divideAndRemainder()`方法分别获取商和余数。
+>
+> ※ 在比较两个`BigDecimal`的大小时，建议使用`compareTo()`方法，而非`equals()`，因为前者可以忽略多余的`0`。
 
 > <!-- Part 010 -->
 >
