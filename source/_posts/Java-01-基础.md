@@ -91,7 +91,7 @@ double d3 = -1.0 / 0; // -Infinity: 无穷小
 
 > <!-- Part 005 -->
 >
-> ※ `Java`在内存中总是使用`Unicode`表示字符。关于`Unicode`和`UTF-8`之间的关系，可以自行参考<a href="https://www.zhihu.com/question/23374078">知乎</a>。
+> ※ `Java`在内存中总是使用`Unicode`表示字符。关于`Unicode`和`UTF-8`之间的关系，可以自行参考<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1260469698963456">讲解</a>。
 >
 > ※ 在使用`+`连接任意字符串和其它数据类型时，编译器会先将其它数据类型转换为字符串，之后再进行连接。
 >
@@ -312,8 +312,98 @@ java -cp .;C:\work\project\bin;C:\sgared abc.xyz.Hello
 >
 > ※ 将一堆`class`封装为`jar`只是一个打包的过程，而把一堆`class`封装为模块不但需要打包，还需将依赖关系写入至`module-info.java`中，并且还可以包含二进制代码（通常是`JNI`扩展）。此外，模块支持多版本，即在同一个模块中可以为不同的`JVM`提供不同的版本。
 >
-> ※ 利用模块，可以按需打包`jre`。关于如何编写模块，运行模块及打包`JRE`，可以自行参考<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1281795926523938">教程</a>。
+> ※ 利用模块，可以按需打包`jre`。关于如何编写模块，运行模块及打包`JRE`，可以自行参考<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1281795926523938">这里</a>。
 
 #### Day 006
 
+> <!-- Part 001 -->
+>
+> ※ 字符串在`String`内部实际上是通过一个`char[]`数组表示的：
+
+```java
+String str = new String(new char[] {'c', 'h', 'e', 'n'});
+```
+
+> 只是因为字符串太常用了，所以提供了`"..."`这种字面量表示方法。
+>
+> ※ 字符串的不可变性是通过内部的`private final char[]`属性以及没有任何修改`char[]`的方法实现的。
+>
+> ※ 若想比较两个字符串是否相同，必须使用`equals()`方法而不能用`==`！**注**：若要忽略大小写比较，可以使用`equalsIgnoreCase()`方法。
+>
+> ※ `trim()`和`strip()`均可以用于移除字符串首位空白字符，只是后者还会将类似中文的空格字符`\u3000`移除。**注**：空白字符包括`\t`、`\r`、`\n`。
+>
+> ※ `Integer`有个`getInteger(String)`方法，它不是将字符串转换为`int`，而是将该字符串对应的系统变量转换为`Integer`：
+
+```java
+Integer.getInteger("java.version"); // 版本号，15
+```
+
+> ※ `String`和`char[]`可以相互转换，对`char[]`进行修改，并不会影响到`String`，这是因为在通过`new String(char[])`创建`String`实例时，并不会直接引用传入的`char[]`数组，而是会复制一份。**注**：从`String`的不变性设计可以看出，若传入的对象有可能发生改变，我们需要复制而不是直接引用。
+>
+> ※ 对于不同版本的`JDK`，`String`在内存中有着不同的优化方式。具体来说，早期`JDK`版本的`String`总是以`char[]`存储，它的定义如下：
+
+```java
+public final class String {
+    private final char[] value;
+    private final int offset;
+    private final int count;
+}
+```
+
+> 而较新`JDK`版本则以`byte[]`存储：若`String`仅包含ASCII字符，则每个`byte`存储一个字符，否则每两个`byte`存储一个字符。这样做的目的是节省内存，因为大量的长度较短的`String`通常仅包含ASCII字符：
+
+```java
+public final class String {
+    private final byte[] value;
+    private final byte coder; // 0 = LATIN1, 1 = UTF16
+}
+```
+
+> <!-- Part 002 -->
+>
+> ※ 虽然可以直接利用`+`拼接字符串，但是，每次拼接都会创建新的字符串对象并扔掉旧的字符串，这样将会导致绝大部分字符串都是临时对象，不但浪费内存，还会影响垃圾回收效率。为了能够提高拼接效率，`Java`标准库提供了一个可以预分配缓冲区的可变对象`StringBuilder`，这样，在往`StringBuidler`中新增字符时，将不会创建新的临时对象。**注**：`StringBuilder`支持链式操作，实现链式操作的关键是返回实例本身。
+
+> <!-- Part 003 -->
+>
+> ※ 用指定分隔符拼接字符串数组时，可以借助`StringJoiner`或者`String.join()`。与`String.join()`相比，`StringJoiner`可以额外附加一个“开头”和“结尾”。
+
+> <!-- Part 004 -->
+>
+> ※ 直接将基本类型转型为引用类型的赋值写法称为<span style="color:blue">自动装箱</span>，将引用类型转型为基本类型的赋值写法称为<span style="color:blue">自动拆箱</span>。**注**：自动装箱和自动拆箱只发生在编译阶段，目的是为了少写代码。
+>
+> ※ 在`Java`中，无符号整型和有符号整型的转换需要借助包装类型的静态方法完成。
+
+> <!-- Part 005 -->
+>
+> ※ 在`Java`中，有很多`class`的定义都符合这样的规范：若干`private`属性；通过`public`方法读写属性。例如：
+
+```java
+// 读方法
+public Type getValue();
+// 写方法
+public void setValue(Type value);
+```
+
+> 这样的`class`被称为`JavaBean`。
+>
+> ※ 要枚举一个`JavaBean`的所有属性，可以直接使用`Java`核心库提供的`Introspector`，示例请参考<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1260474416351680">这里</a>。
+
+> <!-- Part 006 -->
+>
 > ※ 
+
+> <!-- Part 007 -->
+>
+> ※ 
+
+> <!-- Part 008 -->
+>
+> ※ `Java.math.BigInteger`用于表示任意大小的整数，其内部用一个`int[]`来进行模拟。我们可以将`BigInteger`转换为基本类型，若其表示的数值超过了基本类型的范围，将丢失高位信息。如果想要将其准确地转换为基本类型，可以使用`intValueExact()`、`longValueExact()`等方法，在数值超出基本类型的范围时，将抛出`ArithmeticException`异常。**注**：若`BigInteger`的数值超过了`float`的最大范围，`floatValue()`将会返回`Infinity`。
+
+> <!-- Part 009 -->
+>
+> ※ `Java.math.BigDecimal`用于表示任意大小并且精度完全准确的浮点数。利用`scale()`方法，可以获取`BigDecimal`的小数位数；利用``
+
+> <!-- Part 010 -->
+>
+> ※ `Math`类用于进行数学计算，其与`StrictMath`类的区别在于：前者会尽量针对平台优化计算速度；后者会保证浮点数计算在所有平台上的结果都是相同的。
