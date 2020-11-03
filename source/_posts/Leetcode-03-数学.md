@@ -508,4 +508,33 @@ class Solution:
 
 > ※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。
 
+#### 1642. 可以到达的最远建筑
+
+> ※ 优先利用梯子去爬高度相差较大的楼层，当梯子不够时，再利用砖块去爬。基于上述思想，可以利用优先队列。
+
+```java
+class Solution {
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        int i = 0,  n = heights.length;
+        Queue<Integer> queue = new PriorityQueue<Integer>();
+        while (i + 1 < n) {
+            int diff = heights[i + 1] - heights[i];
+            if (diff > 0) {
+                queue.offer(diff);
+            }
+            if (queue.size() > ladders) {
+                bricks -= queue.poll();
+            }
+            if (bricks < 0) {
+                return i;
+            }
+            i++;
+        }
+        return n - 1;
+    }
+}
+```
+
+> ※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。
+
 -----
