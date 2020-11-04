@@ -750,7 +750,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-21 09:31:44" itemprop="dateModified" datetime="2020-10-21T09:31:44+08:00">2020-10-21</time>
+        <time title="修改时间：2020-11-04 23:14:47" itemprop="dateModified" datetime="2020-11-04T23:14:47+08:00">2020-11-04</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -887,6 +887,14 @@
 
 <blockquote>
 <p>※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。</p>
+</blockquote>
+<h4 id="1451-重新排列句子中的单词"><a href="#1451-重新排列句子中的单词" class="headerlink" title="1451. 重新排列句子中的单词"></a>1451. 重新排列句子中的单词</h4><blockquote>
+<p>※ 首先，利用<code>split(&quot; &quot;)</code>函数对字符串进行分割得到单词数组；接着，利用<code>toLowerCase()</code>函数将单词数组的第一个元素进行小写化；然后，利用<code>Arrays.sort()</code>函数对单词列表进行排序；最后，将排序后的第一个元素的首字母转换为大写，并对字符串列表进行拼接即可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">arrangeWords</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">        String[] words = text.split(<span class="string">&quot; &quot;</span>);</span><br><span class="line">        words[<span class="number">0</span>] = words[<span class="number">0</span>].toLowerCase();</span><br><span class="line">        Arrays.sort(words, (word1, word2) -&gt; word1.length() - word2.length());</span><br><span class="line">        words[<span class="number">0</span>] = words[<span class="number">0</span>].substring(<span class="number">0</span>,<span class="number">1</span>).toUpperCase() + words[<span class="number">0</span>].substring(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> String.join(<span class="string">&quot; &quot;</span>, words);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。</p>
 </blockquote>
 <hr>
 
