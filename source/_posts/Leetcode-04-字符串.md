@@ -390,4 +390,22 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 1451. 重新排列句子中的单词
+
+> ※ 首先，利用`split(" ")`函数对字符串进行分割得到单词数组；接着，利用`toLowerCase()`函数将单词数组的第一个元素进行小写化；然后，利用`Arrays.sort()`函数对单词列表进行排序；最后，将排序后的第一个元素的首字母转换为大写，并对字符串列表进行拼接即可。
+
+```java
+class Solution {
+    public String arrangeWords(String text) {
+        String[] words = text.split(" ");
+        words[0] = words[0].toLowerCase();
+        Arrays.sort(words, (word1, word2) -> word1.length() - word2.length());
+        words[0] = words[0].substring(0,1).toUpperCase() + words[0].substring(1);
+        return String.join(" ", words);
+    }
+}
+```
+
+> ※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。
+
 -----
