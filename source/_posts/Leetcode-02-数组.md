@@ -1012,6 +1012,27 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 1503. 所有蚂蚁掉下来前的最后一刻
+
+> ※ 该题的关键点在于：两只相遇的蚂蚁同时改变方向后，其情形等价于两只蚂蚁均未改变方向。这样，问题便可以简化成根据每只蚂蚁的初始位置和移动方向得到最后一只蚂蚁到达模板边界的时刻。
+
+```java
+class Solution {
+    public int getLastMoment(int n, int[] left, int[] right) {
+        int res = 0;
+        for (int num : left) {
+            res = Math.max(res, num);
+        }
+        for (int num : right) {
+            res = Math.max(res, n - num);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 1630. 等差子数组
 
 > ※ 依次拷贝每一个子数组，并对子数组进行排序，然后依次判断子数组中的每个元素是否满足等差数列的性质`2 * A[i] == A[i + 1] + A[i - 1]`即可。**注**：当子数组的长度小于`3`时必为等差数组。
