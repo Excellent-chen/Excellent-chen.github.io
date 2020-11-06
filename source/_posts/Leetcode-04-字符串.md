@@ -390,6 +390,31 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 539. 最小时间差
+
+> ※ 将时间全部转换为分钟制，然后对它们进行排序。**注**：不要忘记第一个时间和最后一个时间之间的差值！
+
+```java
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        int n = timePoints.size();
+        int[] times = new int[n];
+        for (int i = 0; i < n; i++) {
+            String time = timePoints.get(i);
+            times[i] = (time.charAt(0) - '0') * 600 + (time.charAt(1) - '0') * 60 + (time.charAt(3) - '0') * 10 + time.charAt(4) - '0';
+        }
+        Arrays.sort(times);
+        int res = 1440 - times[n - 1] + times[0];
+        for (int i = 0; i < n - 1; i++) {
+            res = Math.min(res, times[i + 1] - times[i]);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。
+
 #### 1451. 重新排列句子中的单词
 
 > ※ 首先，利用`split(" ")`函数对字符串进行分割得到单词数组；接着，利用`toLowerCase()`函数将单词数组的第一个元素进行小写化；然后，利用`Arrays.sort()`函数对单词列表进行排序；最后，将排序后的第一个元素的首字母转换为大写，并对字符串列表进行拼接即可。
