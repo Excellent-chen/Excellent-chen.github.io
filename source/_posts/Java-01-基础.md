@@ -266,7 +266,7 @@ switch (fruit) {
 >
 > ※ 利用`static`修饰的字段，称为静态字段。对于静态字段，类的所有实例都会共享它。
 >
-> ※ 利用`static`修饰的方法，称为静态方法。**注**：由于静态方法属于类而不属于实例，因此其内部无法访问实例字段，也无法访问`this`变量，<span style="color:red">只能</span>访问静态字段。**TODO**：为什么？
+> ※ 利用`static`修饰的方法，称为静态方法。**注**：由于静态方法属于类而不属于实例，因此其内部无法访问实例字段，也无法访问`this`变量，<span style="color:red">只能</span>访问静态字段。
 >
 > ※ 接口可以定义静态字段，而且静态字段必须为`final`类型。由于接口的字段只能是`public static final`类型，因此可以将这些修饰符都去掉。
 
@@ -390,11 +390,17 @@ public void setValue(Type value);
 
 > <!-- Part 006 -->
 >
-> ※ 
+> TODO：没看懂。。。
+>
+> ※ 使用`enum`定义的枚举类属于引用类型，按理说在对引用类型进行比较时需要使用`equals()`方法，但枚举类例外，其每个常量在`JVM`中只有一个唯一实例，因此可以直接利用`==`比较。
+>
+> ※ 与常量相比，使用`enum`定义枚举有如下好处：首先，`enum`常量本身带有类型信息，编译器会自动检查出类型错误；其次，无法引用到非枚举的值；最后，不同类型的枚举不能互相比较或赋值。
+>
+> ※ 与普通类相比，枚举类有如下特点：总是继承自`java.lang.Enum`，且无法被继承；只能定义出`enum`的实例，无法通过`new`操作符创建`enum`的实例；定义的每个类都是引用类型的唯一实例；可以将枚举类用于`switch`语句。
 
 > <!-- Part 007 -->
 >
-> ※ 
+> ※ 从`Java 14`开始，提供了新的`record`关键字，用于定义不变类。**注**：通过编写`Compact Constructor`，可以对参数进行验证；通过定义静态方法，可以更加便捷的创建不变类。
 
 > <!-- Part 008 -->
 >
@@ -406,12 +412,108 @@ public void setValue(Type value);
 >
 > ※ `Java.math.BigDecimal`用于表示任意大小并且精度完全准确的浮点数。
 >
-> ※ 利用`scale()`方法，可以获取`BigDecimal`的小数位数；利用`setScale()`方法，可以对一个`BigDecimal`设置它的`scale`，若精度比原始值低，将按照指定的方法进行四舍五入或直接截断；利用`stripTrailingZeros()`方法，可以将`BigDecimal`格式化为一个相等的，但去掉了末尾`0`的`BigDecimal`。**注**：若一个`BigDecimal`的`scale()`返回负数，如`-2`，表示这个数为整数，并且末尾有`2`个`0`。
+> ※ `scale()`方法可以获取`BigDecimal`的小数位数；`setScale()`方法可以对一个`BigDecimal`设置它的`scale`，若精度比原始值低，将按照指定的方法进行四舍五入或直接截断；`stripTrailingZeros()`方法，可以将`BigDecimal`格式化为一个相等的，但去掉了末尾`0`的`BigDecimal`。**注**：若一个`BigDecimal`的`scale()`返回负数，如`-2`，表示这个数为整数，并且末尾有`2`个`0`。
 >
-> ※ 对`BigDecimal`做加、减、乘时，精度不会丢失，但是做除法时，存在无法除尽的情况，这时，就必须指定精度以及如何进行截断；或者利用`divideAndRemainder()`方法分别获取商和余数。
+> ※ 对`BigDecimal`做加、减、乘时，精度不会丢失，但是做除法时，存在无法除尽的情况，此时可以利用`divideAndRemainder()`方法分别获取商和余数，或者指定精度以及如何进行截断。
 >
 > ※ 在比较两个`BigDecimal`的大小时，建议使用`compareTo()`方法，而非`equals()`，因为前者可以忽略多余的`0`。
 
 > <!-- Part 010 -->
 >
 > ※ `Math`类用于进行数学计算，其与`StrictMath`类的区别在于：前者会尽量针对平台优化计算速度；后者会保证浮点数计算在所有平台上的结果都是相同的。
+
+#### Day 007
+
+> <!-- Part 001 -->
+>
+> ※ 所有的`Java`异常均继承自`Throwable`，它们共分为两个体系：`Error`和`Exception`。其中，`Error`属于无需捕获的严重错误；`Exception`属于可以被捕获并处理的错误，并可进一步被细分为`RuntimeException`和非`RuntimeException`两大类。**注**：`Java`规定，必须捕获的异常包括`Exception`及其子类，但不包括`RuntimeException`及其子类（该类异常被称为`Checked Exception`）；不必须捕获的异常包括`Error`及其子类，`RuntimeException`及其子类。
+>
+> ※ 所有的异常都可以调用`printStackTrace()`方法打印异常栈。
+
+> <!-- Part 002 -->
+>
+> ※ 使用`try ... catch ... finally`时，一个`catch`语句可以匹配多个非继承关系的异常：
+
+```java
+catch (IOException | NumberFormatException e) {
+    ...
+}
+```
+
+> <!-- Part 003 -->
+>
+> ※ 抛出异常分为两步：创建某个`Exception`实例；用`throw`语句抛出。
+
+```java
+void process(String str) {
+    if (str == null) {
+        // NullPointerException e = new NullPointerException();
+        // throw e;
+        throw new NullPointerException();
+    }
+}
+```
+
+> ※ 为了能追踪到完整的异常栈，在构造异常时，可以把原始的`Exception`实例传入，这样，新的`Exception`将持有原始`Exception`信息：
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        try {
+            process1();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+	static void process1() {
+    	try {
+        	process2();
+    	} catch (NullPointerException e) {
+        	throw new IllegalArgumentException(e);
+    	}
+	}
+
+	static void process2() {
+    	throw new NullPointerException();
+	}
+}
+/*
+java.lang.IllegalArgumentException: java.lang.NullPointerException
+	at Main.process1(Main.java:15)
+	at Main.main(Main.java:5)
+Caused by: java.lang.NullPointerException
+	at Main.process2(Main.java:20)
+	at Main.process1(Main.java:13)
+*/
+```
+
+> ※ 在`catch`中抛出异常，`JVM`会先执行`finally`，然后再抛出。**注**：通常不会再在`finally`中抛出异常，若一定要抛，应先用变量保存原始异常，然后调用`Throwable.addSuppressed()`将其添加进来，最后在`finally`中抛出：
+
+```java
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Exception origin = null;
+        try {
+            System.out.println(Integer.parseInt("abc"));
+        } catch (Exception e) {
+            origin = e;
+            throw e;
+        } finally {
+            Exception e = new IllegalArgumentException();
+            if (origin != null) {
+                e.addSuppressed(origin);
+            }
+            throw e;
+        }
+    }
+}
+```
+
+> <!-- Part 004 -->
+>
+> ※ 自定义异常体系时，推荐从`RuntimeException`派生根异常，再派生业务异常。**注**：自定义异常时，应提供多种构造方法。
+
+> <!-- Part 005 -->
+>
+> ※ 断言是一种调试方式，只能在开发和测试阶段启用，其在失败时会抛出`AssertionError`。**注**：断言很少被使用，更好的方法是编写单元测试。
