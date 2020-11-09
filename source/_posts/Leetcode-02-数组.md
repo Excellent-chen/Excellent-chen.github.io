@@ -821,6 +821,33 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 215. 数组中的第K个最大元素
+
+> ※ 首先，利用优先队列保存前`K`个元素；然后，依次遍历剩余元素，若当前遍历元素大于优先队列队头的元素，则将队头元素弹出并放入当前元素；最后，返回队头元素即可。
+
+```java
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        Queue<Integer> queue = new PriorityQueue<Integer>();
+        for (int i = 0; i < k; i++) {
+            queue.offer(nums[i]);
+        }
+        for (int i = k; i < nums.length; i++) {
+            int num = queue.peek();
+            if (nums[i] > num) {
+                queue.poll();
+                queue.offer(nums[i]);
+            }
+        }
+        return queue.peek();
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。
+>
+> **TODO**：有时间可以了解一下堆排序、快速排序和归并排序。
+
 #### 289. 生命游戏
 
 > ※ 该题目与`130. 被围绕的区域`类似，同样可以借助其它数字来表示“细胞”状态的更新，如`-1`表示细胞由活变死，`2`表示细胞由死变活。这里需要注意的是第`11`行代码，此时，`board[x][y] = -1`同样表示活细胞。

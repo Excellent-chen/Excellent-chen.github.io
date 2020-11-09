@@ -461,4 +461,30 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 1647. 字符频次唯一的最小删除次数
+
+> ※ 记录每个字符出现的次数并按从小到大的顺序排序，然后从倒数第二个元素开始遍历，
+
+```java
+class Solution {
+    public int minDeletions(String s) {
+        int res = 0;
+        int[] charCnt = new int[26];
+        for (char c : s.toCharArray()) {
+            charCnt[c - 'a']++;
+        }
+        Arrays.sort(charCnt);
+        for (int i = 24; i >= 0; i--) {
+            while (charCnt[i] > 0 && charCnt[i] >= charCnt[i + 1]) {
+                charCnt[i]--;
+                res++;
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。
+
 -----

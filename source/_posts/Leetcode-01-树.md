@@ -232,6 +232,54 @@ class Solution {
 
 -----
 
+#### 103. 二叉树的锯齿形层次遍历
+
+> ※ 借助双端队列和一个用于指定方向的临时变量即可解决。
+
+```java
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        if (root == null) {
+            return res;
+        }
+        int left_to_right = 0;
+        Deque<TreeNode> deque = new LinkedList<TreeNode>();
+        deque.offerFirst(root);
+        while(deque.size() > 0) {
+            int size = deque.size();
+            List<Integer> list = new LinkedList<Integer>();
+            while(size-- > 0) {
+                if (left_to_right == 0) {
+                    TreeNode node = deque.pollLast();
+                    if (node.left != null) {
+                        deque.offerFirst(node.left);
+                    }
+                    if (node.right != null) {
+                        deque.offerFirst(node.right);
+                    }
+                    list.add(node.val);
+                } else {
+                    TreeNode node = deque.pollFirst();
+                    if (node.right != null) {
+                        deque.offerLast(node.right);
+                    }
+                    if (node.left != null) {
+                        deque.offerLast(node.left);
+                    }
+                    list.add(node.val);
+                }
+            }
+            left_to_right = 1 - left_to_right;
+            res.add(list);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 105. 从前序与中序遍历序列构造二叉树
 
 > ※ 对于前序遍历来说，最先遍历的节点一定为根节点；借助中序遍历，可以分别得知根节点左右子树包含节点的数量，从而进一步获取它们的先序遍历和中序遍历。以此类推，利用递归便可解决该题目。
