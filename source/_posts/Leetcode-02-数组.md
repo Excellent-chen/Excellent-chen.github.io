@@ -980,6 +980,25 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 973. 最接近原点的 K 个点
+
+> ※ 将每个点到原点的欧几里得距离的平方从小到大排序，取前`K`个即可。
+
+```java
+class Solution {
+    public int[][] kClosest(int[][] points, int K) {
+        Arrays.sort(points, new Comparator<int[]>() {
+            public int compare(int[] point1, int[] point2) {
+                return point1[0] * point1[0] + point1[1] * point1[1] - point2[0] * point2[0] - point2[1] * point2[1];
+            }
+        });
+        return Arrays.copyOfRange(points, 0, K);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。
+
 #### 1004. 最大连续1的个数 III
 
 > ※ 该题目可以理解为：滑动窗口内最多有`K`个`0`，求滑动窗口的最大长度。
