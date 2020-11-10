@@ -917,6 +917,35 @@ class Solution {
 
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
+#### 436. 寻找右区间
+
+> ※ 首先，依次遍历每个区间，将区间的左端点及其对应的下标保存至`TreeMap`中；然后，再次遍历每个区间，并利用`ceilingKey()`函数查询是否存在比当前区间右端点大的键值对，若不存在，则说明满足条件的区间不存在，否则，将区间对应的下标保存至`res`数组中即可。
+
+```java
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        int n = intervals.length;
+        // Map<Integer, Integer> map = new TreeMap<Integer, Integer>(); // 这样写是不对的，无法调用 Treeset 的 ceilingKey 函数！
+        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        for (int i = 0; i < n; i++) {
+            map.put(intervals[i][0], i);
+        }
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            Integer key = map.ceilingKey(intervals[i][1]);
+            if (key == null) {
+                res[map.get(intervals[i][0])] = -1;
+            } else {
+                res[map.get(intervals[i][0])] = map.get(key);
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$，`TreeMap`的插入操作需要$O(logN)$的时间，`ceilingKey`也需要$O(logN)$的时间；空间复杂度：$O(N)$。
+
 #### 670. 最大交换
 
 > ※ 自右向左统计大于（不包含等于）当前字符的最大字符的下标；然后，自左向右遍历字符，若当前字符的下标不等于大于其最大字符的下标，并且这两个字符不相等（该约束很重要！），则对它们进行交换并退出。
