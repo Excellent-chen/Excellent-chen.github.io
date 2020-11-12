@@ -980,6 +980,36 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 692. 前K个高频单词
+
+> ※ 计算每个单词的频率，并将他们存储至大小为`k`的小根堆中，最后，从堆中最多弹出`k`次，并反转结果，即可得到前`k`个高频单词。**注**：需要留意在初始化堆时如何指定`Comparator`！
+
+```java
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        Map<String, Integer> count = new HashMap<String, Integer>();
+        for (String word : words) {
+            count.put(word, count.getOrDefault(word, 0) + 1);
+        }
+        Queue<String> queue = new PriorityQueue<String>((word1, word2) -> count.get(word1) == count.get(word2) ? word2.compareTo(word1) : count.get(word1) - count.get(word2));
+        for (String word : count.keySet()) {
+            queue.offer(word);
+            if (queue.size() > k) {
+                queue.poll();
+            }
+        }
+        List<String> res = new ArrayList<String>();
+        while (queue.size() != 0) {
+            res.add(queue.poll());
+        }
+        Collections.reverse(res);
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogK)$，将`N`个单词添加到堆中，每次向堆中添加每个单词的时间复杂度为$O(logk)$；空间复杂度：$O(N)$，用于存储计数空间。
+
 #### 739. 每日温度
 
 > ※ 该题目与`496. 下一个更大元素 I`类似，同样利用了“单调栈”的思想，只是这里将元素的下标保存至栈中，而非元素本身。
