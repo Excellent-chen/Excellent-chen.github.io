@@ -415,6 +415,34 @@ class Solution {
 
 > ※ 时间复杂度：取决于内部函数；空间复杂度：取决于内部函数。
 
+#### 1324. 竖直打印单词
+
+> ※ 首先，对字符串进行分词，并统计所有单词的最大长度；然后，对于结果链表中的第`i`个元素，依次遍历所有单词，若单词存在第`i`个字符，则将该字符加入元素的末尾，否则，将空格加入元素的末尾； 最后，借助特殊方法去掉元素末尾冗余的空格即可。
+
+```java
+class Solution {
+    public List<String> printVertically(String s) {
+        int wordMaxLen = 0;
+        String[] words = s.split(" ");
+        for (String word : words) {
+            wordMaxLen = Math.max(wordMaxLen, word.length());
+        }
+        List<String> res = new ArrayList<String>();
+        for (int i = 0; i < wordMaxLen; i++) {
+            StringBuilder sb = new StringBuilder("!");
+            for (String word : words) {
+                char c = i >= word.length() ? ' ' : word.charAt(i);
+                sb.append(c); // 原来 StringBuilder 可以直接 append 字符。
+            }
+            res.add(sb.toString().trim().substring(1)); // 是 substring 不是 subString !
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N max(|S|))$，其中，`N`表示单词的个数，`max(|S|)`表示最长的单词长度；空间复杂度：$O(N max(|S|))$。
+
 #### 1451. 重新排列句子中的单词
 
 > ※ 首先，利用`split(" ")`函数对字符串进行分割得到单词数组；接着，利用`toLowerCase()`函数将单词数组的第一个元素进行小写化；然后，利用`Arrays.sort()`函数对单词列表进行排序；最后，将排序后的第一个元素的首字母转换为大写，并对字符串列表进行拼接即可。
