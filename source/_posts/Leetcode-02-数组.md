@@ -946,6 +946,35 @@ class Solution {
 
 > ※ 时间复杂度：$O(NlogN)$，`TreeMap`的插入操作需要$O(logN)$的时间，`ceilingKey`也需要$O(logN)$的时间；空间复杂度：$O(N)$。
 
+#### 611. 有效三角形的个数
+
+> ※ 对数组进行排序并利用双指针即可解决该题目。
+
+```java
+class Solution {
+    public int triangleNumber(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length, res = 0;
+        for (int i = 0; i < n - 2; i++) {
+            for (int j = i + 1; j < n - 1; j++) {
+                int k = j + 1;
+                while (k < n) {
+                    if (nums[i] + nums[j] > nums[k]) {
+                        k++;
+                    } else {
+                        break;
+                    }
+                }
+                res += (k - j - 1);
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$，代码跟官方题解几乎一样，个人感觉时间复杂度还是$O(N^3)$，不清楚为什么官方题解给了$O(N^2)$；空间复杂度：$O(logN)$，排序所需空间。
+
 #### 670. 最大交换
 
 > ※ 自右向左统计大于（不包含等于）当前字符的最大字符的下标；然后，自左向右遍历字符，若当前字符的下标不等于大于其最大字符的下标，并且这两个字符不相等（该约束很重要！），则对它们进行交换并退出。
