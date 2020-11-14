@@ -946,6 +946,42 @@ class Solution {
 
 > ※ 时间复杂度：$O(NlogN)$，`TreeMap`的插入操作需要$O(logN)$的时间，`ceilingKey`也需要$O(logN)$的时间；空间复杂度：$O(N)$。
 
+#### 442. 数组中重复的数据
+
+> ※ 该题目具有一定的技巧性，有两种常见解法：一种为原地修改元素为负数作为访问标记，另一种为原地加`n`作为访问标记。
+
+```java
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        // // 方法一：原地修改元素为负数作为访问标记
+        // List<Integer> res = new LinkedList<Integer>();
+        // for (int i = 0; i < nums.length; i++) {
+        //     int index = Math.abs(nums[i]); // 防止 nums[i] < 0
+        //     if (nums[index - 1] < 0) {
+        //         res.add(index);
+        //     } else {
+        //         nums[index - 1] = - nums[index - 1];
+        //     }
+        // }
+        // return res;
+        // 方法二：原地加 n 投机取巧
+        List<Integer> res = new LinkedList<Integer>();
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            nums[(nums[i] - 1) % n] += n;
+        }
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > 2 * n) {
+                res.add(i + 1);
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 611. 有效三角形的个数
 
 > ※ 对数组进行排序并利用双指针即可解决该题目。
