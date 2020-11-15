@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="Day 001   ※ 如果一个Java对象可以在内部持有若干其它Java对象，并对外提供访问接口，那么该对象被称之为集合。显然，数组便是一种集合。 ※ Java主要提供了3种集合类：List、Set和Map，均定义在java.util包中。Java的集合设计有如下特点：接口与实现类分离；支持泛型；利用迭代器Iterator进行访问。 ※ Java的集合设计比较久远，中间经历过大规模改进，有一些集">
+  <meta name="description" content="Day 001   ※ 每加载一种class，JVM便会为其创建一个Class类型的实例，并将它们关联起来。在Class实例中，保存了该class的类名、包名、父类、实现的接口、所有方法、所有字段等，因此，若获取了某个Class实例，便可以通过该实例获取到该实例对应的class的所有信息。上述通过Class实例获取class信息的方法便成为反射。 ※ 获取一个class的Class实例，存在以下三">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java中级">
 <meta property="og:url" content="http://example.com/2020/11/09/Java-02-%E4%B8%AD%E7%BA%A7/index.html">
 <meta property="og:site_name" content="阿晨的博客">
-<meta property="og:description" content="Day 001   ※ 如果一个Java对象可以在内部持有若干其它Java对象，并对外提供访问接口，那么该对象被称之为集合。显然，数组便是一种集合。 ※ Java主要提供了3种集合类：List、Set和Map，均定义在java.util包中。Java的集合设计有如下特点：接口与实现类分离；支持泛型；利用迭代器Iterator进行访问。 ※ Java的集合设计比较久远，中间经历过大规模改进，有一些集">
+<meta property="og:description" content="Day 001   ※ 每加载一种class，JVM便会为其创建一个Class类型的实例，并将它们关联起来。在Class实例中，保存了该class的类名、包名、父类、实现的接口、所有方法、所有字段等，因此，若获取了某个Class实例，便可以通过该实例获取到该实例对应的class的所有信息。上述通过Class实例获取class信息的方法便成为反射。 ※ 获取一个class的Class实例，存在以下三">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-09T03:40:15.000Z">
-<meta property="article:modified_time" content="2020-11-09T07:49:46.996Z">
+<meta property="article:modified_time" content="2020-11-15T14:41:10.166Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="中级">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-003"><span class="nav-number">2.</span> <span class="nav-text">Day 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-004"><span class="nav-number">3.</span> <span class="nav-text">Day 004</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TODO%EF%BC%9A%E5%8F%8D%E5%B0%84%EF%BC%8C%E6%B3%A8%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">TODO：反射，注解</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -269,10 +269,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-11-09 11:40:15 / 修改时间：15:49:46" itemprop="dateCreated datePublished" datetime="2020-11-09T11:40:15+08:00">2020-11-09</time>
+      <time title="创建时间：2020-11-09 11:40:15" itemprop="dateCreated datePublished" datetime="2020-11-09T11:40:15+08:00">2020-11-09</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-15 22:41:10" itemprop="dateModified" datetime="2020-11-15T22:41:10+08:00">2020-11-15</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -294,6 +300,74 @@
     
     <div class="post-body" itemprop="articleBody">
         <h4 id="Day-001"><a href="#Day-001" class="headerlink" title="Day 001"></a>Day 001</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ 每加载一种<code>class</code>，<code>JVM</code>便会为其创建一个<code>Class</code>类型的实例，并将它们关联起来。在<code>Class</code>实例中，保存了该<code>class</code>的类名、包名、父类、实现的接口、所有方法、所有字段等，因此，若获取了某个<code>Class</code>实例，便可以通过该实例获取到该实例对应的<code>class</code>的所有信息。上述通过<code>Class</code>实例获取<code>class</code>信息的方法便成为<span style="color:blue">反射</span>。</p>
+<p>※ 获取一个<code>class</code>的<code>Class</code>实例，存在以下三种方法：</p>
+<ul>
+<li>直接通过<code>class</code>的静态变量<code>class</code>获取：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class cls = String.class;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过实例变量提供的<code>getClass()</code>方法获取：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">&quot;chen&quot;</span>;</span><br><span class="line">Class cls = s.getClass();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过静态方法<code>Class.forName()</code>获取（前提是知道<code>class</code>的完整类名）：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class cls = Class.forName(<span class="string">&quot;java.lang.String&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>注</strong>：因为<code>Class</code>实例在<code>JVM</code>中是唯一的，因此上述方法获取的<code>Class</code>实例为同一个实例，可以直接用<code>==</code>进行比较。</p>
+<p>※ 通常情况下，我们应该使用<code>instanceof</code>判断数据类型，因为面向抽象编程的时候，我们并不关心具体的子类型，只有在需要精确判断一个类型是不是某个<code>class</code>的时候，才会使用<code>==</code>判断。</p>
+<p>※ <code>JVM</code>在执行<code>Java</code>程序的时候，并不是一次性把所有用到的<code>class</code>加载到内存，而是需要用到时才加载，这便是<code>JVM</code><span style="color:blue">动态加载</span><code>class</code>的特性。利用<code>JVM</code>的动态加载特性，可以在运行期间根据条件加载不同的实现类。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+
+</blockquote>
+<h4 id="Day-003"><a href="#Day-003" class="headerlink" title="Day 003"></a>Day 003</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ <span style="color:blue">泛型</span>是指编写模板代码来适应任意类型，其好处是在使用时不必对类型进行强制转换，可以通过编译器对类型进行检查。</p>
+<p>※ 可以把<code>ArrayList&lt;Integer&gt;</code>向上转型为<code>List&lt;Integer&gt;</code>（<code>T</code>不能变），但不能把<code>ArrayList&lt;Integer&gt;</code>向上转型为<code>ArrayList&lt;Number&gt;</code>（<code>T</code>不能变为父类）。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ 使用泛型时，可以把泛型参数<code>&lt;T&gt;</code>替换为需要的<code>class</code>类型，也可以省略编译器能自动推断出的类型。</p>
+<p>※ 不指定泛型参数类型时，编译器将会给出警告，且只能将<code>&lt;T&gt;</code>视为<code>Object</code>类型。</p>
+<p>※ 可以在接口中定义泛型类型，实现此接口的类必须实现正确的泛型类型。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ 编写泛型时，需要定义泛型类型<code>&lt;T&gt;</code>。</p>
+<p>※ 泛型可以同时定义多种类型，例如<code>Map&lt;K, V&gt;</code>。</p>
+<p>※ 静态方法不能引用泛型类型<code>&lt;T&gt;</code>，必须定义其它类型（如<code>&lt;T&gt;</code>）来实现静态泛型方法。</p>
+</blockquote>
+<blockquote>
+<!-- Part 004 -->
+
+<p>※ <code>Java</code>的泛型是采用<span style="color:red">擦拭法</span>实现的，擦拭法决定了泛型<code>&lt;T&gt;</code>存在以下缺点：不能是基本类型；不能获取带泛型类型的<code>Class</code>；不能判断带泛型类型的类型，例如<code>x instanceof Pair&lt;String&gt;</code>；不能实例化<code>T</code>类型。</p>
+<p>※ 泛型方法要防止重复定义方法，例如<code>public boolean equals(T obj)</code>。</p>
+<p>※ 子类可以获取父类的泛型类型。</p>
+</blockquote>
+<blockquote>
+<!-- Part 005 -->
+
+<p>※ 使用类似<code>&lt;? extends Number&gt;</code>通配符作为方法参数时：方法内部可以调用获取<code>Number</code>引用的方法，但不可以调用传入<code>Number</code>引用的方法（<code>null</code>除外），换句话说，使用<code>extends</code>通配符表示可以读，不能写。<span style="color:blue">上界通配符</span></p>
+<p>※ 使用类似<code>&lt;? super Number&gt;</code>通配符作为方法参数时：方法内部可以调用传入<code>Number</code>引用的方法，但不可以调用获取<code>Number</code>引用的方法（<code>Object</code>除外），换句话说，使用<code>super</code>通配符表示可以写，不能读。<span style="color:blue">下界通配符</span></p>
+</blockquote>
+<blockquote>
+<!-- Part 006 -->
+
+<p>※ 部分反射<code>API</code>为泛型，例如<code>Class&lt;T&gt;</code>、<code>Constructor&lt;T&gt;</code>。</p>
+<p>※ 可以声明带泛型的数组，但不能直接创建带泛型的数组，必须强制转型。</p>
+</blockquote>
+<h4 id="Day-004"><a href="#Day-004" class="headerlink" title="Day 004"></a>Day 004</h4><blockquote>
 <!-- Part 001 -->
 
 <p>※ 如果一个<code>Java</code>对象可以在内部持有若干其它<code>Java</code>对象，并对外提供访问接口，那么该对象被称之为集合。显然，数组便是一种集合。</p>
@@ -501,7 +575,7 @@
 <p>※ <code>Collections</code>可以对<code>List</code>进行排序。由于排序会直接修改<code>List</code>元素的位置，因此必须传入可变<code>List</code>。</p>
 <p>※ 将<code>List</code>封装成不可变集合：<code>List&lt;T&gt; unmodifiableList(List&lt;? extends T&gt; list)</code>；将<code>Map</code>封装成不可变集合：<code>Map&lt;K, V&gt; unmodifiableMap(Map&lt;? extends K, ? extends V&gt; m)</code>；将<code>Set</code>封装成不可变集合：<code>Set&lt;T&gt; unmodifiableSet(Set&lt;? extends T&gt; set)</code>。<strong>注</strong>：该封装实际上是通过创建一个代理拦截掉所有修改方法实现的。然而，若继续对原始可变集合进行增删，同样会影响到封装后的不可变集合。为此，如果我们希望把一个可变集合封装成不可变集合，最好在返回不可变集合后扔掉对可变集合的引用。</p>
 </blockquote>
-
+<h4 id="TODO：反射，注解"><a href="#TODO：反射，注解" class="headerlink" title="TODO：反射，注解"></a>TODO：反射，注解</h4>
     </div>
 
     
