@@ -11,6 +11,87 @@ tags:
 
 > <!-- Part 001 -->
 >
+> ※ 每加载一种`class`，`JVM`便会为其创建一个`Class`类型的实例，并将它们关联起来。在`Class`实例中，保存了该`class`的类名、包名、父类、实现的接口、所有方法、所有字段等，因此，若获取了某个`Class`实例，便可以通过该实例获取到该实例对应的`class`的所有信息。上述通过`Class`实例获取`class`信息的方法便成为<span style="color:blue">反射</span>。
+>
+> ※ 获取一个`class`的`Class`实例，存在以下三种方法：
+>
+> - 直接通过`class`的静态变量`class`获取：
+>
+> ```java
+> Class cls = String.class;
+> ```
+>
+> - 通过实例变量提供的`getClass()`方法获取：
+>
+> ```java
+> String str = "chen";
+> Class cls = s.getClass();
+> ```
+>
+> - 通过静态方法`Class.forName()`获取（前提是知道`class`的完整类名）：
+>
+> ```java
+> Class cls = Class.forName("java.lang.String");
+> ```
+>
+> **注**：因为`Class`实例在`JVM`中是唯一的，因此上述方法获取的`Class`实例为同一个实例，可以直接用`==`进行比较。
+>
+> ※ 通常情况下，我们应该使用`instanceof`判断数据类型，因为面向抽象编程的时候，我们并不关心具体的子类型，只有在需要精确判断一个类型是不是某个`class`的时候，才会使用`==`判断。
+>
+> ※ `JVM`在执行`Java`程序的时候，并不是一次性把所有用到的`class`加载到内存，而是需要用到时才加载，这便是`JVM`<span style="color:blue">动态加载</span>`class`的特性。利用`JVM`的动态加载特性，可以在运行期间根据条件加载不同的实现类。
+
+> <!-- Part 002 -->
+>
+> 
+
+#### Day 003
+
+> <!-- Part 001 -->
+>
+> ※ <span style="color:blue">泛型</span>是指编写模板代码来适应任意类型，其好处是在使用时不必对类型进行强制转换，可以通过编译器对类型进行检查。
+>
+> ※ 可以把`ArrayList<Integer>`向上转型为`List<Integer>`（`T`不能变），但不能把`ArrayList<Integer>`向上转型为`ArrayList<Number>`（`T`不能变为父类）。
+
+> <!-- Part 002 -->
+>
+> ※ 使用泛型时，可以把泛型参数`<T>`替换为需要的`class`类型，也可以省略编译器能自动推断出的类型。
+>
+> ※ 不指定泛型参数类型时，编译器将会给出警告，且只能将`<T>`视为`Object`类型。
+>
+> ※ 可以在接口中定义泛型类型，实现此接口的类必须实现正确的泛型类型。
+
+> <!-- Part 003 -->
+>
+> ※ 编写泛型时，需要定义泛型类型`<T>`。
+>
+> ※ 泛型可以同时定义多种类型，例如`Map<K, V>`。
+>
+> ※ 静态方法不能引用泛型类型`<T>`，必须定义其它类型（如`<T>`）来实现静态泛型方法。
+
+> <!-- Part 004 -->
+>
+> ※ `Java`的泛型是采用<span style="color:red">擦拭法</span>实现的，擦拭法决定了泛型`<T>`存在以下缺点：不能是基本类型；不能获取带泛型类型的`Class`；不能判断带泛型类型的类型，例如`x instanceof Pair<String>`；不能实例化`T`类型。
+>
+> ※ 泛型方法要防止重复定义方法，例如`public boolean equals(T obj)`。
+>
+> ※ 子类可以获取父类的泛型类型。
+
+> <!-- Part 005 -->
+>
+> ※ 使用类似`<? extends Number>`通配符作为方法参数时：方法内部可以调用获取`Number`引用的方法，但不可以调用传入`Number`引用的方法（`null`除外），换句话说，使用`extends`通配符表示可以读，不能写。<span style="color:blue">上界通配符</span>
+>
+> ※ 使用类似`<? super Number>`通配符作为方法参数时：方法内部可以调用传入`Number`引用的方法，但不可以调用获取`Number`引用的方法（`Object`除外），换句话说，使用`super`通配符表示可以写，不能读。<span style="color:blue">下界通配符</span>
+
+> <!-- Part 006 -->
+>
+> ※ 部分反射`API`为泛型，例如`Class<T>`、`Constructor<T>`。
+>
+> ※ 可以声明带泛型的数组，但不能直接创建带泛型的数组，必须强制转型。
+
+#### Day 004
+
+> <!-- Part 001 -->
+>
 > ※ 如果一个`Java`对象可以在内部持有若干其它`Java`对象，并对外提供访问接口，那么该对象被称之为集合。显然，数组便是一种集合。
 >
 > ※ `Java`主要提供了`3`种集合类：`List`、`Set`和`Map`，均定义在`java.util`包中。`Java`的集合设计有如下特点：接口与实现类分离；支持泛型；利用迭代器`Iterator`进行访问。
@@ -335,3 +416,5 @@ class ReverseList<T> implements Iterable<T> {
 > ※ `Collections`可以对`List`进行排序。由于排序会直接修改`List`元素的位置，因此必须传入可变`List`。
 >
 > ※ 将`List`封装成不可变集合：`List<T> unmodifiableList(List<? extends T> list)`；将`Map`封装成不可变集合：`Map<K, V> unmodifiableMap(Map<? extends K, ? extends V> m)`；将`Set`封装成不可变集合：`Set<T> unmodifiableSet(Set<? extends T> set)`。**注**：该封装实际上是通过创建一个代理拦截掉所有修改方法实现的。然而，若继续对原始可变集合进行增删，同样会影响到封装后的不可变集合。为此，如果我们希望把一个可变集合封装成不可变集合，最好在返回不可变集合后扔掉对可变集合的引用。
+
+#### TODO：反射，注解
