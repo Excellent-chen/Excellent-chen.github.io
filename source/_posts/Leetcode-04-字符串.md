@@ -390,6 +390,50 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 402. 移掉K位数字
+
+> ※ 对于两个相同长度的数字序列，最左边不同的数字决定了这两个数字的大小，例如，对于`A = 1axxx`，`B = 1bxxx`，若`a > b`，则`A > B`。基于此，可以得知，若要使剩下的数字最小，需要保证靠前的数字尽可能小。给定一个长度为`n`的数字序列$[D_0D_1D_2...D_{n-1}]$，从左往右找到第一个位置`i (i > 0)`，使得$D_i < D_{i-1}$，并删去$D_{i-1}$；如果不存在，说明整个数字序列单调不减，删去最后一个数字即可。
+
+```java
+class Solution {
+    public String removeKdigits(String num, int k) {
+        int count = 0;
+        Deque<Character> queue = new LinkedList<Character>();
+        for (char c : num.toCharArray()) {
+            // 对于每个数字，如果该数字小于栈顶元素，我们就不断弹出栈顶元素，直到：
+            // 栈为空；已经删除了 k 位数字；新的栈顶元素不大于当前数字
+            while (!queue.isEmpty() && count < k && queue.peekLast() > c) { // not "queue.peekLast() >= c"
+                queue.pollLast();
+                count++;
+            }
+            queue.offerLast(c);
+        }
+        // 上述过程结束后还需要针对一些情况做额外的处理：
+        // 删除了 m 个数字并且 m < k，这种情况下需要从序列尾部删除额外的 k - m 个数字；
+        // 最终的数字序列存在前导零，这种情况下需要删除前导零；
+        // 最终的数字序列为空，这种情况下应该返回 0.
+        // while (!queue.isEmpty() && count < k) { // num 的长度小于 10002 且 ≥ k
+        while (count < k) {
+            queue.pollLast();
+            count++;
+        }
+        boolean leadingZero = true;
+        StringBuilder sb = new StringBuilder();
+        while (!queue.isEmpty()) {
+            if (queue.peekFirst() == '0' && leadingZero) {
+                queue.pollFirst();
+            } else {
+                leadingZero = false;
+                sb.append(queue.pollFirst());
+            }
+        }
+        return sb.length() == 0 ? "0" : sb.toString();
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 539. 最小时间差
 
 > ※ 将时间全部转换为分钟制，然后对它们进行排序。**注**：不要忘记第一个时间和最后一个时间之间的差值！

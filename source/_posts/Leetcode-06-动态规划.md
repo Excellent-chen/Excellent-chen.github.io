@@ -67,4 +67,39 @@ class Solution {
 
 > ※ 时间复杂度：$O(M * N)$，其中，`M`表示石块总重，`N`表示石块的个数；空间复杂度：$O(M)$。
 
+#### 1314. 矩阵区域和
+
+> ※ 用二维数组`dp`表示`mat`的前缀和，其中，`dp[i][j]`表示`mat`中以`(0, 0)`为左上角，`(i - 1, j - 1)`为右下角的子矩形的元素之和。题目需要对`mat`中的每个位置，计算以`(i - K, j - K)`为左上角，`(i + K, j + K)`为右下角的子矩形的元素之和，我们可以在前缀和的帮助下，通过：
+>
+> $sum = dp[i + K + 1][j + K + 1] - dp[i - K][j + K + 1] - dp[i + K + 1][j - K] + dp[i - K][j - K]$
+>
+> 得到元素之和。
+
+```java
+class Solution {
+    public int[][] matrixBlockSum(int[][] mat, int K) {
+        int rows = mat.length, cols = mat[0].length;
+        int[][] dp = new int[rows + 1][cols + 1];
+        for (int i = 1; i <= rows; i++) {
+            for (int j = 1; j <= cols; j++) {
+                dp[i][j] = mat[i - 1][j - 1] + dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1];
+            }
+        }
+        int[][] res = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                int t = Math.max(0, i - K);
+                int b = Math.min(rows - 1, i + K);
+                int l = Math.max(0, j - K);
+                int r = Math.min(cols - 1, j + K);
+                res[i][j] = dp[b + 1][r + 1] + dp[t][l] - dp[b + 1][l] - dp[t][r + 1];
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(MN)$。
+
 -----
