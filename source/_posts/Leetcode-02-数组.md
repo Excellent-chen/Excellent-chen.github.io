@@ -889,6 +889,26 @@ class Solution {
 
 > ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
 
+#### 406. 根据身高重建队列
+
+> ※ 将所有人按照`h`从大到小，`k`从小到大的顺序进行排序，并对排序后的数组进行遍历。当遍历到第`i`个人时，前`i - 1`个人已经被安排好了位置，他们只要站在第`i`个人的前面，就会对其产生影响，因为他们都不比第`i`个人低；后`n - i`个人无论站在哪里，只有在身高与第`i`个人一致时才会对其产生影响，基于此，可以采用“插空”的方法，依次给每个人在当前的队列中选择一个插入的位置，即对于第`i`个人，需要将其插入队列中，并使得他的前面恰好有$k_i$个人即可。
+
+```java
+class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        // 按照身高（h）降序，人数（k）升序的顺序对数组进行排序
+        Arrays.sort(people, (person1, person2) -> person1[0] == person2[0] ? person1[1] - person2[1] : person2[0] - person1[0]);
+        List<int[]> list = new LinkedList<int[]>(); // 这是什么瞎逼操作？
+        for (int[] person : people) {
+            list.add(person[1], person);
+        }
+        return list.toArray(int[][]::new);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(logN)$。
+
 #### 419. 甲板上的战舰
 
 > ※ 完全没有思路，看了<a href="https://leetcode-cn.com/problems/battleships-in-a-board/solution/">题解</a>之后才会做，我真的是好菜啊。对二维矩阵进行扫描，扫描到`X`时，如果其上方或左方也是`X`，则不计数，否则计数加`1`。
