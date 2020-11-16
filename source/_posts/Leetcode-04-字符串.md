@@ -559,4 +559,44 @@ class Solution {
 
 > ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。
 
+#### 1657. 确定两个字符串是否接近
+
+> ※ 该题目共有四种情况：字符串长度不同，返回`false`；字符串含有的字符种类不同，返回`false`；排序后，含有的个数不同，返回`false`，其它均返回`true`。
+
+```java
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+        int[] char1Cnt = new int[26];
+        int[] char2Cnt = new int[26];
+        for (char c : word1.toCharArray()) {
+            char1Cnt[c - 'a']++;
+        }
+        for (char c : word2.toCharArray()) {
+            char2Cnt[c - 'a']++;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (char1Cnt[i] != 0 && char2Cnt[i] == 0) {
+                return false;
+            }
+            if (char1Cnt[i] == 0 && char2Cnt[i] != 0) {
+                return false;
+            }
+        }
+        Arrays.sort(char1Cnt);
+        Arrays.sort(char2Cnt);
+        for (int i = 0; i < 26; i++) {
+            if (char1Cnt[i] != char2Cnt[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
+
 -----
