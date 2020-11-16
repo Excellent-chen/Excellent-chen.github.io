@@ -11,7 +11,7 @@ tags:
 
 > <!-- Part 001 -->
 >
-> ※ 每加载一种`class`，`JVM`便会为其创建一个`Class`类型的实例，并将它们关联起来。在`Class`实例中，保存了该`class`的类名、包名、父类、实现的接口、所有方法、所有字段等，因此，若获取了某个`Class`实例，便可以通过该实例获取到该实例对应的`class`的所有信息。上述通过`Class`实例获取`class`信息的方法便成为<span style="color:blue">反射</span>。
+> ※ 每加载一种`class`，`JVM`便会为其创建一个`Class`类型的实例，并将它们关联起来。在`Class`实例中，保存了该`class`的类名、包名、父类、实现的接口、所有方法、所有字段等，因此，若获取了某个`Class`实例，便可以通过该实例获取到该实例对应的`class`的所有信息。上述通过`Class`实例获取`class`信息的方法便称为<span style="color:blue">反射</span>。
 >
 > ※ 获取一个`class`的`Class`实例，存在以下三种方法：
 >
@@ -42,7 +42,35 @@ tags:
 
 > <!-- Part 002 -->
 >
-> 
+> ※ 反射`API`提供的`Field`类封装了字段的所有信息。
+>
+> ※ 利用`Class`实例的`getField()`，`getFields()`，`getDeclaredField()`和`getDeclaredFields()`方法可以获取`Field`实例。通过`Field`实例，可以获取字段信息，如`getName()`（名称），`getType()`（类型），`getModifiers()`（修饰符）；也可以读取或设置某个对象的字段（若存在访问限制，则首先需要调用`setAccessible(true)`来访问非`public`字段）。
+
+> <!-- Part 003 -->
+>
+> ※ 反射`API`提供的`Method`类封装了方法的所有信息。
+>
+> ※ 利用`Class`实例的`getMethod()`，`getMethods()`，`getDeclareMethod()`和`getDeclaredMethods()`方法可以获取`Method`实例。通过`Method`实例，可以获取方法信息，如`getName()`，`getModifiers()`，`getReturnType()`，`getParameterTypes()`；也可以调用某个对象的方法。**注**：通过反射调用方法时，仍然遵守多态原则。
+
+> <!-- Part 004 -->
+>
+> ※ 反射`API`提供的`Constructor`类封装了构造方法的所有信息。
+>
+> ※ 利用`Class`实例的`getConstructor()`，`getConstructors()`等方法可以获取`Constructor`实例。通过`Constructor`实例，可以创建一个对象，如`newInstance(Object... parameters)`。**注**：其实也可以直接调用`Class`实例的`newInstance()`方法来创造实例，但是它只能调用该类的`public`无参数构造方法，若构造方法不是`public`或者带有参数，就无法通过`Class.newInstance`来创造。
+
+> <!-- Part 005 -->
+>
+> ※ 利用`Class`实例可以获取继承关系，如`getSuperclass()`（获取父类类型），`getInterfaces()`（获取**当前类**实现的所有接口）。**注**：对所有`interface`的`Class`调用`getSuperclass()`返回的是`null`，获取接口的父接口要用`getInterfaces()`。
+>
+> ※ 利用`Class`实例的`isAssignableFrom()`方法可以判断一个向上转型是否可以实现。
+
+> <!-- Part 006 -->
+>
+> ※ `Java`标准库提供了<span style="color:green">动态代理</span>功能，允许在运行期间动态创建一个接口的实例。<!--存疑-->
+
+#### Day 002
+
+
 
 #### Day 003
 
@@ -74,7 +102,7 @@ tags:
 >
 > ※ 泛型方法要防止重复定义方法，例如`public boolean equals(T obj)`。
 >
-> ※ 子类可以获取父类的泛型类型。
+> ※ 子类可以获取父类的泛型类型。<!--存疑-->
 
 > <!-- Part 005 -->
 >
@@ -86,7 +114,7 @@ tags:
 >
 > ※ 部分反射`API`为泛型，例如`Class<T>`、`Constructor<T>`。
 >
-> ※ 可以声明带泛型的数组，但不能直接创建带泛型的数组，必须强制转型。
+> ※ 可以声明带泛型的数组，但不能直接创建带泛型的数组，必须强制转型。<!--存疑-->
 
 #### Day 004
 
@@ -417,4 +445,8 @@ class ReverseList<T> implements Iterable<T> {
 >
 > ※ 将`List`封装成不可变集合：`List<T> unmodifiableList(List<? extends T> list)`；将`Map`封装成不可变集合：`Map<K, V> unmodifiableMap(Map<? extends K, ? extends V> m)`；将`Set`封装成不可变集合：`Set<T> unmodifiableSet(Set<? extends T> set)`。**注**：该封装实际上是通过创建一个代理拦截掉所有修改方法实现的。然而，若继续对原始可变集合进行增删，同样会影响到封装后的不可变集合。为此，如果我们希望把一个可变集合封装成不可变集合，最好在返回不可变集合后扔掉对可变集合的引用。
 
-#### TODO：反射，注解
+#### Day 005
+
+> <!-- Part 001 -->
+>
+> 
