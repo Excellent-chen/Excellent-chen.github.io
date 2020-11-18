@@ -11,6 +11,32 @@ tags:
 
 -----
 
+#### 714. 买卖股票的最佳时机含手续费
+
+> ※ 用变量`not_hold[i]`表示第`i`天不持有股票时的利润，`hold[i]`表示第`i`天持有股票时的理论，可得如下状态转移方程：
+>
+> `not_hold[i] = Math.max(not_hold[i - 1], hold[i - 1] + prices[i] - fee)`，
+>
+> `hold[i] = Math.max(hold[i], not_hold[i - 1] + prices[i])`，
+>
+> 在初始时，有`not_hold[0] = 0`，`hold[0] = - prices[0]`。
+
+```java
+class Solution {
+    public int maxProfit(int[] prices, int fee) {
+        int not_hold = 0, hold = - prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            int old_hold = not_hold;
+            not_hold = Math.max(not_hold, hold + prices[i] - fee);
+            hold = Math.max(hold, old_hold - prices[i]);
+        }
+        return not_hold;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
+
 #### 1024. 视频拼接
 
 > ※ 该题目与`55. 跳跃游戏`类似，只是多了一个转换的过程。
