@@ -30,7 +30,7 @@
 <meta property="og:description" content="Day 001   ※ 在计算机中，我们把一个任务称为一个进程；某些进程内部还需要同时执行多个子任务，我们把这些子任务称为线程。进程与线程之间的关系为：一个进程可以包含多个线程，但至少会有一个线程。注：操作系统调度的最小任务单位不是进程，而是线程！ ※ 同一个应用程序中，既可以有多个进程，又可以有多个线程，因此，实现多任务的方法有以下几种：多进程模式（每个进程只有一个线程）；多线程模式（一个进程有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-16T14:58:04.000Z">
-<meta property="article:modified_time" content="2020-11-17T11:59:56.997Z">
+<meta property="article:modified_time" content="2020-11-19T14:12:29.463Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="高级">
 <meta name="twitter:card" content="summary">
@@ -277,7 +277,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-17 19:59:56" itemprop="dateModified" datetime="2020-11-17T19:59:56+08:00">2020-11-17</time>
+        <time title="修改时间：2020-11-19 22:12:29" itemprop="dateModified" datetime="2020-11-19T22:12:29+08:00">2020-11-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -395,6 +395,186 @@
 <p>※ <code>JVM</code>允许同一个线程重复获取同一个锁，这种能被同一个线程反复获取的锁，称为<span style="color:blue">可重入锁</span>。</p>
 <p>※ 当多线程各自持有不同的锁，并互相试图获取对方已持有的锁时，将导致无限等待，此时便陷入了<span style="color:blue">死锁</span>。</p>
 <p>※ 在编写多线程应用时，要特别注意防止死锁，因为死锁一旦形成，就只能强制结束<code>JVM</code>进程。避免死锁的方法为多线程获取锁的顺序要一致！</p>
+</blockquote>
+<blockquote>
+<!-- Part 009 -->
+
+<p>※ 多线程协调运行的原则为：当条件不满足时，线程进入等待状态；当条件满足时，线程被唤醒，继续执行任务。</p>
+<p>※ <code>wait</code>和<code>notify</code>用于多线程协调运行，在<code>synchronzied</code>内部可以调用<code>wait()</code>使线程进入等待状态，但必须在已获得的锁对象上调用<code>wait()</code>方法；在<code>synchronzied</code>内部可以调用<code>notify()</code>或<code>notifyAll()</code>唤醒其它等待线程，但必须在已获得的锁对象上调用<code>notify()</code>或<code>notifyAll()</code>方法。<strong>注</strong>：已唤醒的线程需要重新获得锁后才能继续执行。<!-- 存疑（你给我解释解释，什么TM的叫TM的已获得的锁对象） --></p>
+</blockquote>
+<blockquote>
+<!-- Part 010 -->
+
+<p>※ <code>ReentrantLock</code>可以用于替代<code>synchronized</code>进行同步，与<code>synchronized</code>相比，<code>ReentrantLock</code>可以在指定时间范围内尝试获取锁，一旦超过指定时间范围，程序可以做一些额外处理，而不是无限等待下去，这样可以有效避免死锁：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">            count += n;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        lock.lock(); <span class="comment">// lock() 方法表示当前线程占用 lock 对象</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            count += n;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock(); <span class="comment">// 必须调用 unlock() 方法进行手动释放</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (lock.tryLock(<span class="number">1</span>, TimeUnit.SECONDS)) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<!-- Part 011 -->
+
+<p>※ <code>ReentrantLock</code>可以替代<code>synchronized</code>进行同步，那么该如果实现<code>synchronized</code>下的<code>wait</code>和<code>notify</code>呢？可以使用<code>Condition</code>：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TaskQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Condition condition = lock.newCondition();</span><br><span class="line">    <span class="keyword">private</span> Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addTask</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            queue.add(s);</span><br><span class="line">            condition.signalAll();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (queue.isEmpty()) &#123;</span><br><span class="line">                condition.await();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> queue.remove();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可见，使用<code>Condition</code>时，引用的<code>Condition</code>对象必须从<code>Lock</code>实例的<code>newCondition()</code>返回，这样才能获得一个绑定了<code>Lock</code>实例的<code>Condition</code>对象。</p>
+<p>※ <code>Condition</code>提供的<code>await()</code>、<code>signal()</code>、<code>signalAll()</code>方法在原理上和<code>synchronized</code>锁对象提供的<code>wait()</code>、<code>notify()</code>、<code>notifyAll()</code>方法是一致的，并且行为也是一样的：<code>await()</code>用于释放当前锁并进入等待状态；<code>signal()</code>用于唤醒某个等待线程；<code>signalAll()</code>用于唤醒所有等待线程。<strong>注</strong>：与<code>trylock()</code>类似，<code>await()</code>可以在等待指定时间后自己醒来。</p>
+</blockquote>
+<blockquote>
+ <!-- Part 012 -->
+
+<p>※ 在读多写少的场景中，利用<code>ReadWriteLock</code>可以提高读取效率：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ReadWriteLock rwlock = <span class="keyword">new</span> ReentrantReadWriteLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock rlock = rwlock.readLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock wlock = rwlock.writeLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] counts = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inc</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        wlock.lock(); <span class="comment">// 加写锁</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            counts[index] += <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            wlock.unlock(); <span class="comment">// 释放写锁</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] get() &#123;</span><br><span class="line">        rlock.lock(); <span class="comment">// 加读锁</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> Arrays.copyOf(counts, counts.length);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            rlock.unlock(); <span class="comment">// 释放读锁</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注</strong>：在论坛中，回复可以视为写入操作，它是不频繁的，浏览可以视为读取操作，它是频繁的，这种情况就可以使用<code>ReadWriteLock</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 013 -->
+
+<p>※ 在<code>Java 8</code>中，引入了新的读写锁<code>StampedLock</code>，与<code>ReadWriteLock</code>相比，前者的改进之处在于：读的过程中也允许获取写锁后写入。但是这样可能会导致读的数据不一致，因此需要一点儿额外的代码来判断读的过程中是否有写入：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> StampedLock stampedLock = <span class="keyword">new</span> StampedLock();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">(<span class="keyword">double</span> deltaX, <span class="keyword">double</span> deltaY)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> stamp = stampedLock.writeLock(); <span class="comment">// 获取写锁</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            x += deltaX;</span><br><span class="line">            y += deltaY;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            stampedLock.unlockWrite(stamp); <span class="comment">// 释放写锁</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">distanceFromOrigin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> stamp = stampedLock.tryOptimisticRead(); <span class="comment">// 获得一个乐观读锁</span></span><br><span class="line">        <span class="comment">// 注意下面两行代码不是原子操作</span></span><br><span class="line">        <span class="comment">// 假设x,y = (100,200)</span></span><br><span class="line">        <span class="keyword">double</span> currentX = x;</span><br><span class="line">        <span class="comment">// 此处已读取到x=100，但x,y可能被写线程修改为(300,400)</span></span><br><span class="line">        <span class="keyword">double</span> currentY = y;</span><br><span class="line">        <span class="comment">// 此处已读取到y，如果没有写入，读取是正确的(100,200)</span></span><br><span class="line">        <span class="comment">// 如果有写入，读取是错误的(100,400)</span></span><br><span class="line">        <span class="keyword">if</span> (!stampedLock.validate(stamp)) &#123; <span class="comment">// 检查乐观读锁后是否有其他写锁发生</span></span><br><span class="line">            stamp = stampedLock.readLock(); <span class="comment">// 获取一个悲观读锁</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                currentX = x;</span><br><span class="line">                currentY = y;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                stampedLock.unlockRead(stamp); <span class="comment">// 释放悲观读锁</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.sqrt(currentX * currentX + currentY * currentY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>与<code>ReadWriteLock</code>相比，写入的加锁是完全一致的，不同的是读取。首先，通过<code>tryOptimisticRead()</code>获取一个乐观读锁，并返回版本号；接着，待读取完成后，通过<code>validate()</code>去验证版本号，若在读取过程中没有写入，版本号不变，验证成功；若在读取过程中有写入，版本号改变，验证失败，此时将再通过获取悲观读锁进行读取。可见，<code>StampedLock</code>将读锁细分为乐观读锁和悲观读锁，其中，<span style="color:blue">乐观读锁</span>是指乐观地估计读的过程中大概率不会有写入；<span style="color:blue">悲观读锁</span>是指读的过程中拒绝有写入。然而，如此细分也是有代价的：一是代码更加复杂，二是<code>StampedLock</code>为不可重入锁，不能在一个线程中反复获取同一个锁！</p>
+</blockquote>
+<blockquote>
+<!-- Part 014 -->
+
+<p>※ 针对<code>List</code>、<code>Map</code>、<code>Set</code>、<code>Queue</code>、<code>Deque</code>等，<code>java.util.concurrent</code>包提供了对应的并发集合类：</p>
+<table>
+<thead>
+<tr>
+<th align="center">interface</th>
+<th align="center">non-thread-safe</th>
+<th align="center">thread-safe</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>List</code></td>
+<td align="center"><code>ArrayList</code></td>
+<td align="center"><code>CopyOnWriteArrayList</code></td>
+</tr>
+<tr>
+<td align="center"><code>Map</code></td>
+<td align="center"><code>HashMap</code></td>
+<td align="center"><code>ConcurrentHashMap</code></td>
+</tr>
+<tr>
+<td align="center"><code>Set</code></td>
+<td align="center"><code>HashSet/TreeSet</code></td>
+<td align="center"><code>CopyOnWriteArraySet</code></td>
+</tr>
+<tr>
+<td align="center"><code>Queue</code></td>
+<td align="center"><code>ArrayDeque/LinkedList</code></td>
+<td align="center"><code>ArrayBlockingQueue/LinkedBlockingQueue</code></td>
+</tr>
+<tr>
+<td align="center"><code>Deque</code></td>
+<td align="center"><code>ArrayDeque/LinkedList</code></td>
+<td align="center"><code>LinkedBlockingDeque</code></td>
+</tr>
+</tbody></table>
+<p>使用这些并发集合与使用非线程安全的集合类完全相同。</p>
+<p>※ <code>java.util.Collections</code>工具类还提供了一个旧的线程安全集合转换器：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Map unsafeMap = <span class="keyword">new</span> HashMap();</span><br><span class="line">Map threadSafeMap = Collections.synchronizedMap(unsafeMap);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该转换器实际上只是用一个包装类包装了非线程安全的<code>Map</code>，然后对所有读写方法都用<code>synchronized</code>加锁，这样获取的线程安全集合的性能比<code>java.util.concurrent</code>集合要低很多，不推荐使用！</p>
+</blockquote>
+<blockquote>
+<!-- Part 015 -->
+
+<p>※ <code>java.util.concurrent</code>包除了提供底层锁、并发集合外，还提供了一组原子操作的封装类，这些封装类位于<code>java.util.concurrent.atomic</code>包中。</p>
+<p>※ <code>Atomic</code>类是通过<strong>无锁</strong>的方式实现的线程安全访问，它的主要原理是利用了<code>CAS(Compare and Set)</code>。其中，<code>CAS</code>是指若<code>AtomicInteger</code>的当前值为<code>prev</code>，那么就更新为<code>next</code>，返回<code>true</code>；若<code>AtomicInteger</code>的当前值不为<code>prev</code>，就什么都不干，返回<code>false</code>。通过<code>CAS</code>操作并配合<code>do ... while</code>循环，即使其它线程修改了<code>AtomicInteger</code>的值，最终的结果也是正确的。<strong>注</strong>：该类适用于计数器，累加器等。</p>
+</blockquote>
+<blockquote>
+<!-- Part 016 -->
+
+<p>※ <code>Java</code>语言虽然内置了多线程支持，启动一个新线程非常方便，但是，创建线程需要操作系统资源（线程资源，栈空间等），频繁创建和销毁线程需要消耗大量时间。如果可以复用一组线程，那么就可以把很多小任务让一组线程来执行，而不是一个任务对应一个新线程，这种能接收大量小任务并进行分发处理的就是<span style="color:blue">线程池</span>。换句话说，线程池内部维护了若干个线程，没有任务的时候，这些线程均处于等待状态，有新任务的时候，就分配一个空闲线程执行。若所有线程均处于忙碌状态，新任务要么放入队列等待，要么增加一个新线程进行处理。</p>
+<p>※ <code>Java</code>标准库提供了<code>ExecutorService</code>接口表示线程池，其典型用法如下：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建固定大小的线程池:</span></span><br><span class="line">ExecutorService executor = Executors.newFixedThreadPool(<span class="number">3</span>);</span><br><span class="line"><span class="comment">// 提交任务:</span></span><br><span class="line">executor.submit(task1);</span><br><span class="line">executor.submit(task2);</span><br><span class="line">executor.submit(task3);</span><br><span class="line">executor.submit(task4);</span><br><span class="line">executor.submit(task5);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于<code>ExecutorService</code>接口，<code>Java</code>标准库提供的几个常用实现类有：<code>FixedThreadPoll</code>，线程数固定的线程池；<code>ChchedThreadPoll</code>，线程数根据任务动态调整的线程池；<code>SingleThreadExecutor</code>，仅单线程执行的线程池。</p>
+<p>※ 线程池在程序结束的时候要关闭！使用<code>shutdown()</code>方法关闭线程池时，会等待正在执行的任务完成后再关闭；使用<code>shutdownNow()</code>方法关闭线程池时，会立即停止正在执行的任务；使用<code>awaitTermination()</code>方法关闭线程池时，会等待指定的时间让线程池关闭。</p>
+<p>※ 还有一种任务，需要定期反复执行，如每秒刷新证券的价格。这种任务本身固定，需要反复执行，可以使用<code>ScheduledThreadPool</code>，放入其中的任务可以定期反复执行：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ScheduledExecutorService ses = Executors.newScheduledThreadPool(<span class="number">4</span>);</span><br><span class="line"><span class="comment">// 1秒后执行一次性任务:</span></span><br><span class="line">ses.schedule(<span class="keyword">new</span> Task(<span class="string">&quot;one-time&quot;</span>), <span class="number">1</span>, TimeUnit.SECONDS);</span><br><span class="line"><span class="comment">// 2秒后开始执行定时任务，每3秒执行:</span></span><br><span class="line">ses.scheduleAtFixedRate(<span class="keyword">new</span> Task(<span class="string">&quot;fixed-rate&quot;</span>), <span class="number">2</span>, <span class="number">3</span>, TimeUnit.SECONDS);</span><br><span class="line"><span class="comment">// 2秒后开始执行定时任务，以3秒为间隔执行:</span></span><br><span class="line">ses.scheduleWithFixedDelay(<span class="keyword">new</span> Task(<span class="string">&quot;fixed-delay&quot;</span>), <span class="number">2</span>, <span class="number">3</span>, TimeUnit.SECONDS);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意<code>FixedRate</code>和<code>FixedDelay</code>的区别：前者是指任务总是以固定时间间隔触发，不管执行时间有多长；后者是指上一次任务执行完毕后，再等待固定的时间间隔执行任务。<span style="color:red"><strong>注</strong></span>：在<code>FixedRate</code>模式下，假设任务的执行时间超过了其运行周期，则后续执行可能会延迟开始，但不会并发执行；此外，若任务的任何执行遇到了异常，将禁止后续任务的执行。</p>
+<p>※ <code>Java</code>标准库提供的<code>java.util.Timer</code>类同样可以定期执行任务，但是，一个<code>Timer</code>只能定期执行一个任务，多个定时任务必须启动多个<code>Timer</code>，而一个<code>ScheduledThreadPoll</code>可以调度多个定时任务，因此完全可以用<code>ScheduledThreadPoll</code>取代旧的<code>Timer</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 017 -->
+
+<p>※ 使用<code>Java</code>标准库提供的线程池执行多个任务是非常方便的，我们提交的任务只需要实现<code>Runnable</code>接口即可让线程池去执行：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String result;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.result = longTimeCalculation(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>但是，<code>Runnable</code>接口没有返回值，如果任务需要一个返回结果，那么只能保存到变量，并提供额外的方法读取。为此，<code>Java</code>标准库提供了一个<code>Callable</code>接口，与<code>Runnable</code>接口相比，它多了一个返回值：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> longTimeCalculation(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>并且<code>Callable</code>接口是一个泛型接口，可以返回指定类型的结果。那么问题来了，该如何获取异步执行的结果呢？如果仔细查看<code>ExecutorService.submit()</code>方法，可以看到，它返回了一个<code>Future</code>类型的实例，该实例代表一个未来能获取结果的对象：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService executor = Executors.newFixedThreadPool(<span class="number">4</span>); </span><br><span class="line"><span class="comment">// 定义任务:</span></span><br><span class="line">Callable&lt;String&gt; task = <span class="keyword">new</span> Task();</span><br><span class="line"><span class="comment">// 提交任务并获得Future:</span></span><br><span class="line">Future&lt;String&gt; future = executor.submit(task);</span><br><span class="line"><span class="comment">// 从Future获取异步执行返回的结果:</span></span><br><span class="line">String result = future.get(); <span class="comment">// 可能阻塞</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当我们提交一个<code>Callable</code>任务后，同时会获得一个<code>Future</code>对象，然后，我们在主线程某个时刻调用该对象的<code>get()</code>方法，即可获得异步执行的结果。<strong>注</strong>：在调用<code>get()</code>时，如果异步任务已经执行完成，则可以直接获得结果；如果异步任务尚未执行完成，那么<code>get()</code>会阻塞，直到任务完成后才返回结果。</p>
+<p>※ 一个<code>Future&lt;V&gt;</code>接口表示一个未来可能会返回的结果，它定义的方法有：<code>get()</code>，获取结果，但可能会等待；<code>get(long timeout, TimeUnit unit)</code>，获取结果，但只等待指定的时间；<code>isDone()</code>，判断任务是否已经完成；<code>cancel(boolean mayInterruptIfRunning)</code>，取消当前任务。</p>
+</blockquote>
+<blockquote>
+<!-- Part 018 -->
+
+<p>※ 使用<code>Future</code>获得异步执行结果时，要么调用阻塞方法<code>get()</code>，要么轮询查看<code>isDone()</code>是否为<code>true</code>，这两种方法均不是很好，因为主线程也会被迫等待。从<code>Java 8</code>引入了<code>CompletableFuture</code>，它对<code>Future</code>进行了改进，可以传入回调对象，当异步任务完成或者发生异常时，将自动调用回调对象的回调方法。</p>
+<p>※ 创建一个<code>CompletableFuture</code>是通过<code>CompletableFuture.supplyAsync()</code>实现的，它需要一个实现了<code>Supplier</code>接口的对象。紧接着，<code>CompletableFuture</code>已经被提交给默认的线程池执行了，我们需要定义的是<code>CompletableFuture</code>完成时和异常时需要回调的实例。完成时，<code>CompletableFuture</code>会调用<code>Consumer</code>对象；异常时，<code>CompletableFuture</code>会调用<code>Function</code>对象。</p>
+<p>※ 与<code>Future</code>相比，<code>CompletableFuture</code>更大的优势在于：既可以串行化执行，又可以并行化执行。具体地，<code>thenApplyAsync()</code>方法用于串行化另一个<code>CompletableFuture</code>；<code>anyOf()</code>和<code>allOf()</code>方法用于并行化多个<code>CompletableFuture</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 019 -->
+
+<p>※ <code>Java 7</code>开始引入了一种新的<code>Fork/Join</code>线程池，它可以执行一种特殊的任务：将一个大任务拆成多个小任务并行执行。<strong>注</strong>：任务类必须继承自<code>RecursiveTask</code>或<code>RecursiveAction</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 020 -->
+
+<p>※ <code>Thread</code>对象代表一个线程，在代码中调用<code>Thread.currentThread()</code>方法可以获取当前线程。</p>
+<p>※ 在一个线程中，横跨若干种方法调用，需要传递的对象，通常称之为上下文，它是一种状态，可以是用户身份，也可以是任务信息等。给每个方法增加一个上下文参数非常麻烦，而且有些时候，如果调用链有无法修改源码的第三方库，上下文参数就传不进去了。<code>Java</code>标准库提供了一个特殊的<code>TheadLocal</code>，它可以在一个线程中传递同一个对象。</p>
+<p>※ <code>ThreadLocal</code>实例通常以静态字段初始化，其典型使用方式如下：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> ThreadLocal&lt;User&gt; threadLocalUser = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">processUser</span><span class="params">(user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        threadLocalUser.set(user);</span><br><span class="line">        step1();</span><br><span class="line">        step2();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        threadLocalUser.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过设置一个<code>User</code>实例关联到<code>ThreadLocal</code>中，在移除之前，所有方法都可以随时获取到该<code>User</code>实例：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">step1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    User u = threadLocalUser.get();</span><br><span class="line">    log();</span><br><span class="line">    printUser();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">log</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    User u = threadLocalUser.get();</span><br><span class="line">    println(u.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">step2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    User u = threadLocalUser.get();</span><br><span class="line">    checkUser(u.id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注</strong>：<code>ThreadLocal</code>一定要在<code>finally</code>中清除，因为当前线程执行完相关代码后，很可能会被重新放入线程池中，若<code>ThreadLocal</code>没有被清除，会把上一次的状态带进去。</p>
+<p>※ 为了保证能释放<code>ThreadLocal</code>关联的实例，可以通过<code>AutoCloseable</code>接口配合<code>try (resource) &#123;...&#125;</code>结构，让编译器自动为我们关闭：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserContext</span> <span class="keyword">implements</span> <span class="title">AutoCloseable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;String&gt; ctx = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserContext</span><span class="params">(String user)</span> </span>&#123;</span><br><span class="line">        ctx.set(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">currentUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ctx.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ctx.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用的时候，借助<code>try (resource) &#123;...&#125;</code>结构，可以这么写：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (<span class="keyword">var</span> ctx = <span class="keyword">new</span> UserContext(<span class="string">&quot;Bob&quot;</span>)) &#123;</span><br><span class="line">    <span class="comment">// 可任意调用UserContext.currentUser():</span></span><br><span class="line">    String currentUser = UserContext.currentUser();</span><br><span class="line">&#125; <span class="comment">// 在此自动调用UserContext.close()方法释放ThreadLocal关联对象</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这样就在<code>UserContext</code>中完全封装了<code>ThreadLocal</code>，外部代码在<code>try (resource) &#123;...&#125;</code>内部可以随时调用<code>UserContext.currentUser()</code>获取当前线程绑定的用户名。</p>
 </blockquote>
 
     </div>
