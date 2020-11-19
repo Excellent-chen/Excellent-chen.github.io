@@ -37,6 +37,33 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 983. 最低票价
+
+> ※ 记第`N`天的最低票价为`F(N)`，假设已经求出了前`N - 1`天的最低票价，现在来求`F(N)`。如果第`N`天要选择有效期长度为`dayOfPass`的通行证，其价格为`cost`，那么在第`N - dayOfPass`天时就应该买入该通行证，才能使利益最大化；而我们已经求出了前`N - 1`天的最低票价，即`F(N - dayOfPass)`是已知的。因此，对于该选择，其花费为`F(N - dayOfPass) + cost`，取所有选择的最小值更新`F(N)`即可。
+
+```java
+class Solution {
+    public int mincostTickets(int[] days, int[] costs) {
+        int pos = 0, n = days.length;
+        int[] dp = new int[days[n - 1] + 1];
+        for (int i = 1; i < dp.length; i++) {
+            if (days[pos] == i) {
+                int d1 = i - 1 > 0 ? i - 1 : 0;
+                int d2 = i - 7 > 0 ? i - 7 : 0;
+                int d3 = i - 30 > 0 ? i - 30 : 0;
+                dp[i] = Math.min(dp[d1] + costs[0], Math.min(dp[d2] + costs[1], dp[d3] + costs[2]));
+                pos++;
+            } else {
+                dp[i] = dp[i - 1];
+            }
+        }
+        return dp[dp.length - 1];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(W)$，其中，`W`表示旅行计划中日期的最大值；空间复杂度：$O(W)$。
+
 #### 1024. 视频拼接
 
 > ※ 该题目与`55. 跳跃游戏`类似，只是多了一个转换的过程。
