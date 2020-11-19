@@ -179,3 +179,362 @@ public synchronized void add(int n) { // 锁住this
 >
 > ※ 在编写多线程应用时，要特别注意防止死锁，因为死锁一旦形成，就只能强制结束`JVM`进程。避免死锁的方法为多线程获取锁的顺序要一致！
 
+> <!-- Part 009 -->
+>
+> ※ 多线程协调运行的原则为：当条件不满足时，线程进入等待状态；当条件满足时，线程被唤醒，继续执行任务。
+>
+> ※ `wait`和`notify`用于多线程协调运行，在`synchronzied`内部可以调用`wait()`使线程进入等待状态，但必须在已获得的锁对象上调用`wait()`方法；在`synchronzied`内部可以调用`notify()`或`notifyAll()`唤醒其它等待线程，但必须在已获得的锁对象上调用`notify()`或`notifyAll()`方法。**注**：已唤醒的线程需要重新获得锁后才能继续执行。<!-- 存疑（你给我解释解释，什么TM的叫TM的已获得的锁对象） -->
+
+> <!-- Part 010 -->
+>
+> ※ `ReentrantLock`可以用于替代`synchronized`进行同步，与`synchronized`相比，`ReentrantLock`可以在指定时间范围内尝试获取锁，一旦超过指定时间范围，程序可以做一些额外处理，而不是无限等待下去，这样可以有效避免死锁：
+
+```java
+public class Counter {
+    private int count;
+
+    public void add(int n) {
+        synchronized(this) {
+            count += n;
+        }
+    }
+}
+```
+
+```java
+public class Counter {
+    private final Lock lock = new ReentrantLock();
+    private int count;
+
+    public void add(int n) {
+        lock.lock(); // lock() 方法表示当前线程占用 lock 对象
+        try {
+            count += n;
+        } finally {
+            lock.unlock(); // 必须调用 unlock() 方法进行手动释放
+        }
+    }
+}
+```
+
+```java
+if (lock.tryLock(1, TimeUnit.SECONDS)) {
+    try {
+        ...
+    } finally {
+        lock.unlock();
+    }
+}
+```
+
+> <!-- Part 011 -->
+>
+> ※ `ReentrantLock`可以替代`synchronized`进行同步，那么该如果实现`synchronized`下的`wait`和`notify`呢？可以使用`Condition`：
+
+```java
+class TaskQueue {
+    private final Lock lock = new ReentrantLock();
+    private final Condition condition = lock.newCondition();
+    private Queue<String> queue = new LinkedList<>();
+
+    public void addTask(String s) {
+        lock.lock();
+        try {
+            queue.add(s);
+            condition.signalAll();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public String getTask() {
+        lock.lock();
+        try {
+            while (queue.isEmpty()) {
+                condition.await();
+            }
+            return queue.remove();
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
+
+> 可见，使用`Condition`时，引用的`Condition`对象必须从`Lock`实例的`newCondition()`返回，这样才能获得一个绑定了`Lock`实例的`Condition`对象。
+>
+> ※ `Condition`提供的`await()`、`signal()`、`signalAll()`方法在原理上和`synchronized`锁对象提供的`wait()`、`notify()`、`notifyAll()`方法是一致的，并且行为也是一样的：`await()`用于释放当前锁并进入等待状态；`signal()`用于唤醒某个等待线程；`signalAll()`用于唤醒所有等待线程。**注**：与`trylock()`类似，`await()`可以在等待指定时间后自己醒来。
+
+>  <!-- Part 012 -->
+>
+> ※ 在读多写少的场景中，利用`ReadWriteLock`可以提高读取效率：
+
+```java
+public class Counter {
+    private final ReadWriteLock rwlock = new ReentrantReadWriteLock();
+    private final Lock rlock = rwlock.readLock();
+    private final Lock wlock = rwlock.writeLock();
+    private int[] counts = new int[10];
+
+    public void inc(int index) {
+        wlock.lock(); // 加写锁
+        try {
+            counts[index] += 1;
+        } finally {
+            wlock.unlock(); // 释放写锁
+        }
+    }
+
+    public int[] get() {
+        rlock.lock(); // 加读锁
+        try {
+            return Arrays.copyOf(counts, counts.length);
+        } finally {
+            rlock.unlock(); // 释放读锁
+        }
+    }
+}
+```
+
+> **注**：在论坛中，回复可以视为写入操作，它是不频繁的，浏览可以视为读取操作，它是频繁的，这种情况就可以使用`ReadWriteLock`。
+
+> <!-- Part 013 -->
+>
+> ※ 在`Java 8`中，引入了新的读写锁`StampedLock`，与`ReadWriteLock`相比，前者的改进之处在于：读的过程中也允许获取写锁后写入。但是这样可能会导致读的数据不一致，因此需要一点儿额外的代码来判断读的过程中是否有写入：
+
+```java
+public class Point {
+    private final StampedLock stampedLock = new StampedLock();
+
+    private double x;
+    private double y;
+
+    public void move(double deltaX, double deltaY) {
+        long stamp = stampedLock.writeLock(); // 获取写锁
+        try {
+            x += deltaX;
+            y += deltaY;
+        } finally {
+            stampedLock.unlockWrite(stamp); // 释放写锁
+        }
+    }
+
+    public double distanceFromOrigin() {
+        long stamp = stampedLock.tryOptimisticRead(); // 获得一个乐观读锁
+        // 注意下面两行代码不是原子操作
+        // 假设x,y = (100,200)
+        double currentX = x;
+        // 此处已读取到x=100，但x,y可能被写线程修改为(300,400)
+        double currentY = y;
+        // 此处已读取到y，如果没有写入，读取是正确的(100,200)
+        // 如果有写入，读取是错误的(100,400)
+        if (!stampedLock.validate(stamp)) { // 检查乐观读锁后是否有其他写锁发生
+            stamp = stampedLock.readLock(); // 获取一个悲观读锁
+            try {
+                currentX = x;
+                currentY = y;
+            } finally {
+                stampedLock.unlockRead(stamp); // 释放悲观读锁
+            }
+        }
+        return Math.sqrt(currentX * currentX + currentY * currentY);
+    }
+}
+```
+
+> 与`ReadWriteLock`相比，写入的加锁是完全一致的，不同的是读取。首先，通过`tryOptimisticRead()`获取一个乐观读锁，并返回版本号；接着，待读取完成后，通过`validate()`去验证版本号，若在读取过程中没有写入，版本号不变，验证成功；若在读取过程中有写入，版本号改变，验证失败，此时将再通过获取悲观读锁进行读取。可见，`StampedLock`将读锁细分为乐观读锁和悲观读锁，其中，<span style="color:blue">乐观读锁</span>是指乐观地估计读的过程中大概率不会有写入；<span style="color:blue">悲观读锁</span>是指读的过程中拒绝有写入。然而，如此细分也是有代价的：一是代码更加复杂，二是`StampedLock`为不可重入锁，不能在一个线程中反复获取同一个锁！
+
+> <!-- Part 014 -->
+>
+> ※ 针对`List`、`Map`、`Set`、`Queue`、`Deque`等，`java.util.concurrent`包提供了对应的并发集合类：
+>
+> | interface |     non-thread-safe     |               thread-safe                |
+> | :-------: | :---------------------: | :--------------------------------------: |
+> |  `List`   |       `ArrayList`       |          `CopyOnWriteArrayList`          |
+> |   `Map`   |        `HashMap`        |           `ConcurrentHashMap`            |
+> |   `Set`   |    `HashSet/TreeSet`    |          `CopyOnWriteArraySet`           |
+> |  `Queue`  | `ArrayDeque/LinkedList` | `ArrayBlockingQueue/LinkedBlockingQueue` |
+> |  `Deque`  | `ArrayDeque/LinkedList` |          `LinkedBlockingDeque`           |
+>
+> 使用这些并发集合与使用非线程安全的集合类完全相同。
+>
+> ※ `java.util.Collections`工具类还提供了一个旧的线程安全集合转换器：
+
+```java
+Map unsafeMap = new HashMap();
+Map threadSafeMap = Collections.synchronizedMap(unsafeMap);
+```
+
+> 该转换器实际上只是用一个包装类包装了非线程安全的`Map`，然后对所有读写方法都用`synchronized`加锁，这样获取的线程安全集合的性能比`java.util.concurrent`集合要低很多，不推荐使用！
+
+> <!-- Part 015 -->
+>
+> ※ `java.util.concurrent`包除了提供底层锁、并发集合外，还提供了一组原子操作的封装类，这些封装类位于`java.util.concurrent.atomic`包中。
+>
+> ※ `Atomic`类是通过**无锁**的方式实现的线程安全访问，它的主要原理是利用了`CAS(Compare and Set)`。其中，`CAS`是指若`AtomicInteger`的当前值为`prev`，那么就更新为`next`，返回`true`；若`AtomicInteger`的当前值不为`prev`，就什么都不干，返回`false`。通过`CAS`操作并配合`do ... while`循环，即使其它线程修改了`AtomicInteger`的值，最终的结果也是正确的。**注**：该类适用于计数器，累加器等。
+
+> <!-- Part 016 -->
+>
+> ※ `Java`语言虽然内置了多线程支持，启动一个新线程非常方便，但是，创建线程需要操作系统资源（线程资源，栈空间等），频繁创建和销毁线程需要消耗大量时间。如果可以复用一组线程，那么就可以把很多小任务让一组线程来执行，而不是一个任务对应一个新线程，这种能接收大量小任务并进行分发处理的就是<span style="color:blue">线程池</span>。换句话说，线程池内部维护了若干个线程，没有任务的时候，这些线程均处于等待状态，有新任务的时候，就分配一个空闲线程执行。若所有线程均处于忙碌状态，新任务要么放入队列等待，要么增加一个新线程进行处理。
+>
+> ※ `Java`标准库提供了`ExecutorService`接口表示线程池，其典型用法如下：
+
+```java
+// 创建固定大小的线程池:
+ExecutorService executor = Executors.newFixedThreadPool(3);
+// 提交任务:
+executor.submit(task1);
+executor.submit(task2);
+executor.submit(task3);
+executor.submit(task4);
+executor.submit(task5);
+```
+
+> 对于`ExecutorService`接口，`Java`标准库提供的几个常用实现类有：`FixedThreadPoll`，线程数固定的线程池；`ChchedThreadPoll`，线程数根据任务动态调整的线程池；`SingleThreadExecutor`，仅单线程执行的线程池。
+>
+> ※ 线程池在程序结束的时候要关闭！使用`shutdown()`方法关闭线程池时，会等待正在执行的任务完成后再关闭；使用`shutdownNow()`方法关闭线程池时，会立即停止正在执行的任务；使用`awaitTermination()`方法关闭线程池时，会等待指定的时间让线程池关闭。
+>
+> ※ 还有一种任务，需要定期反复执行，如每秒刷新证券的价格。这种任务本身固定，需要反复执行，可以使用`ScheduledThreadPool`，放入其中的任务可以定期反复执行：
+
+```java
+ScheduledExecutorService ses = Executors.newScheduledThreadPool(4);
+// 1秒后执行一次性任务:
+ses.schedule(new Task("one-time"), 1, TimeUnit.SECONDS);
+// 2秒后开始执行定时任务，每3秒执行:
+ses.scheduleAtFixedRate(new Task("fixed-rate"), 2, 3, TimeUnit.SECONDS);
+// 2秒后开始执行定时任务，以3秒为间隔执行:
+ses.scheduleWithFixedDelay(new Task("fixed-delay"), 2, 3, TimeUnit.SECONDS);
+```
+
+> 注意`FixedRate`和`FixedDelay`的区别：前者是指任务总是以固定时间间隔触发，不管执行时间有多长；后者是指上一次任务执行完毕后，再等待固定的时间间隔执行任务。<span style="color:red">**注**</span>：在`FixedRate`模式下，假设任务的执行时间超过了其运行周期，则后续执行可能会延迟开始，但不会并发执行；此外，若任务的任何执行遇到了异常，将禁止后续任务的执行。
+>
+> ※ `Java`标准库提供的`java.util.Timer`类同样可以定期执行任务，但是，一个`Timer`只能定期执行一个任务，多个定时任务必须启动多个`Timer`，而一个`ScheduledThreadPoll`可以调度多个定时任务，因此完全可以用`ScheduledThreadPoll`取代旧的`Timer`。
+
+> <!-- Part 017 -->
+>
+> ※ 使用`Java`标准库提供的线程池执行多个任务是非常方便的，我们提交的任务只需要实现`Runnable`接口即可让线程池去执行：
+
+```java
+class Task implements Runnable {
+    public String result;
+
+    public void run() {
+        this.result = longTimeCalculation(); 
+    }
+}
+```
+
+> 但是，`Runnable`接口没有返回值，如果任务需要一个返回结果，那么只能保存到变量，并提供额外的方法读取。为此，`Java`标准库提供了一个`Callable`接口，与`Runnable`接口相比，它多了一个返回值：
+
+```java
+class Task implements Callable<String> {
+    public String call() throws Exception {
+        return longTimeCalculation(); 
+    }
+}
+```
+
+> 并且`Callable`接口是一个泛型接口，可以返回指定类型的结果。那么问题来了，该如何获取异步执行的结果呢？如果仔细查看`ExecutorService.submit()`方法，可以看到，它返回了一个`Future`类型的实例，该实例代表一个未来能获取结果的对象：
+
+```java
+ExecutorService executor = Executors.newFixedThreadPool(4); 
+// 定义任务:
+Callable<String> task = new Task();
+// 提交任务并获得Future:
+Future<String> future = executor.submit(task);
+// 从Future获取异步执行返回的结果:
+String result = future.get(); // 可能阻塞
+```
+
+> 当我们提交一个`Callable`任务后，同时会获得一个`Future`对象，然后，我们在主线程某个时刻调用该对象的`get()`方法，即可获得异步执行的结果。**注**：在调用`get()`时，如果异步任务已经执行完成，则可以直接获得结果；如果异步任务尚未执行完成，那么`get()`会阻塞，直到任务完成后才返回结果。
+>
+> ※ 一个`Future<V>`接口表示一个未来可能会返回的结果，它定义的方法有：`get()`，获取结果，但可能会等待；`get(long timeout, TimeUnit unit)`，获取结果，但只等待指定的时间；`isDone()`，判断任务是否已经完成；`cancel(boolean mayInterruptIfRunning)`，取消当前任务。
+
+> <!-- Part 018 -->
+>
+> ※ 使用`Future`获得异步执行结果时，要么调用阻塞方法`get()`，要么轮询查看`isDone()`是否为`true`，这两种方法均不是很好，因为主线程也会被迫等待。从`Java 8`引入了`CompletableFuture`，它对`Future`进行了改进，可以传入回调对象，当异步任务完成或者发生异常时，将自动调用回调对象的回调方法。
+>
+> ※ 创建一个`CompletableFuture`是通过`CompletableFuture.supplyAsync()`实现的，它需要一个实现了`Supplier`接口的对象。紧接着，`CompletableFuture`已经被提交给默认的线程池执行了，我们需要定义的是`CompletableFuture`完成时和异常时需要回调的实例。完成时，`CompletableFuture`会调用`Consumer`对象；异常时，`CompletableFuture`会调用`Function`对象。
+>
+> ※ 与`Future`相比，`CompletableFuture`更大的优势在于：既可以串行化执行，又可以并行化执行。具体地，`thenApplyAsync()`方法用于串行化另一个`CompletableFuture`；`anyOf()`和`allOf()`方法用于并行化多个`CompletableFuture`。
+
+> <!-- Part 019 -->
+>
+> ※ `Java 7`开始引入了一种新的`Fork/Join`线程池，它可以执行一种特殊的任务：将一个大任务拆成多个小任务并行执行。**注**：任务类必须继承自`RecursiveTask`或`RecursiveAction`。
+
+> <!-- Part 020 -->
+>
+> ※ `Thread`对象代表一个线程，在代码中调用`Thread.currentThread()`方法可以获取当前线程。
+>
+> ※ 在一个线程中，横跨若干种方法调用，需要传递的对象，通常称之为上下文，它是一种状态，可以是用户身份，也可以是任务信息等。给每个方法增加一个上下文参数非常麻烦，而且有些时候，如果调用链有无法修改源码的第三方库，上下文参数就传不进去了。`Java`标准库提供了一个特殊的`TheadLocal`，它可以在一个线程中传递同一个对象。
+>
+> ※ `ThreadLocal`实例通常以静态字段初始化，其典型使用方式如下：
+
+```java
+static ThreadLocal<User> threadLocalUser = new ThreadLocal<>();
+
+void processUser(user) {
+    try {
+        threadLocalUser.set(user);
+        step1();
+        step2();
+    } finally {
+        threadLocalUser.remove();
+    }
+}
+```
+
+> 通过设置一个`User`实例关联到`ThreadLocal`中，在移除之前，所有方法都可以随时获取到该`User`实例：
+
+```java
+void step1() {
+    User u = threadLocalUser.get();
+    log();
+    printUser();
+}
+
+void log() {
+    User u = threadLocalUser.get();
+    println(u.name);
+}
+
+void step2() {
+    User u = threadLocalUser.get();
+    checkUser(u.id);
+}
+```
+
+> **注**：`ThreadLocal`一定要在`finally`中清除，因为当前线程执行完相关代码后，很可能会被重新放入线程池中，若`ThreadLocal`没有被清除，会把上一次的状态带进去。
+>
+> ※ 为了保证能释放`ThreadLocal`关联的实例，可以通过`AutoCloseable`接口配合`try (resource) {...}`结构，让编译器自动为我们关闭：
+
+```java
+public class UserContext implements AutoCloseable {
+
+    static final ThreadLocal<String> ctx = new ThreadLocal<>();
+
+    public UserContext(String user) {
+        ctx.set(user);
+    }
+
+    public static String currentUser() {
+        return ctx.get();
+    }
+
+    @Override
+    public void close() {
+        ctx.remove();
+    }
+}
+```
+
+> 使用的时候，借助`try (resource) {...}`结构，可以这么写：
+
+```java
+try (var ctx = new UserContext("Bob")) {
+    // 可任意调用UserContext.currentUser():
+    String currentUser = UserContext.currentUser();
+} // 在此自动调用UserContext.close()方法释放ThreadLocal关联对象
+```
+
+> 这样就在`UserContext`中完全封装了`ThreadLocal`，外部代码在`try (resource) {...}`内部可以随时调用`UserContext.currentUser()`获取当前线程绑定的用户名。
