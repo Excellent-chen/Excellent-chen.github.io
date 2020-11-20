@@ -120,6 +120,33 @@ class Solution {
 
 > ※ 时间复杂度：$O(M * N)$，其中，`M`表示石块总重，`N`表示石块的个数；空间复杂度：$O(M)$。
 
+#### 1143. 最长公共子序列
+
+> ※ 令`dp[i][j]`表示字符串`S1[0:i]`与字符串`S2[0:j]`的最长公共子序列，则有`S1[i] = S2[j]`时，`dp[i][j] = dp[i - 1][j - 1]`；`S1[i] != S2[j]`时，`dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j])`。
+
+```java
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        int rows = text1.length(), cols = text2.length();
+        int[][] dp = new int[rows + 1][cols + 1];
+        char[] chars1 = text1.toCharArray();
+        char[] chars2 = text2.toCharArray();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (chars1[i] == chars2[j]) {
+                    dp[i + 1][j + 1] = dp[i][j] + 1;
+                } else {
+                    dp[i + 1][j + 1] = Math.max(dp[i][j + 1], dp[i + 1][j]);
+                }
+            }
+        }
+        return dp[rows][cols];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(MN)$。
+
 #### 1314. 矩阵区域和
 
 > ※ 用二维数组`dp`表示`mat`的前缀和，其中，`dp[i][j]`表示`mat`中以`(0, 0)`为左上角，`(i - 1, j - 1)`为右下角的子矩形的元素之和。题目需要对`mat`中的每个位置，计算以`(i - K, j - K)`为左上角，`(i + K, j + K)`为右下角的子矩形的元素之和，我们可以在前缀和的帮助下，通过：
