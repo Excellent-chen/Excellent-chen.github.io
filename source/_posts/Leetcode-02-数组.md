@@ -1202,6 +1202,41 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 1282. 用户分组
+
+> ※ 首先，用`HashMap`对所有用户进行“粗分组”，其中，`Key`对应了`groupSize`，表示用户组的大小；`value`对应了`userList`，表示用户组中的所有用户；接着，对每个键值对中的`value`进行细分组，即每经过`key`个用户，便新建一个链表，用于保存下一个用户分组。
+
+```java
+class Solution {
+    public List<List<Integer>> groupThePeople(int[] groupSizes) {
+        int n = groupSizes.length;
+        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        for (int i = 0; i < n; i++) {
+            List<Integer> list = map.getOrDefault(groupSizes[i], new LinkedList<Integer>());
+            list.add(i);
+            map.put(groupSizes[i], list);
+        }
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
+            int count = 0;
+            List<Integer> list = new LinkedList<Integer>();
+            for (int index : entry.getValue()) {
+                count++;
+                list.add(index);
+                if (count % entry.getKey() == 0) {
+                    count = 0;
+                    res.add(list);
+                    list = new LinkedList<Integer>();
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 1395. 统计作战单位数
 
 > ※ 该题目最先能想到的便是利用暴力法，但是暴力法的时间复杂度较高，有没有更好的方法呢？有的，枚举中间点就可以使得时间复杂度降至$O(N^2)$。具体来说，枚举三元组`(i, j, k)`中的`j`，并统计：出现在`j`左侧并且比`j`评分低的士兵数量`l_s`；出现在`j`左侧并且比`j`屏风高的士兵数量`l_l`；出现在`j`右侧并且比`j`评分低的士兵数量`r_s`；出现在`j`右侧并且比`j`评分高的士兵数量`r_l`。这样一来，以`j`为中间点的满足条件的三元组数量为：`l_s * r_l + l_l * r_s`。
