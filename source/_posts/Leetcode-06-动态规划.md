@@ -11,6 +11,32 @@ tags:
 
 -----
 
+#### 516. 最长回文子序列
+
+> ※ 建立二维数组`dp[s.length()][dp.length()]`，其中，`dp[i][j]`表示字符串第`i`个字符与第`j`个字符之间的所有字符构成的子字符串中最长回文子序列的长度（包括第`i`个字符和第`j`个字符）。易知，若`s.charAt(i) == s.charAt(j)`，则有`dp[i][j] = dp[i + 1][j - 1] + 2`；若`s.charAt(i) != s.charAt(j)`，则有`dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1])`。基于上述递推公式，可以得知，从后往前更新`dp`更为合适。
+
+```java
+class Solution {
+    public int longestPalindromeSubseq(String s) {
+        int len = s.length();
+        int[][] dp = new int[len][len];
+        for (int i = len - 1; i > -1; i--) {
+            dp[i][i] = 1;
+            for (int j = i + 1; j < len; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[0][len - 1];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N^2)$。
+
 #### 714. 买卖股票的最佳时机含手续费
 
 > ※ 用变量`not_hold[i]`表示第`i`天不持有股票时的利润，`hold[i]`表示第`i`天持有股票时的理论，可得如下状态转移方程：
