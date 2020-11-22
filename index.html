@@ -271,7 +271,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-19 22:12:29" itemprop="dateModified" datetime="2020-11-19T22:12:29+08:00">2020-11-19</time>
+        <time title="修改时间：2020-11-22 23:51:55" itemprop="dateModified" datetime="2020-11-22T23:51:55+08:00">2020-11-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -569,6 +569,42 @@
 
 <blockquote>
 <p>这样就在<code>UserContext</code>中完全封装了<code>ThreadLocal</code>，外部代码在<code>try (resource) &#123;...&#125;</code>内部可以随时调用<code>UserContext.currentUser()</code>获取当前线程绑定的用户名。</p>
+</blockquote>
+<h4 id="Day-002"><a href="#Day-002" class="headerlink" title="Day 002"></a>Day 002</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ <code>Maven</code>是一个<code>Java</code>项目管理和构建工具，它可以定义项目结构、项目依赖，并使用统一的方式进行自动化构建。</p>
+<p>※ 使用<code>Maven</code>管理的普通<code>Java</code>项目的目录结构默认如下：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a-maven-project</span><br><span class="line">├── pom.xml</span><br><span class="line">├── src</span><br><span class="line">│   ├── main</span><br><span class="line">│   │   ├── java</span><br><span class="line">│   │   └── resources</span><br><span class="line">│   └── test</span><br><span class="line">│       ├── java</span><br><span class="line">│       └── resources</span><br><span class="line">└── target</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中，项目的根目录<code>a-maven-project</code>为项目名，它有一个<span style="color:blue">项目描述文件</span><code>pom.xml</code>，存放源码的目录为<code>src/main/java</code>，存放资源文件的目录为<code>src/main/resources</code>，存放测试源码的目录为<code>src/test/java</code>，存放测试资源文件的目录为<code>src/tset/resources</code>，最后，所有编译、打包生成的文件都放在<code>target</code>目录里。</p>
+<p>※ 通常情况下，项目描述文件<code>pom.xml</code>的内容如下所示：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itranswarp.learnjava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">	<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中，<code>groupId</code>类似于<code>Java</code>的包名，通常是公司或组织名称，<code>artifactId</code>类似于<code>Java</code>的类名，通常是项目名称，再加上<code>version</code>，即可作为唯一标识。在引用其它第三方库时，也是通过这三个变量确定的，如<code>commons-logging</code>：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用<code>&lt;dependency&gt;</code>声明一个依赖后，<code>Maven</code>就会自动下载这个依赖包并把它方法<code>classpath</code>中。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ <code>Maven</code>定义了几种依赖关系，分别是<code>compile</code>、<code>test</code>、<code>runtime</code>和<code>provided</code>：其中，默认的<code>compile</code>依赖最常用，<code>Maven</code>会把这种类型的依赖直接放入<code>classpath</code>中；<code>test</code>依赖表示仅在测试时使用，正常运行时不需要，如<code>JUnit</code>；<code>runtime</code>依赖表示编译时不需要，但运行时需要，如<code>MySQL</code>；<code>provided</code>依赖表示编译时需要，但运行时不需要，如<code>servle-api</code>。</p>
+<p>※ <code>Maven</code>通过对<code>jar</code>包进行<code>PGP</code>签名确保任何一个<code>jar</code>包一经发布就无法修改，修改<code>jar</code>包的唯一方法为发布一个新版本。因此，某个<code>jar</code>包一旦被<code>Maven</code>下载过，即可永久地安全缓存在本地。<strong>注</strong>：只有以<code>-SNAPSHOT</code>结尾的版本号会被<code>Maven</code>视为开发版本，开发版本每次都会重复下载，这种<code>SNAPSHOT</code>版本只能用于内部私有的<code>Maven repo</code>，公开发布的版本不允许出现。</p>
+<p>※ <code>Maven</code>并不会每次都从中央仓库下载<code>jar</code>包，一个<code>jar</code>包一旦被下载过，就会被<code>Maven</code>自动缓存在本地目录（用户主目录下的<code>.m2</code>目录）。因此，除第一次编译时因为下载需要时间会比较慢外，后续过程因为有本地缓存，并不会很慢。</p>
+<p>※ 使用<code>Maven</code>镜像仓库需要一个配置，在用户主目录下进入<code>.m2</code>目录，创建一个<code>setting.xml</code>配置文件，内容如下：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyun<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 国内推荐阿里云的Maven镜像 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>配置镜像仓库后，<code>Maven</code>的下载速度会很快。</p>
+<p>※ 如果需要引用一个第三方组件，可以通过<a href="[Maven Central Repository Search](https://search.maven.org/)">search.maven.org</a>搜索关键字，找到对应的组件后直接复制即可。</p>
 </blockquote>
 
       
