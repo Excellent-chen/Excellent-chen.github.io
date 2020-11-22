@@ -538,3 +538,88 @@ try (var ctx = new UserContext("Bob")) {
 ```
 
 > 这样就在`UserContext`中完全封装了`ThreadLocal`，外部代码在`try (resource) {...}`内部可以随时调用`UserContext.currentUser()`获取当前线程绑定的用户名。
+
+#### Day 002
+
+> <!-- Part 001 -->
+>
+> ※ `Maven`是一个`Java`项目管理和构建工具，它可以定义项目结构、项目依赖，并使用统一的方式进行自动化构建。
+>
+> ※ 使用`Maven`管理的普通`Java`项目的目录结构默认如下：
+
+```shell
+a-maven-project
+├── pom.xml
+├── src
+│   ├── main
+│   │   ├── java
+│   │   └── resources
+│   └── test
+│       ├── java
+│       └── resources
+└── target
+```
+
+> 其中，项目的根目录`a-maven-project`为项目名，它有一个<span style="color:blue">项目描述文件</span>`pom.xml`，存放源码的目录为`src/main/java`，存放资源文件的目录为`src/main/resources`，存放测试源码的目录为`src/test/java`，存放测试资源文件的目录为`src/tset/resources`，最后，所有编译、打包生成的文件都放在`target`目录里。
+>
+> ※ 通常情况下，项目描述文件`pom.xml`的内容如下所示：
+
+```xml
+<project ...>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.itranswarp.learnjava</groupId>
+	<artifactId>hello</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<properties>
+        ...
+	</properties>
+	<dependencies>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+	</dependencies>
+</project>
+```
+
+> 其中，`groupId`类似于`Java`的包名，通常是公司或组织名称，`artifactId`类似于`Java`的类名，通常是项目名称，再加上`version`，即可作为唯一标识。在引用其它第三方库时，也是通过这三个变量确定的，如`commons-logging`：
+
+```xml
+<dependency>
+    <groupId>commons-logging</groupId>
+    <artifactId>commons-logging</artifactId>
+    <version>1.2</version>
+</dependency>
+```
+
+> 使用`<dependency>`声明一个依赖后，`Maven`就会自动下载这个依赖包并把它方法`classpath`中。
+
+> <!-- Part 002 -->
+>
+> ※ `Maven`定义了几种依赖关系，分别是`compile`、`test`、`runtime`和`provided`：其中，默认的`compile`依赖最常用，`Maven`会把这种类型的依赖直接放入`classpath`中；`test`依赖表示仅在测试时使用，正常运行时不需要，如`JUnit`；`runtime`依赖表示编译时不需要，但运行时需要，如`MySQL`；`provided`依赖表示编译时需要，但运行时不需要，如`servle-api`。
+>
+> ※ `Maven`通过对`jar`包进行`PGP`签名确保任何一个`jar`包一经发布就无法修改，修改`jar`包的唯一方法为发布一个新版本。因此，某个`jar`包一旦被`Maven`下载过，即可永久地安全缓存在本地。**注**：只有以`-SNAPSHOT`结尾的版本号会被`Maven`视为开发版本，开发版本每次都会重复下载，这种`SNAPSHOT`版本只能用于内部私有的`Maven repo`，公开发布的版本不允许出现。
+>
+> ※ `Maven`并不会每次都从中央仓库下载`jar`包，一个`jar`包一旦被下载过，就会被`Maven`自动缓存在本地目录（用户主目录下的`.m2`目录）。因此，除第一次编译时因为下载需要时间会比较慢外，后续过程因为有本地缓存，并不会很慢。
+>
+> ※ 使用`Maven`镜像仓库需要一个配置，在用户主目录下进入`.m2`目录，创建一个`setting.xml`配置文件，内容如下：
+
+```xml
+<settings>
+    <mirrors>
+        <mirror>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <mirrorOf>central</mirrorOf>
+            <!-- 国内推荐阿里云的Maven镜像 -->
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </mirror>
+    </mirrors>
+</settings>
+```
+
+> 配置镜像仓库后，`Maven`的下载速度会很快。
+>
+> ※ 如果需要引用一个第三方组件，可以通过<a href="[Maven Central Repository Search](https://search.maven.org/)">search.maven.org</a>搜索关键字，找到对应的组件后直接复制即可。
