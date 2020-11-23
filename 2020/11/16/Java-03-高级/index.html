@@ -30,7 +30,7 @@
 <meta property="og:description" content="Day 001   ※ 在计算机中，我们把一个任务称为一个进程；某些进程内部还需要同时执行多个子任务，我们把这些子任务称为线程。进程与线程之间的关系为：一个进程可以包含多个线程，但至少会有一个线程。注：操作系统调度的最小任务单位不是进程，而是线程！ ※ 同一个应用程序中，既可以有多个进程，又可以有多个线程，因此，实现多任务的方法有以下几种：多进程模式（每个进程只有一个线程）；多线程模式（一个进程有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-16T14:58:04.000Z">
-<meta property="article:modified_time" content="2020-11-23T03:35:10.745Z">
+<meta property="article:modified_time" content="2020-11-23T13:35:11.015Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="高级">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-002"><span class="nav-number">2.</span> <span class="nav-text">Day 002</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-002"><span class="nav-number">2.</span> <span class="nav-text">Day 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-003"><span class="nav-number">3.</span> <span class="nav-text">Day 003</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -277,7 +277,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-23 11:35:10" itemprop="dateModified" datetime="2020-11-23T11:35:10+08:00">2020-11-23</time>
+        <time title="修改时间：2020-11-23 21:35:11" itemprop="dateModified" datetime="2020-11-23T21:35:11+08:00">2020-11-23</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -643,6 +643,33 @@
 <!-- Part 007 -->
 
 <p>※ 使用<code>Maven</code>发布一个<code>Artifact</code>时，可以发布到本地，然后由静态服务器提供<code>repo</code>服务，使用方必须声明<code>repo</code>地址；可以发布到<code>central.sonatype.org</code>，并自动同步到<code>Maven</code>中央仓库，需要前期申请账号以及本地配置；可以发布到<code>Github Packages</code>作为私有仓库使用，必须提供<code>Token</code>以及正确的权限才能使用和发布。</p>
+</blockquote>
+<h4 id="Day-003"><a href="#Day-003" class="headerlink" title="Day 003"></a>Day 003</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ 使用<code>Java</code>进行网络编程时，由虚拟机实现了底层复杂的网络协议，<code>Java</code>程序只需要调用<code>Java</code>标准库提供的接口，即可简单高效地编写网络程序。</p>
+<p>※ <code>TCP/IP</code>协议泛指互联网协议，其中最重要的两个协议是<code>TCP</code>协议和<code>IP</code>协议。只有使用<code>TCP/IP</code>协议的计算机才能够联入互联网，使用其它网络协议是无法联入互联网的。</p>
+<p>※ 在互联网中，一个<code>IP</code>地址用于唯一标识一个网络接口。一台连入互联网的计算机肯定有一个<code>IP</code>地址，但也可能有多个<code>IP</code>地址。<code>IP</code>地址既可以分为<code>IPv4</code>和<code>IPv6</code>，又可以分为公网<code>IP</code>地址和内网<code>IP</code>地址。公网<code>IP</code>地址可以直接被访问，内网<code>IP</code>地址只能在内网访问。内网<code>IP</code>地址类似于：<code>192.168.*.*</code>，<code>10.*.*.*</code>。</p>
+<p>※ 如果一台计算机有两块网卡，那么除了本机地址<code>127.0.0.1</code>，它还可以有两个<code>IP</code>地址，这两个<code>IP</code>地址可以分别接入两个网络，使得它们连接起来。<strong>注</strong>：通常连接两个网络的设备是路由器或者交换机。</p>
+<p> ※ 每台计算机都需要正确配置<code>IP</code>地址和子网掩码，根据它们可以计算网络号。若两台计算机计算出的网络号相同，说明两台计算机在同一个网络，可以直接通信；若两台计算机计算出的网络号不同，说明两台计算机不在同一个网络，不能直接通信，它们之间必须通过路由器或者交换机这样的网络设备间接通信，这种设备通常被称为<span style="color:blue">网关</span>。网关的作用就是连接多个网络，负责把来自一个网络的数据包发到另一个网络，这个过程叫做<span style="color:blue">路由</span>。</p>
+<p>※ 域名解析服务器<code>DNS</code>负责把域名翻译成对应的<code>IP</code>，客户端再根据<code>IP</code>地址访问服务器。<strong>注</strong>：用<code>nslookup</code>可以查看域名对应的<code>IP</code>地址。</p>
+<p>※ <code>OSI</code>网络模型是<code>ISO</code>组织定义的一个计算机互联标准模型，目的是为了简化网络各层的操作，提供标准接口便于实现和维护，该模型从上到下依次是：应用层，提供应用程序之间的通信；表示层，处理数据的格式，加解密等；会话层，负责建立和维护对话；传输层，负责提供端到端的可靠传输；网络层，负责根据目标地址选择路由来传输数据；链路层和物理层负责把数据进行分片并且真正通过物理网络传输，如无线网和光纤等。互联网使用的<code>TCP/IP</code>模型并不是对应到<code>OSI</code>的<code>7</code>层模型，而是大致对应<code>OSI</code>的<code>5</code>层模型。</p>
+<p>※ <code>IP</code>协议是一种分组交换传输协议；<code>TCP</code>协议是一种面向连接，可靠传输的协议；<code>UDP</code>协议是一种非面向连接，不可靠传输的协议。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ <code>Socket</code>是一个抽象概念，应用程序通过一个<code>Socket</code>来建立一个远程连接，而<code>Socket</code>内部通过<code>TCP/IP</code>协议把数据传输到网络。</p>
+<p>※ 一个<code>Socket</code>就是由<code>IP</code>地址和端口号组成，端口号总是由操作系统分配，它是<code>0 ~ 65535</code>之间的数字，其中，小于<code>1024</code>的端口属于特权端口，需要管理员权限，大于<code>1024</code>的端口可以由任意用户的应用程序打开。</p>
+<p>※ 使用<code>Socket</code>进行网络编程时，本质上就是两个进程之间的网络通信。其中一个进程必须充当服务器端，它会主动监听某个指定的端口，另一个进行必须充当客户端，它必须主动连接服务器的<code>IP</code>地址和指定端口，如果连接成功，服务器端和客户端就成功地建立了一个<code>TCP</code>连接，双方后继就可以随时发送和接收数据。因此，当<code>Socket</code>连接成功地再服务器端和客户端之间建立后，对服务器端来说，它的<code>Socket</code>是指定的<code>IP</code>地址和指定的端口号；对客户端来说，它的<code>Socket</code>是它所在计算机的<code>IP</code>地址和一个由操作系统分配的随机端口号。</p>
+<p>※ 当<code>Socket</code>连接建立成功后，无论是服务器端，还是客户端，都使用<code>Socket</code>实例进行网络通信。因为<code>TCP</code>是一种基于流的协议，因此，<code>Java</code>标准库使用<code>InputStream</code>和<code>OutputStream</code>来封装<code>Socket</code>的数据流。</p>
+<p>※ 使用<code>Java</code>进行<code>TCP</code>编程时，需要使用<code>Socket</code>模型：服务器端用<code>ServerSocket</code>监听指定端口；客户端使用<code>Socket(InetAddress, port)</code>连接服务器；服务器端用<code>accept()</code>接收连接并返回<code>Socket</code>；双方通过<code>Socket</code>打开<code>InputStream/OutputStream</code>读写数据。<strong>注</strong>：服务器端通常使用多线程同时处理多个客户端连接，利用线程池可大幅提升效率。</p>
+<p>※ 在写入网络数据时，要调用<code>flush()</code>方法，若不调用，可能会发现客户端和服务器端都收不到数据，这是因为我们以流的形式写入数据时，并不是一写入就立刻发送到网络，而是先写入到内存缓冲区，直到缓冲区满了以后，才会一次性真正发送到网络，这样设计的目的是提高传输效率。若缓冲区的数据很少，而我们又想把这些数据发送到网络，就必须调用<code>flush()</code>强制把缓冲区数据发送出去。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ </p>
 </blockquote>
 
     </div>
