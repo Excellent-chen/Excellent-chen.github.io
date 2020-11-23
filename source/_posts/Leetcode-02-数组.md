@@ -1002,6 +1002,50 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 452. 用最少数量的箭引爆气球
+
+> ※ 对`points`数组进行排序，然后定义`lower`、`upper`两个变量以保存相交区间，依次判断每个`point`与`lower`、`upper`是否存在交集，若不存在，则说明需要一支弓箭。**注**：调用`Arrays.sort()`函数对数组进行排序时要用逻辑运算符而不是算术运算符进行判断，因为可能会溢出；此外，每遍历完一个点，切记利用`upper = Math.min(upper, point[1])`对`upper`进行更新。
+
+```java
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 0) {
+            return 0;
+        }
+        Arrays.sort(points, new Comparator<int[]> () {
+            public int compare(int[] point1, int[] point2) {
+                if (point1[0] < point2[0]) { // 这里直接用 - 号进行判断可能会溢出。。。
+                    return -1;
+                } else if (point1[0] > point2[0]) {
+                    return 1;
+                } else if (point1[1] < point2[1]) {
+                    return -1;
+                } else if (point1[1] > point2[1]) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        int res = 1;
+        int lower = points[0][0], upper = points[0][1];
+        for (int[] point : points) {
+            if (point[0] <= upper) {
+                lower = point[0];
+                upper = Math.min(upper, point[1]); // [[1, 10], [3, 9]] !!! 
+            } else {
+                res++;
+                lower = point[0];
+                upper = point[1];
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NlogN)$；空间复杂度：$O(logN)$。
+
 #### 611. 有效三角形的个数
 
 > ※ 对数组进行排序并利用双指针即可解决该题目。
