@@ -623,3 +623,72 @@ a-maven-project
 > 配置镜像仓库后，`Maven`的下载速度会很快。
 >
 > ※ 如果需要引用一个第三方组件，可以通过<a href="[Maven Central Repository Search](https://search.maven.org/)">search.maven.org</a>搜索关键字，找到对应的组件后直接复制即可。
+
+> <!-- Part 003 -->
+>
+> ※ `Maven`的<span style="color:blue">生命周期</span>由一系列阶段（`phase`）构成，以内置的生命周期`default`为例，它包含以下<a href="[构建流程 - 廖雪峰的官方网站 (liaoxuefeng.com)](https://www.liaoxuefeng.com/wiki/1252599548343744/1309301196980257)">阶段</a>。如果我们运行`mvn package`，`Maven`就会执行`default`生命周期，它会从开始一直运行到`package`这个阶段为止；如果我们运行`mvn compile`，`Maven`也会执行`default`生命周期，但这次它只会运行到`compile`。此外，`Maven`另一个常用的生命周期为`clean`，它会执行三个阶段：`pre-clean`、`clean`、`post-clean`。
+>
+> ※ 在实际开发中，常用的命令有：`mvn clean`，清理所有生成的`class`和`jar`；`mvn clean compile`，先清理再执行到`compile`；`mvn clean test`，先清理再执行到`test`；`mvn clean package`：先清理再执行到`package`。**注**：大多数阶段在执行过程中，因为通常没有在`pom.xml`中配置相关设置，因此什么事情都不做，经常用到的阶段其实只有几个，如`clean`、`compile`、`test`、`package`。
+
+> <!-- Part 004 -->
+>
+> ※ 实际上，执行每个阶段，都是通过某个插件来执行的，`Maven`本身并不知道如何执行`compile`，它只是负责找到对应的`compiler`插件，然后执行默认的`compiler:compile`这个`goal`来完成编译。因此，使用`Maven`实际上就是配置好需要使用的插件，然后通过阶段调用它们。**注**：若标准插件无法满足需求，还可以使用自定义插件。使用自定义插件时，需要声明。
+
+> <!-- Part 005 -->
+>
+> ※ `Maven`可以有效管理多个模块，只需要把每个模块当作一个独立的`Maven`项目，每个项目有各自独立的`pom.xml`。
+>
+> ※ 不同模块的`pom.xml`高度相似，因此，可以提取出共同部分作为`parent`：
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.itranswarp.learnjava</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <name>parent</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.28</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.5.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+> `parent`的`<packing>`是`pom`而不是`jar`，因为`parent`本身不含任何`Java`代码。编写`parent`的`pom.xml`只是为了在各个模块中减少重复的配置。
+
+> <!-- Part 006 -->
+>
+> ※ 安装完`Maven`之后，系统所有项目都会使用全局安装的这个`Maven`版本，但是对于某些项目来说，可能必须使用某个特定的`Maven`版本，这个时候就可以使用`Maven Wrapper`（<span style="color:blue">`mvnw`</span>），它可以负责给这些项目安装指定版本的`Maven`，而其它项目不受影响。`mvnw`的另一个作用是把项目的`mvnw`、`mvnw.cmd`和`.mvn`提交到版本库中，可以使所有开发人员使用统一的`Maven`版本。
+
+> <!-- Part 007 -->
+>
+> ※ 使用`Maven`发布一个`Artifact`时，可以发布到本地，然后由静态服务器提供`repo`服务，使用方必须声明`repo`地址；可以发布到`central.sonatype.org`，并自动同步到`Maven`中央仓库，需要前期申请账号以及本地配置；可以发布到`Github Packages`作为私有仓库使用，必须提供`Token`以及正确的权限才能使用和发布。
