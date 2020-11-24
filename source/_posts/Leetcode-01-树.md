@@ -484,6 +484,44 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 222. 完全二叉树的节点个数
+
+> ※ 该题目的关键在于计算二叉树的深度以及最底层叶子节点的个数。对于前者，可以对二叉树进行深度优先搜索，并保存每个节点对应的深度，**最先**遇到的满足`root.left == null && root.right == null`的节点对应的深度即为该二叉树的深度；对于后者，可以借助上一步中求出的`depth`，在对二叉树进行深度优先搜索的同时获取。
+
+```java
+class Solution {
+
+    private boolean setDepth = false;
+
+    private int count = 0, depth = 0;
+
+    public int countNodes(TreeNode root) {
+        DFS(root, 0);
+        return (int)(Math.pow(2, this.depth) + this.count - 1);
+    }
+
+    private void DFS(TreeNode root, int depth) {
+        if (root == null) {
+            return;
+        } else if (root.left == null && root.right == null) {
+            if (this.depth == 0 && !this.setDepth) {
+                this.setDepth = true;
+                this.depth = depth;
+            }
+            if (this.depth == depth) {
+                count++;
+            }
+        } else {
+            DFS(root.left, depth + 1);
+            DFS(root.right, depth + 1);
+        }
+    }
+
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 230. 二叉搜索树中第K小的元素
 
 > ※ 二叉搜索树中第`K`小的元素对应了二叉搜索树中序遍历的第`K`个元素，因此，只需对二叉搜索树进行中序遍历，并对遍历过的节点进行计数，待遍历到第`K`个节点时，返回该节点的值即可。
