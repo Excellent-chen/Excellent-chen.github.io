@@ -30,7 +30,7 @@
 <meta property="og:description" content="Day 001   ※ 在计算机中，我们把一个任务称为一个进程；某些进程内部还需要同时执行多个子任务，我们把这些子任务称为线程。进程与线程之间的关系为：一个进程可以包含多个线程，但至少会有一个线程。注：操作系统调度的最小任务单位不是进程，而是线程！ ※ 同一个应用程序中，既可以有多个进程，又可以有多个线程，因此，实现多任务的方法有以下几种：多进程模式（每个进程只有一个线程）；多线程模式（一个进程有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-16T14:58:04.000Z">
-<meta property="article:modified_time" content="2020-11-23T15:24:47.505Z">
+<meta property="article:modified_time" content="2020-11-24T06:49:56.831Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="高级">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-002"><span class="nav-number">2.</span> <span class="nav-text">Day 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-003"><span class="nav-number">3.</span> <span class="nav-text">Day 003</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-001"><span class="nav-number">1.</span> <span class="nav-text">Day 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-002"><span class="nav-number">2.</span> <span class="nav-text">Day 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-003"><span class="nav-number">3.</span> <span class="nav-text">Day 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Day-004"><span class="nav-number">4.</span> <span class="nav-text">Day 004</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -277,7 +277,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-23 23:24:47" itemprop="dateModified" datetime="2020-11-23T23:24:47+08:00">2020-11-23</time>
+        <time title="修改时间：2020-11-24 14:49:56" itemprop="dateModified" datetime="2020-11-24T14:49:56+08:00">2020-11-24</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -683,13 +683,38 @@
 
 <p>※ <code>HTTP</code>是目前<code>    Web</code>应用程序使用最广泛的基础协议，翻译为超文本传输协议。</p>
 <p>※ 当浏览器希望访问某个网站时，浏览器和网站服务器之间首先建立<code>TCP</code>连接，并且服务器总是使用<code>80</code>端口和加密端口<code>443</code>；然后，浏览器向服务器发送一个<code>HTTP</code>请求，服务器收到后返回一个<code>HTTP</code>响应，并且在响应中包含了<code>HTML</code>网页内容，这样，浏览器解析<code>HTML</code>后就可以给用户显示网页了。</p>
-<p>※ <code>HTTP</code>请求的格式是固定的，由<code>HTTP Header</code>和<code>HTTP Body</code>两部分构成。第一行总是“请求方法 路径 <code>HTTP</code>版本”，后继的每一行都是固定的<code>Header: Value</code>格式，称之为<code>Header</code>，服务器依靠某些特定的<code>Header</code>来识别客户端请求：<code>Host</code>，表示请求的域名，因为一台服务器上可能有多个网站，有必要依靠<code>Host</code>来识别请求；<code>User-Agent</code>，表示客户端自身标识信息，不同的浏览器有不同的标识，服务器依靠其判断客户端类型；<code>Accept</code>，表示客户端能处理的<code>HTTP</code>响应格式，<code>*/*</code>表示惹你格式，<code>text/*</code>表示任意文本，<code>image/png</code>表示<code>PNG</code>格式的图片；<code>Accept-Language</code>，表示客户端接收的语言，多种语言按照优先级排序，服务器依靠该字段给用户返回特定语言的网页版本。<strong>注</strong>：如果是<code>GET</code>请求，那么该<code>HTTP</code>请求只有<code>Header</code>，没有<code>Body</code>；如果是<code>POST</code>请求，那么该<code>HTTP</code>请求带有<code>Body</code>，以一个空行分隔。一个典型的带有<code>Body</code>的<code>HTTP</code>请求如下：</p>
+<p>※ <code>HTTP</code>请求的格式是固定的，由<code>Header</code>和<code>Body</code>两部分构成。第一行总是“请求方法 路径 <code>HTTP</code>版本”，后继的每一行都是固定的<code>Header: Value</code>格式，称之为<code>HTTP Header</code>，服务器依靠某些特定的<code>Header</code>来识别客户端请求，其中，<code>Host</code>表示请求的域名，因为一台服务器上可能有多个网站，因此有必要依靠<code>Host</code>来识别请求；<code>User-Agent</code>表示客户端自身标识信息，不同的浏览器有不同的标识，服务器依靠其判断客户端类型；<code>Accept</code>表示客户端能处理的<code>HTTP</code>响应格式，<code>*/*</code>表示惹你格式，<code>text/*</code>表示任意文本，<code>image/png</code>表示<code>PNG</code>格式的图片；<code>Accept-Language</code>表示客户端接收的语言，多种语言按照优先级排序，服务器依靠该字段给用户返回特定语言的网页版本。<strong>注</strong>：如果是<code>GET</code>请求，那么该<code>HTTP</code>请求只有<code>Header</code>，没有<code>Body</code>；如果是<code>POST</code>请求，那么该<code>HTTP</code>请求带有<code>Body</code>，以一个空行分隔。一个典型的带有<code>Body</code>的<code>HTTP</code>请求如下：</p>
 </blockquote>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/login</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: www.example.com</span><br><span class="line"><span class="attribute">Content-Type</span>: application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span>: 30</span><br><span class="line"></span><br><span class="line">username=hello&amp;password=123456</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><code>POST</code>请求通常要设置<code>Content-Type</code>表示<code>Body</code>类型，<code>Content-Length</code>表示<code>Body</code>长度，这样服务器就可以根据请求的<code>Header</code>和<code>Body</code>做出正确的响应。此外，<code>GET</code>请求的参数必须附加在<code>URL</code>上，并以<code>URLEncode</code>方式编码。</p>
-<p>※ <code>HTTP</code>响应同样是由<code>Header</code>和<code>Body</code>两部分构成。第一行总是“<code>HTTP</code>版本 响应代码 响应说明”。客户端只依赖响应代码判断<code>HTTP</code>响应是否成功：<code>1**</code>，表示一个提示性响应，如<code>101</code>表示将切换协议，常见于<code>WebSocket</code>连接；<code>2**</code>，表示一个成功响应，如<code>200</code>表示成功，<code>206</code>表示只发送了部分内容；<code>3**</code>，表示一个重定向响应，如<code>301</code>表示永久重定向，<code>303</code>表示客户端应该按照指定路径重新发送请求；<code>4**</code>，表示一个因为客户端问题导致的错误响应，如<code>400</code>表示因为<code>Content-Type</code>等各种原因导致的无效请求，<code>404</code>表示指定的路径不存在；<code>5**</code>，表示一个因为服务器问题导致的错误响应，如<code>500</code>表示服务器内部故障，<code>503</code>表示服务器暂时无法响应。</p>
+<p>※ <code>HTTP</code>响应同样是由<code>Header</code>和<code>Body</code>两部分构成。第一行总是“<code>HTTP</code>版本 响应代码 响应说明”。客户端只依赖响应代码判断<code>HTTP</code>响应是否成功，其中，<code>1**</code>表示一个提示性响应，如<code>101</code>表示将切换协议，常见于<code>WebSocket</code>连接；<code>2**</code>表示一个成功响应，如<code>200</code>表示成功，<code>206</code>表示只发送了部分内容；<code>3**</code>表示一个重定向响应，如<code>301</code>表示永久重定向，<code>303</code>表示客户端应该按照指定路径重新发送请求；<code>4**</code>表示一个因为客户端问题导致的错误响应，如<code>400</code>表示因为<code>Content-Type</code>等各种原因导致的无效请求，<code>404</code>表示指定的路径不存在；<code>5**</code>表示一个因为服务器问题导致的错误响应，如<code>500</code>表示服务器内部故障，<code>503</code>表示服务器暂时无法响应。</p>
+<p>※ 当浏览器收到第一个<code>HTTP</code>响应并解析<code>HTML</code>后，又会发送一系列<code>HTTP</code>请求，如<code>GET /log.jpg HTTP/1.1</code>请求一个图片，服务器响应图片请求后，会直接把二进制内容的图片发送给浏览器。因此，服务器总是被动地接收客户端的一个<code>HTTP</code>请求，然后响应它；客户端则根据需要发送若干个<code>HTTP</code>请求。</p>
+<p>※ 对于最早期的<code>HTTP/1.0</code>协议，每次发送一个<code>HTTP</code>请求后，客户端都需要先创建一个新的<code>TCP</code>连接，待收到服务器响应后，关闭这个<code>TCP</code>连接。由于建立<code>TCP</code>连接比较耗时，为了提高效率，<code>HTTP/1.1</code>协议允许在一个<code>TCP</code>连接中反复请求-响应，这样就能大大提高效率。然而，<code>HTTP</code>协议是一个请求-响应协议，客户端在发送了一个<code>HTTP</code>请求后，必须等待服务器响应后才能发送下一个请求，这样以来，若某个响应太慢，将会堵住后面的请求。因此，为了进一步提速，<code>HTTP/2.0</code>允许客户在没有收到响应的时候，发送多个<code>HTTP</code>请求，服务器返回响应时，不一定按照顺序返回，只要双方能识别出哪个响应对应哪个请求，即可做到并行发送和接收。</p>
+</blockquote>
+<blockquote>
+<!-- Part 006 -->
+
+<p>※ <code>Java</code>的<code>RMI</code>远程调用是指：一个<code>JVM</code>中的代码可以通过网络远程调用另一个<code>JVM</code>的某个方法，提供服务的一方称为服务器，实现远程调用的一方称之为客户端。</p>
+<p>※ <code>RMI</code>通过自动生成<code>stub</code>和<code>skeleton</code>实现网络调用，客户端只需要查找服务并获得接口实例，服务端只需要编写实现类并注册为服务。此外，<code>RMI</code>的序列化和反序列化可能会造成安全漏洞，因此调用双方必须是内网互相信任的机器，不要把<code>1099</code>端口暴露再公网上作为对外服务。</p>
+</blockquote>
+<h4 id="Day-004"><a href="#Day-004" class="headerlink" title="Day 004"></a>Day 004</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ <code>XML</code>是可扩展标记语言的缩写，属于一种数据表示格式，可以描述非常复杂的数据结构，常用于传输和存储数据。<code>XML</code>有几个特点：一是纯文本，默认使用<code>UTF-8</code>编码；二是可嵌套，适合表示结构化数据。</p>
+<p>※ <code>XML</code>有固定的结构，首行必定是<code>&lt;?xml version=&quot;1.0&quot;?&gt;</code>，有时还可以加上可选的编码。紧接着，如果以类似<code>&lt;!DOCTYPE note SYSTEM &quot;book.dtd&quot;&gt;</code>声明的是<span style="color:blue">文档定义类型</span><code>DTD</code>，<code>DTD</code>是可选的。接下来是<code>XML</code>的文档内容，一个<code>XML</code>文档有且仅有一个根元素，根元素可以包含任意个子元素，元素可以包含属性。</p>
+<p>※ 验证<code>XML</code>正确性最简单的方式是通过浏览器验证，即直接把<code>XML</code>文件拖拽到浏览器窗口，若格式错误，浏览器将会报错。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ <code>XML</code>为树形结构的文档，它有两种标准的解析<code>API</code>：<code>DOM</code>，一次性读取<code>XML</code>，并在内存中表示为树形结构；<code>SAX</code>，以流的形式读取<code>XML</code>，使用事件回调。<strong>注</strong>：<code>DOM</code>解析速度慢，内存占用大；<code>SAX</code>读取速度快，内存站占用小。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ <code>JSON</code>是轻量级的数据表示方式，常用于<code>Web</code>应用；<code>Jackson</code>可以实现<code>JavaBean</code>和<code>JSON</code>之间的转换；可以通过<code>Module</code>扩展<code>Jackson</code>能处理的数据类型；可以自定义<code>JsonSerializer</code>和<code>JsonDeserializer</code>来定制序列化和反序列化。</p>
 </blockquote>
 
     </div>
