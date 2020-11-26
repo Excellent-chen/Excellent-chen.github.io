@@ -1416,3 +1416,54 @@ class Solution {
 > ※ 时间复杂度：待定；空间复杂度：待定。
 
 -----
+
+### 困难
+
+-----
+
+#### 164. 最大间距
+
+> ※ 利用桶排序即可解决该题。在桶排序中，有以下注意事项：桶的大小`bucket_size`可由`Math.max(1, (max - min)/ (n - 1))`确定，桶的个数可由`(max - min) / bucket_size + 1`确定，每个`num`所处的桶可由`(num - min) / bucket_size`确定。
+
+```java
+class Solution {
+    public int maximumGap(int[] nums) {
+        int n = nums.length;
+        if (n < 2) {
+            return 0;
+        }
+        int min = Arrays.stream(nums).min().getAsInt();
+        int max = Arrays.stream(nums).max().getAsInt();
+        int bucket_size = Math.max(1, (max - min) / (n - 1)); // 确定桶的大小（这里不要忘记 Math.max ）
+        int bucket_num = (max - min) / bucket_size + 1; // 确定桶的个数，加 1 是为了确保数组的最大值也能分到一个桶
+        int[][] bucket = new int[bucket_num][2];
+        for (int i = 0; i < bucket_num; i++) {
+            Arrays.fill(bucket[i], -1);
+        }
+        for (int i = 0; i < n; i++) {
+            int idx = (nums[i] - min) / bucket_size; // 依据 (nums[i] - min(nums)) / bucket_size 确定数字对应的桶
+            if (bucket[idx][0] == -1) {
+                bucket[idx][0] = bucket[idx][1] =nums[i];
+            } else {
+                bucket[idx][0] = Math.min(bucket[idx][0], nums[i]);
+                bucket[idx][1] = Math.max(bucket[idx][1], nums[i]);
+            }
+        }
+        int res = 0, prev = -1;
+        for (int i = 0; i < bucket_num; i++) {
+            if (bucket[i][0] == -1) {
+                continue;
+            }
+            if (prev != -1) {
+                res = Math.max(res, bucket[i][0] - bucket[prev][1]);
+            }
+            prev = i;
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
+-----
