@@ -447,6 +447,34 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 454. 四数相加 II
+
+> ※ 将四个数组分为两部分，`A`和`B`一组，`C`和`D`一组。对于`A`和`B`，使用二重循环对它们进行遍历，得到所有的`A[i] + B[j]`并放入哈希表中。对于哈希表中的每个键值对，键表示一种`A[i] + B[j]`，值表示对应键出现的次数。对于`C`和`D`，同样使用二重循环对它们进行遍历，当遍历到`C[i] + D[j]`时，若哈希表中出现了`-(C[i] + D[j])`，那么将`-(C[i] + D[j])`在哈希表中出现的次数进行累加即可。
+
+```java
+class Solution {
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int a : A) {
+            for (int b : B) {
+                map.put(a + b, map.getOrDefault(a + b, 0) + 1);
+            }
+        }
+        int res = 0;
+        for (int c : C) {
+            for (int d : D) {
+                if (map.containsKey(- c - d)) {
+                    res += map.get(-c - d);
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N^2)$，最坏情况下，`A[i] + B[j]`的值各不相同。
+
 #### 807. 保持城市天际线
 
 > ※ 该题目与`883. 三维形体投影面积`类似，均利用了投影的性质。首先，对二维数组进行遍历，求出每一行、每一列的最大值；然后，再次对二维数组进行遍历，对于每一个元素`grid[i][j]`，其可以增加的最大高度等于`Math.min(row_max[i], col_max[j]) - grid[i][j]`；最后，将所有元素可以增加的最大高度累加在一起，得到最终结果。
