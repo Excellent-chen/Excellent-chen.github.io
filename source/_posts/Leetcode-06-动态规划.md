@@ -63,6 +63,53 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 764. 最大加号标志
+
+> ※ 预先计算每个中心点坐标在四个方向上对应的最长臂长$L_u$、$L_l$、$L_d$和$L_r$，则以该中心点坐标为中心可以构成的加号的阶为$min(L_u,L_l,L_d,L_r)$。特别的，对于每个中心点坐标`grid[i][j]`，若`grid[i][j] = 0`，则臂长为`0`；若`grid[i][j] = 1`，则臂长为当前方向上连续`1`的个数。
+
+```java
+class Solution {
+    public int orderOfLargestPlusSign(int N, int[][] mines) {
+        Set<Integer> banned = new HashSet<Integer>();
+        for (int[] mine : mines) {
+            banned.add(mine[0] * N + mine[1]);
+        }
+        int count, res = 0;
+        int[][] dp = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            // 计算每个位置左边有几个连续的一（包括自己）
+            count = 0;
+            for (int j = 0; j < N; j++) {
+                count = banned.contains(i * N + j) ? 0 : count + 1;
+                dp[i][j] = count;
+            }
+            // 计算每个位置右边有几个连续的一（包括自己）
+            count = 0;
+            for (int j = N - 1; j > -1; j--) {
+                count = banned.contains(i * N + j) ? 0 : count + 1;
+                dp[i][j] = Math.min(dp[i][j], count);
+            }
+        }
+        for (int i = 0; i < N; i++) {
+            count = 0;
+            for (int j = 0; j < N; j++) {
+                count = banned.contains(i + j * N) ? 0 : count + 1;
+                dp[j][i] = Math.min(dp[j][i], count);
+            }
+            count = 0;
+            for (int j = N - 1; j > -1; j--) {
+                count = banned.contains(i + j * N) ? 0 : count + 1;
+                dp[j][i] = Math.min(dp[j][i], count);
+                res = Math.max(res, dp[j][i]);
+            }
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N^2)$。
+
 #### 983. 最低票价
 
 > ※ 记第`N`天的最低票价为`F(N)`，假设已经求出了前`N - 1`天的最低票价，现在来求`F(N)`。如果第`N`天要选择有效期长度为`dayOfPass`的通行证，其价格为`cost`，那么在第`N - dayOfPass`天时就应该买入该通行证，才能使利益最大化；而我们已经求出了前`N - 1`天的最低票价，即`F(N - dayOfPass)`是已知的。因此，对于该选择，其花费为`F(N - dayOfPass) + cost`，取所有选择的最小值更新`F(N)`即可。
