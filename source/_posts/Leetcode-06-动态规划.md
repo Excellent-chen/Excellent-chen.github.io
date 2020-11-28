@@ -11,6 +11,35 @@ tags:
 
 -----
 
+#### 309. 最佳买卖股票时机含冷冻期
+
+> ※ 令`f[i]`表示第`i`天结束后的累计最大收益，则`f[i]`对应了三种状态：目前持有一只股票，对应的累计最大收益为`f[i][0]`；目前不持有股票，并且处于冷冻期中，对应的累计最大收益为`f[i][1]`；目前不持有股票，并且未处于冷冻期中，对应的累计最大收益为`f[i][2]`。它们的状态转移方程分别如下：
+>
+> `f[i][0] = Math.max(f[i - 1][0], f[i - 1][2] - price[i])`；`f[i][1] = f[i - 1][0] + price[i]`；`f[i][2] = Math.max(f[i - 1][1], f[i - 1][2])`。
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if (n == 0) {
+            return 0;
+        }
+        int f_0 = - prices[0], f_1 = 0, f_2 = 0;
+        for (int i = 1; i < n; i++) {
+            int new_f_0 = Math.max(f_0, f_2 - prices[i]);
+            int new_f_1 = f_0 + prices[i];
+            int new_f_2 = Math.max(f_1, f_2);
+            f_0 = new_f_0;
+            f_1 = new_f_1;
+            f_2 = new_f_2;
+        }
+        return Math.max(f_1, f_2);
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 516. 最长回文子序列
 
 > ※ 建立二维数组`dp[s.length()][dp.length()]`，其中，`dp[i][j]`表示字符串第`i`个字符与第`j`个字符之间的所有字符构成的子字符串中最长回文子序列的长度（包括第`i`个字符和第`j`个字符）。易知，若`s.charAt(i) == s.charAt(j)`，则有`dp[i][j] = dp[i + 1][j - 1] + 2`；若`s.charAt(i) != s.charAt(j)`，则有`dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1])`。基于上述递推公式，可以得知，从后往前更新`dp`更为合适。
