@@ -446,7 +446,3 @@ class ReverseList<T> implements Iterable<T> {
 > ※ 将`List`封装成不可变集合：`List<T> unmodifiableList(List<? extends T> list)`；将`Map`封装成不可变集合：`Map<K, V> unmodifiableMap(Map<? extends K, ? extends V> m)`；将`Set`封装成不可变集合：`Set<T> unmodifiableSet(Set<? extends T> set)`。**注**：该封装实际上是通过创建一个代理拦截掉所有修改方法实现的。然而，若继续对原始可变集合进行增删，同样会影响到封装后的不可变集合。为此，如果我们希望把一个可变集合封装成不可变集合，最好在返回不可变集合后扔掉对可变集合的引用。
 
 #### Day 005
-
-> <!-- Part 001 -->
->
-> 
