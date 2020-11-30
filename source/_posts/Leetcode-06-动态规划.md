@@ -40,6 +40,41 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
 
+#### 416. 分割等和子集
+
+> ※ 该题目与常规`0-1`背包问题的区别在于：要求精确等于整个数组元素的和的一半，这使得对状态矩阵进行初始化时，所有的值都应该初始化为`false`。此外，对于一些特殊情况，可以直接判断出最终的结果，这一点需要注意。
+
+```java
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int len = nums.length;
+        // 1. 若 n < 2 则不能将数组分割成元素和相等的两个子集，直接返回 false
+        if (len < 2) {
+            return false;
+        }
+        int sum = 0, max = Integer.MIN_VALUE;
+        for (int num : nums) {
+            sum += num;
+            max = Math.max(max, num);
+        }
+        // 2. 若 sum 为奇数或者 max > sum / 2，直接返回 false
+        if (sum % 2 == 1 || max > sum / 2) {
+            return false;
+        }
+        boolean[] dp = new boolean[sum / 2 + 1];
+        dp[0] = true; // 若不选取任何正整数，则被选取的正整数等于零，这一步貌似挺重要的
+        for (int i = 0; i < len; i++) {
+            for (int j = sum / 2; j >= nums[i]; j--) {
+                dp[j] |= dp[j - nums[i]]; // 注：每个数字只能使用一次，因此从后往前遍历是可以的！
+            }
+        }
+        return dp[sum / 2];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N * target)$；空间复杂度：$O(target)$。
+
 #### 516. 最长回文子序列
 
 > ※ 建立二维数组`dp[s.length()][dp.length()]`，其中，`dp[i][j]`表示字符串第`i`个字符与第`j`个字符之间的所有字符构成的子字符串中最长回文子序列的长度（包括第`i`个字符和第`j`个字符）。易知，若`s.charAt(i) == s.charAt(j)`，则有`dp[i][j] = dp[i + 1][j - 1] + 2`；若`s.charAt(i) != s.charAt(j)`，则有`dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1])`。基于上述递推公式，可以得知，从后往前更新`dp`更为合适。
