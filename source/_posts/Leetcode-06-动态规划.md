@@ -75,6 +75,29 @@ class Solution {
 
 > ※ 时间复杂度：$O(N * target)$；空间复杂度：$O(target)$。
 
+#### 486. 预测赢家
+
+> ※ 定义行数与列数均等于数组长度的二维数组`dp`，其中，`dp[i][j]`表示当数组剩下的部分为下标`i`到下标`j`时，当前玩家与另一个玩家的分数之差的最大值。只有当`i <= j`时，数组剩下的部分才有意义，因此当`i > j`时，均有`dp[i][j] = 0`；当`i = j`时，只剩一个数字，当前玩家只能拿取该数字，因此对于所有`0 <= i < nums.length`，均有`dp[i][j] = nums[i]`；当`i < j`时，当前玩家可以选择`nums[i]`或`nums[j]`，然后轮到另一个玩家在数组剩下的部分选取数字。在上述两种方案中，当前玩家会选择最优的方案，使得自己的分数最大化。因此可以得到如下状态转移方程：`dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1])`，最后判断`dp[0][nums.length - 1]`的值，如果其大于或等于`0`，说明先手得分大于或等于后手得分，因此先手成为赢家，否则后手成为赢家。
+
+```java
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n][n];
+        for (int i = n - 1; i > -1; i--) {
+            dp[i][i] = nums[i];
+            for (int j = i + 1; j < n; j++) {
+                dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
+            }
+        }
+        // System.out.println(Arrays.deepToString(dp));
+        return dp[0][n - 1] >= 0;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N^2)$。
+
 #### 516. 最长回文子序列
 
 > ※ 建立二维数组`dp[s.length()][dp.length()]`，其中，`dp[i][j]`表示字符串第`i`个字符与第`j`个字符之间的所有字符构成的子字符串中最长回文子序列的长度（包括第`i`个字符和第`j`个字符）。易知，若`s.charAt(i) == s.charAt(j)`，则有`dp[i][j] = dp[i + 1][j - 1] + 2`；若`s.charAt(i) != s.charAt(j)`，则有`dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1])`。基于上述递推公式，可以得知，从后往前更新`dp`更为合适。
