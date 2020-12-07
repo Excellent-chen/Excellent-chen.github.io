@@ -1195,6 +1195,34 @@ class Solution {
 
 > ※ 时间复杂度：$O(N)$；空间复杂度：$O(1)$。
 
+#### 861. 翻转矩阵后的得分
+
+> ※ 为了得到最高的分数，需要使矩阵每一行的最左边的数均为`1`。为了做到这一点，可以翻转那些最左边的数不为`1`的行，而其它行保持不动。在将每一行的最左边的数变为`1`之后，开始扫描除最左边的列之外的每一列，若当前列`0`的数目对于`1`的数目，就反转该列，其它列保持不变。
+
+```java
+class Solution {
+    public int matrixScore(int[][] A) {
+        int m = A.length, n = A[0].length;
+        int res = m * (1 << (n - 1));
+        for (int j = 1; j < n; j++) {
+            int oneCnt = 0;
+            for (int i = 0; i < m; i++) {
+                if (A[i][0] == 1) {
+                    oneCnt += A[i][j];
+                } else {
+                    oneCnt += (1 - A[i][j]);
+                }
+            }
+            oneCnt = Math.max(oneCnt, m - oneCnt);
+            res += (oneCnt * (1 << (n - j - 1)));
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(MN)$；空间复杂度：$O(1)$。
+
 #### 973. 最接近原点的 K 个点
 
 > ※ 将每个点到原点的欧几里得距离的平方从小到大排序，取前`K`个即可。
