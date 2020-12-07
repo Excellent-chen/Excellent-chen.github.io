@@ -256,6 +256,32 @@ class Solution {
 
 > ※ 时间复杂度：$O(T)$；空间复杂度：$O(T + N)$，其中，`T`表示区间的长度，`N`表示子区间的数量。
 
+#### 1043. 分隔数组以得到最大和
+
+> ※ 令`dp[i]`表示数组前`i`个元素（包含第`i`个元素）对应的结果，则`dp[i + 1] = max(dp[i - j] + max(arr[i + 1], ..., arr[i + 1 - j]) * (j + 1))`，其中`j = 1, ..., k`。
+
+```java
+class Solution {
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+        int n = arr.length;
+        int[] dp = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            int max = arr[i];
+            for (int j = 0; j < k; j++) {
+                if (i - j < 0) {
+                    break;
+                }
+                max = Math.max(max, arr[i - j]);
+                dp[i + 1] = Math.max(dp[i + 1], dp[i - j] + max * (j + 1));
+            }
+        }
+        return dp[n];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(NK)$；空间复杂度：$O(N)$。
+
 #### 1049. 最后一块石头的重量 II
 
 > ※ 该题目可以近似视为`0-1`背包问题，即将所有的石头分为两堆，并使得它们的总重相差最少（详情请见<a href="https://leetcode-cn.com/problems/last-stone-weight-ii/solution/you-qian-ru-shen-si-lu-ji-0-1-bei-bao-xiang-jie-mo/">解析</a>）。
