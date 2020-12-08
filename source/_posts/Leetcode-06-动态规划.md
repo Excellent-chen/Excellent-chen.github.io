@@ -197,6 +197,31 @@ class Solution {
 
 > ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N^2)$。
 
+#### 799. 香槟塔
+
+> ※ 记录流入每个杯子的香槟的杯数之和`X`，若`X`大于`1`，那么将会有`(X - 1.0) / 2`的香槟流入下一层相邻的两个杯子中，依次类推，利用动态规划进行求解即可。
+
+```java
+class Solution {
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        double[][] dp = new double[101][101];
+        dp[0][0] = poured;
+        for (int i = 0; i <= query_row; i++) {
+            for (int j = 0; j <= i; j++) {
+                if (dp[i][j] > 1.0) {
+                    dp[i + 1][j] += (dp[i][j] - 1.0) / 2;
+                    dp[i + 1][j + 1] += (dp[i][j] - 1.0) / 2;
+                    dp[i][j] = 1.0;
+                }
+            }
+        }
+        return dp[query_row][query_glass];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N^2)$。
+
 #### 983. 最低票价
 
 > ※ 记第`N`天的最低票价为`F(N)`，假设已经求出了前`N - 1`天的最低票价，现在来求`F(N)`。如果第`N`天要选择有效期长度为`dayOfPass`的通行证，其价格为`cost`，那么在第`N - dayOfPass`天时就应该买入该通行证，才能使利益最大化；而我们已经求出了前`N - 1`天的最低票价，即`F(N - dayOfPass)`是已知的。因此，对于该选择，其花费为`F(N - dayOfPass) + cost`，取所有选择的最小值更新`F(N)`即可。
