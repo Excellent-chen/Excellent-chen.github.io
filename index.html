@@ -263,10 +263,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-12-07 11:18:41 / 修改时间：19:10:28" itemprop="dateCreated datePublished" datetime="2020-12-07T11:18:41+08:00">2020-12-07</time>
+      <time title="创建时间：2020-12-07 11:18:41" itemprop="dateCreated datePublished" datetime="2020-12-07T11:18:41+08:00">2020-12-07</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-08 20:08:51" itemprop="dateModified" datetime="2020-12-08T20:08:51+08:00">2020-12-08</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -298,6 +304,35 @@
 <!-- Part 002 -->
 
 <p>※ <span style="color:blue">并发</span>是指同一时间应对多件事情的能力；<span style="color:blue">并行</span>是指同一时间动手做多件事情的能力。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ 从方法调用的角度来讲，如果需要等待结果返回，才能继续运行就是<span style="color:blue">同步</span>；不需要等待结果返回，就能继续运行就是<span style="color:blue">异步</span>。</p>
+</blockquote>
+<h4 id="Day-002"><a href="#Day-002" class="headerlink" title="Day 002"></a>Day 002</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ 创建线程有以下多种方式：</p>
+<p>👉 继承<code>Thread</code>类，并重写<code>run()</code>方法；</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;start new thread!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        t.start(); <span class="comment">// 启动新线程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>👉 实现<code>Runnable</code>接口，并在创建<code>Thread</code>实例时传入；</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Runnable runnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;start new thread!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(runnable);</span><br><span class="line">        t.start(); <span class="comment">// 启动新线程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>👉 实现<code>Callable</code>接口，并在创建<code>Thread</code>实例时传入；</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        FutureTask&lt;Integer&gt; task = <span class="keyword">new</span> FutureTask&lt;&gt;(<span class="keyword">new</span> Callable&lt;Integer&gt;() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;start new thread!&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">666</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(task);</span><br><span class="line">        t.start(); <span class="comment">// 启动新线程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ 在<code>Windows</code>下，查看所有进程的命令为：<code>tasklist</code>；查看与<code>Java</code>有关的所有进程的命令为：<code>tasklist | findstr java</code>或<code>jps</code>；杀死指定进程的命令为：<code>taskkill /F /PID ***</code>，其中，<code>/F</code>表示强制杀死，<code>/PID</code>后跟想要杀死的进程编号。</p>
+<p>※ 在<code>Linux</code>下，查看所有进程的命令为：<code>ps -fe</code>或<code>top</code>；查看与<code>Java</code>有关的所有进行的命令为：<code>ps -fe | grep java</code>或<code>jps</code>；杀死指定进程的命令为：<code>kill ***</code>；利用<code>top</code>命令查看某个进程下线程的信息的命令为：<code>top -H -p ***</code>，其中，<code>-H</code>表示查看线程；此外，也可以利用<code>jstack ***</code>命令查看某个进程下线程的信息，只是它是静态的。</p>
 </blockquote>
 
       
