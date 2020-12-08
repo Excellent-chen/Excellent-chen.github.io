@@ -20,3 +20,68 @@ tags:
 > <!-- Part 002 -->
 >
 > ※ <span style="color:blue">并发</span>是指同一时间应对多件事情的能力；<span style="color:blue">并行</span>是指同一时间动手做多件事情的能力。
+
+> <!-- Part 003 -->
+>
+> ※ 从方法调用的角度来讲，如果需要等待结果返回，才能继续运行就是<span style="color:blue">同步</span>；不需要等待结果返回，就能继续运行就是<span style="color:blue">异步</span>。
+
+#### Day 002
+
+> <!-- Part 001 -->
+>
+> ※ 创建线程有以下多种方式：
+>
+> 👉 继承`Thread`类，并重写`run()`方法；
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Thread t = new Thread() {
+            public void run() {
+                System.out.println("start new thread!");
+            }
+        };
+        t.start(); // 启动新线程
+    }
+}
+```
+
+> 👉 实现`Runnable`接口，并在创建`Thread`实例时传入；
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Runnable runnable = new Runnable() {
+            public void run() {
+                System.out.println("start new thread!");
+            }
+        };
+        Thread t = new Thread(runnable);
+        t.start(); // 启动新线程
+    }
+}
+```
+
+> 👉 实现`Callable`接口，并在创建`Thread`实例时传入；
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        FutureTask<Integer> task = new FutureTask<>(new Callable<Integer>() {
+            public Integer call() throws Exception {
+                System.out.println("start new thread!");
+                return 666;
+            }
+        });
+        Thread t = new Thread(task);
+        t.start(); // 启动新线程
+    }
+}
+```
+
+> <!-- Part 002 -->
+>
+> ※ 在`Windows`下，查看所有进程的命令为：`tasklist`；查看与`Java`有关的所有进程的命令为：`tasklist | findstr java`或`jps`；杀死指定进程的命令为：`taskkill /F /PID ***`，其中，`/F`表示强制杀死，`/PID`后跟想要杀死的进程编号。
+>
+> ※ 在`Linux`下，查看所有进程的命令为：`ps -fe`或`top`；查看与`Java`有关的所有进行的命令为：`ps -fe | grep java`或`jps`；杀死指定进程的命令为：`kill ***`；利用`top`命令查看某个进程下线程的信息的命令为：`top -H -p ***`，其中，`-H`表示查看线程；此外，也可以利用`jstack ***`命令查看某个进程下线程的信息，只是它是静态的。
+
