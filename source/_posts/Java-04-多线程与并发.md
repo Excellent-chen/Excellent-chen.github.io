@@ -85,3 +85,11 @@ public class Main {
 >
 > ※ 在`Linux`下，查看所有进程的命令为：`ps -fe`或`top`；查看与`Java`有关的所有进行的命令为：`ps -fe | grep java`或`jps`；杀死指定进程的命令为：`kill ***`；利用`top`命令查看某个进程下线程的信息的命令为：`top -H -p ***`，其中，`-H`表示查看线程；此外，也可以利用`jstack ***`命令查看某个进程下线程的信息，只是它是静态的。
 
+> <!-- Part 003 -->
+>
+> ※ 线程的栈内存是相互独立的，它们之间互不干扰。
+
+> <!-- Part 004 -->
+>
+> ※ 从`Java API`的层面来看，线程可以分为以下六种状态：`NEW`、`BLOCKED`、`WAITING`、`TIMED_WAITING`、`RUNNABLE`、`TERMINATED`。
+
