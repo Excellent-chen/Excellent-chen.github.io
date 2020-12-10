@@ -93,3 +93,22 @@ public class Main {
 >
 > ※ 从`Java API`的层面来看，线程可以分为以下六种状态：`NEW`、`BLOCKED`、`WAITING`、`TIMED_WAITING`、`RUNNABLE`、`TERMINATED`。
 
+#### Day 003
+
+> <!-- Part 001 -->
+>
+> ※ 一段代码块内如果存在对共享资源的多线程读写操作，称这段代码为<span style="color:blue">临界区</span>。
+>
+> ※ 多个线程在临界区内执行，由于代码的执行序列不同而导致结果无法预测，称之为发生了<span style="color:blue">竞态条件</span>。
+
+> <!-- Part 002 -->
+>
+> ※ 为了避免临界区竞态条件的发生，有多种手段可以达到目的：阻塞式解决方案，`synchronized`、`Lock`；非阻塞式方案：原子变量。
+
+> <!-- Part 003 -->
+>
+> ※ `synchronized`加在方法上相当于锁住了`this`对象，加载静态方法上相当于锁住了类对象。**注**：锁住两者相当于锁住了不同的对象！
+
+> <!-- Part 004 -->
+>
+> ※ <span style="color:blue">线程安全类</span>是指多个线程调用同一个实例的某个方法时，是线程安全的。

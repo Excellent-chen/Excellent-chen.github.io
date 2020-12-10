@@ -331,6 +331,37 @@ class Solution {
 
 > ※ 时间复杂度：$O(M * N)$，其中，`M`表示石块总重，`N`表示石块的个数；空间复杂度：$O(M)$。
 
+#### 1105. 填充书架
+
+> ※ 用`dp[i + 1]`表示放置前`i`本书所需要的书架的最小高度，遍历每一本书，并将该书作为书架最后一层的最后一本书，将该书之前的书向后调整，看是否可以减少之前的书架高度。
+
+```java
+class Solution {
+    public int minHeightShelves(int[][] books, int shelf_width) {
+        int n = books.length;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 0; i < n; i++) {
+            int max_hight = 0;
+            int total_width = 0;
+            for (int j = i; j >= 0; j--) {
+                total_width += books[j][0];
+                if (total_width <= shelf_width) {
+                    max_hight = Math.max(max_hight, books[j][1]);
+                    dp[i + 1] = Math.min(dp[i + 1], dp[j] + max_hight);
+                } else {
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。
+
 #### 1143. 最长公共子序列
 
 > ※ 令`dp[i][j]`表示字符串`S1[0:i]`与字符串`S2[0:j]`的最长公共子序列，则有`S1[i] = S2[j]`时，`dp[i][j] = dp[i - 1][j - 1]`；`S1[i] != S2[j]`时，`dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j])`。
