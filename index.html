@@ -271,7 +271,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-09 15:11:42" itemprop="dateModified" datetime="2020-12-09T15:11:42+08:00">2020-12-09</time>
+        <time title="修改时间：2020-12-10 14:44:07" itemprop="dateModified" datetime="2020-12-10T14:44:07+08:00">2020-12-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -343,6 +343,27 @@
 <!-- Part 004 -->
 
 <p>※ 从<code>Java API</code>的层面来看，线程可以分为以下六种状态：<code>NEW</code>、<code>BLOCKED</code>、<code>WAITING</code>、<code>TIMED_WAITING</code>、<code>RUNNABLE</code>、<code>TERMINATED</code>。</p>
+</blockquote>
+<h4 id="Day-003"><a href="#Day-003" class="headerlink" title="Day 003"></a>Day 003</h4><blockquote>
+<!-- Part 001 -->
+
+<p>※ 一段代码块内如果存在对共享资源的多线程读写操作，称这段代码为<span style="color:blue">临界区</span>。</p>
+<p>※ 多个线程在临界区内执行，由于代码的执行序列不同而导致结果无法预测，称之为发生了<span style="color:blue">竞态条件</span>。</p>
+</blockquote>
+<blockquote>
+<!-- Part 002 -->
+
+<p>※ 为了避免临界区竞态条件的发生，有多种手段可以达到目的：阻塞式解决方案，<code>synchronized</code>、<code>Lock</code>；非阻塞式方案：原子变量。</p>
+</blockquote>
+<blockquote>
+<!-- Part 003 -->
+
+<p>※ <code>synchronized</code>加在方法上相当于锁住了<code>this</code>对象，加载静态方法上相当于锁住了类对象。<strong>注</strong>：锁住两者相当于锁住了不同的对象！</p>
+</blockquote>
+<blockquote>
+<!-- Part 004 -->
+
+<p>※ <span style="color:blue">线程安全类</span>是指多个线程调用同一个实例的某个方法时，是线程安全的。</p>
 </blockquote>
 
       
@@ -1314,7 +1335,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-08 20:49:23" itemprop="dateModified" datetime="2020-12-08T20:49:23+08:00">2020-12-08</time>
+        <time title="修改时间：2020-12-09 21:46:52" itemprop="dateModified" datetime="2020-12-09T21:46:52+08:00">2020-12-09</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1428,6 +1449,14 @@
 
 <blockquote>
 <p>※ 时间复杂度：$O(M * N)$，其中，<code>M</code>表示石块总重，<code>N</code>表示石块的个数；空间复杂度：$O(M)$。</p>
+</blockquote>
+<h4 id="1105-填充书架"><a href="#1105-填充书架" class="headerlink" title="1105. 填充书架"></a>1105. 填充书架</h4><blockquote>
+<p>※ 用<code>dp[i + 1]</code>表示放置前<code>i</code>本书所需要的书架的最小高度，遍历每一本书，并将该书作为书架最后一层的最后一本书，将该书之前的书向后调整，看是否可以减少之前的书架高度。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minHeightShelves</span><span class="params">(<span class="keyword">int</span>[][] books, <span class="keyword">int</span> shelf_width)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = books.length;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        Arrays.fill(dp, Integer.MAX_VALUE);</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> max_hight = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> total_width = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">                total_width += books[j][<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">if</span> (total_width &lt;= shelf_width) &#123;</span><br><span class="line">                    max_hight = Math.max(max_hight, books[j][<span class="number">1</span>]);</span><br><span class="line">                    dp[i + <span class="number">1</span>] = Math.min(dp[i + <span class="number">1</span>], dp[j] + max_hight);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。</p>
 </blockquote>
 <h4 id="1143-最长公共子序列"><a href="#1143-最长公共子序列" class="headerlink" title="1143. 最长公共子序列"></a>1143. 最长公共子序列</h4><blockquote>
 <p>※ 令<code>dp[i][j]</code>表示字符串<code>S1[0:i]</code>与字符串<code>S2[0:j]</code>的最长公共子序列，则有<code>S1[i] = S2[j]</code>时，<code>dp[i][j] = dp[i - 1][j - 1]</code>；<code>S1[i] != S2[j]</code>时，<code>dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j])</code>。</p>
