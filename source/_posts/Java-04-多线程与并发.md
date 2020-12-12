@@ -123,3 +123,26 @@ public class Main {
 >
 > ※ 若一个对象虽然有多个线程访问，但是访问的时间是错开的（也就是没有竞争），那么可以使用<span style="color:blue">轻量级锁</span>来优化。**注**：轻量级锁对使用者是透明的，语法仍然是`synchronized`。
 
+> <!-- Part 007 -->
+>
+> ※ `obj.wait()`可以让进入`object`监视器的线程到`waitSet`中等待；`obj.notify()`可以在`object`上正在`waitSet`中等待的线程中挑一个唤醒；`obj.notifyAll()`可以让`object`上正在`waitSet`等待的线程全部唤醒。**注**：它们都是线程之间进行协作的手段，都属于`Object`对象的方法，必须获得此对象的锁，才能调用这几个方法！
+
+> <!-- Part 008 -->
+>
+> ※ `sleep(long n)`与`wait(long n)`的区别：`sleep`是`Thread`的方法，而`wait`是`Object`的方法；`sleep`不需要强制配合`synchronized`使用，而`wait`需要强制配合`synchronized`使用；`sleep`在睡眠时不会释放对象锁，只是放弃了`CPU`的使用，而`wait`在等待的同时会释放对象锁。**注**：在`sleep`/`wait`后，均会进入`TIMED_WAITING`状态。
+>
+> ※ `wait`、`notify`模板：
+
+```java
+synchronized(lock) {
+    while (条件不成立) {
+        lock.wait();
+    }
+    // do something
+}
+
+synchronized(lock) {
+    lock.notifyAll();
+}
+```
+

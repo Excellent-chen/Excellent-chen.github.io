@@ -11,6 +11,32 @@ tags:
 
 -----
 
+#### 300. 最长上升子序列
+
+> ※ $O(N^2)$的动态规划就好，$O(NlogN)$的贪心+二分法不适合我。。。
+
+```java
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int res = 1;
+        int n = nums.length;
+        int[] dp = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            dp[i + 1] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i + 1] = Math.max(dp[i + 1], dp[j + 1] + 1);
+                }
+            }
+            res = Math.max(res, dp[i + 1]);
+        }
+        return res;
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。
+
 #### 309. 最佳买卖股票时机含冷冻期
 
 > ※ 令`f[i]`表示第`i`天结束后的累计最大收益，则`f[i]`对应了三种状态：目前持有一只股票，对应的累计最大收益为`f[i][0]`；目前不持有股票，并且处于冷冻期中，对应的累计最大收益为`f[i][1]`；目前不持有股票，并且未处于冷冻期中，对应的累计最大收益为`f[i][2]`。它们的状态转移方程分别如下：
