@@ -271,7 +271,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-10 21:45:20" itemprop="dateModified" datetime="2020-12-10T21:45:20+08:00">2020-12-10</time>
+        <time title="修改时间：2020-12-11 11:14:21" itemprop="dateModified" datetime="2020-12-11T11:14:21+08:00">2020-12-11</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -376,6 +376,19 @@
 
 <p>※ 若一个对象虽然有多个线程访问，但是访问的时间是错开的（也就是没有竞争），那么可以使用<span style="color:blue">轻量级锁</span>来优化。<strong>注</strong>：轻量级锁对使用者是透明的，语法仍然是<code>synchronized</code>。</p>
 </blockquote>
+<blockquote>
+<!-- Part 007 -->
+
+<p>※ <code>obj.wait()</code>可以让进入<code>object</code>监视器的线程到<code>waitSet</code>中等待；<code>obj.notify()</code>可以在<code>object</code>上正在<code>waitSet</code>中等待的线程中挑一个唤醒；<code>obj.notifyAll()</code>可以让<code>object</code>上正在<code>waitSet</code>等待的线程全部唤醒。<strong>注</strong>：它们都是线程之间进行协作的手段，都属于<code>Object</code>对象的方法，必须获得此对象的锁，才能调用这几个方法！</p>
+</blockquote>
+<blockquote>
+<!-- Part 008 -->
+
+<p>※ <code>sleep(long n)</code>与<code>wait(long n)</code>的区别：<code>sleep</code>是<code>Thread</code>的方法，而<code>wait</code>是<code>Object</code>的方法；<code>sleep</code>不需要强制配合<code>synchronized</code>使用，而<code>wait</code>需要强制配合<code>synchronized</code>使用；<code>sleep</code>在睡眠时不会释放对象锁，只是放弃了<code>CPU</code>的使用，而<code>wait</code>在等待的同时会释放对象锁。<strong>注</strong>：在<code>sleep</code>/<code>wait</code>后，均会进入<code>TIMED_WAITING</code>状态。</p>
+<p>※ <code>wait</code>、<code>notify</code>模板：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">    <span class="keyword">while</span> (条件不成立) &#123;</span><br><span class="line">        lock.wait();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">    lock.notifyAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -1346,7 +1359,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-09 21:46:52" itemprop="dateModified" datetime="2020-12-09T21:46:52+08:00">2020-12-09</time>
+        <time title="修改时间：2020-12-12 11:04:09" itemprop="dateModified" datetime="2020-12-12T11:04:09+08:00">2020-12-12</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1369,6 +1382,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="中等"><a href="#中等" class="headerlink" title="中等"></a>中等</h3><hr>
+<h4 id="300-最长上升子序列"><a href="#300-最长上升子序列" class="headerlink" title="300. 最长上升子序列"></a>300. 最长上升子序列</h4><blockquote>
+<p>※ $O(N^2)$的动态规划就好，$O(NlogN)$的贪心+二分法不适合我。。。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            dp[i + <span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[j] &lt; nums[i]) &#123;</span><br><span class="line">                    dp[i + <span class="number">1</span>] = Math.max(dp[i + <span class="number">1</span>], dp[j + <span class="number">1</span>] + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            res = Math.max(res, dp[i + <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>※ 时间复杂度：$O(N^2)$；空间复杂度：$O(N)$。</p>
+</blockquote>
 <h4 id="309-最佳买卖股票时机含冷冻期"><a href="#309-最佳买卖股票时机含冷冻期" class="headerlink" title="309. 最佳买卖股票时机含冷冻期"></a>309. 最佳买卖股票时机含冷冻期</h4><blockquote>
 <p>※ 令<code>f[i]</code>表示第<code>i</code>天结束后的累计最大收益，则<code>f[i]</code>对应了三种状态：目前持有一只股票，对应的累计最大收益为<code>f[i][0]</code>；目前不持有股票，并且处于冷冻期中，对应的累计最大收益为<code>f[i][1]</code>；目前不持有股票，并且未处于冷冻期中，对应的累计最大收益为<code>f[i][2]</code>。它们的状态转移方程分别如下：</p>
 <p><code>f[i][0] = Math.max(f[i - 1][0], f[i - 1][2] - price[i])</code>；<code>f[i][1] = f[i - 1][0] + price[i]</code>；<code>f[i][2] = Math.max(f[i - 1][1], f[i - 1][2])</code>。</p>

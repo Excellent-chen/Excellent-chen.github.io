@@ -30,7 +30,7 @@
 <meta property="og:description" content="Day 001   ※ 在计算机中，我们把一个任务称为一个进程；某些进程内部还需要同时执行多个子任务，我们把这些子任务称为线程。进程与线程之间的关系为：一个进程可以包含多个线程，但至少会有一个线程。注：操作系统调度的最小任务单位不是进程，而是线程！ ※ 同一个应用程序中，既可以有多个进程，又可以有多个线程，因此，实现多任务的方法有以下几种：多进程模式（每个进程只有一个线程）；多线程模式（一个进程有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-07T03:18:41.000Z">
-<meta property="article:modified_time" content="2020-12-10T13:45:20.179Z">
+<meta property="article:modified_time" content="2020-12-11T03:14:21.579Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="多线程与并发">
 <meta name="twitter:card" content="summary">
@@ -277,7 +277,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-10 21:45:20" itemprop="dateModified" datetime="2020-12-10T21:45:20+08:00">2020-12-10</time>
+        <time title="修改时间：2020-12-11 11:14:21" itemprop="dateModified" datetime="2020-12-11T11:14:21+08:00">2020-12-11</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -382,6 +382,19 @@
 
 <p>※ 若一个对象虽然有多个线程访问，但是访问的时间是错开的（也就是没有竞争），那么可以使用<span style="color:blue">轻量级锁</span>来优化。<strong>注</strong>：轻量级锁对使用者是透明的，语法仍然是<code>synchronized</code>。</p>
 </blockquote>
+<blockquote>
+<!-- Part 007 -->
+
+<p>※ <code>obj.wait()</code>可以让进入<code>object</code>监视器的线程到<code>waitSet</code>中等待；<code>obj.notify()</code>可以在<code>object</code>上正在<code>waitSet</code>中等待的线程中挑一个唤醒；<code>obj.notifyAll()</code>可以让<code>object</code>上正在<code>waitSet</code>等待的线程全部唤醒。<strong>注</strong>：它们都是线程之间进行协作的手段，都属于<code>Object</code>对象的方法，必须获得此对象的锁，才能调用这几个方法！</p>
+</blockquote>
+<blockquote>
+<!-- Part 008 -->
+
+<p>※ <code>sleep(long n)</code>与<code>wait(long n)</code>的区别：<code>sleep</code>是<code>Thread</code>的方法，而<code>wait</code>是<code>Object</code>的方法；<code>sleep</code>不需要强制配合<code>synchronized</code>使用，而<code>wait</code>需要强制配合<code>synchronized</code>使用；<code>sleep</code>在睡眠时不会释放对象锁，只是放弃了<code>CPU</code>的使用，而<code>wait</code>在等待的同时会释放对象锁。<strong>注</strong>：在<code>sleep</code>/<code>wait</code>后，均会进入<code>TIMED_WAITING</code>状态。</p>
+<p>※ <code>wait</code>、<code>notify</code>模板：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">    <span class="keyword">while</span> (条件不成立) &#123;</span><br><span class="line">        lock.wait();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">    lock.notifyAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
