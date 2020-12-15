@@ -146,3 +146,14 @@ synchronized(lock) {
 }
 ```
 
+> <!-- Part 009 -->
+>
+> ※ 模式：同步模式之保护性暂停；异步模式之生产者消费者。
+
+> <!-- Part 010 -->
+>
+> ※ `park`、`unpark`与`wait`、`notify`的功能类似，但是存在以下不同：`wait`，`notify`必须配合对管程一起使用，而`park`、`unpark`不必；`park`、`unpark`是以线程为单位来“阻塞”和“唤醒”线程，而`notify`则没有那么精确；`park`、`unpark`可以先`unpark`，而`wait`，`notify`不能先`notify`。
+
+> <!-- Part 011 -->
+>
+> ※ 线程之间的<span style="color:red">状态转换</span>！

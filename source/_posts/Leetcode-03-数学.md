@@ -493,6 +493,34 @@ class Solution {
 
 > ※ 时间复杂度：$O(1)$；空间复杂度：$O(1)$。
 
+#### 738. 单调递增的数字
+
+> ※ 首先从高位开始找到第一个非升序的位，将此位减`1`，后续所有位改为`9`；然后从此位开始往前判断看更改后是否满足升序要求，若不满足则把本位也提升到`9`，前一位继续减`1`，直到满足升序条件为止。
+
+```java
+class Solution {
+    public int monotoneIncreasingDigits(int N) {
+        int i = 1;
+        char[] strN = String.valueOf(N).toCharArray();
+        while (i < strN.length && strN[i - 1] <= strN[i]) {
+            i++;
+        }
+        if (i < strN.length) {
+            while (i > 0 && strN[i - 1] > strN[i]) {
+                strN[i - 1] -= 1;
+                i--;
+            }
+            for (i += 1; i < strN.length; i++) {
+                strN[i] = '9';
+            }
+        }
+        return Integer.parseInt(String.valueOf(strN));
+    }
+}
+```
+
+> ※ 时间复杂度：$O(N)$；空间复杂度：$O(N)$。
+
 #### 807. 保持城市天际线
 
 > ※ 该题目与`883. 三维形体投影面积`类似，均利用了投影的性质。首先，对二维数组进行遍历，求出每一行、每一列的最大值；然后，再次对二维数组进行遍历，对于每一个元素`grid[i][j]`，其可以增加的最大高度等于`Math.min(row_max[i], col_max[j]) - grid[i][j]`；最后，将所有元素可以增加的最大高度累加在一起，得到最终结果。
