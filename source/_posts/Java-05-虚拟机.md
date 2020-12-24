@@ -1,13 +1,13 @@
 ---
-title: Java虚拟机
-date: 2020-12-23 21:46:17
+title: Java-05-虚拟机
+date: 2020-12-24 16:32:55
 categories:
 - Java
 tags:
 - 虚拟机
 ---
 
-<img src="Java-05-虚拟机\java-jvm-overview.png" alt="java-jvm-overview" style="zoom:80%;" />
+{% asset_img java-jvm-overview.png java-jvm-overview %}
 
 #### Day 001
 
