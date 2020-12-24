@@ -7,7 +7,7 @@ tags:
 - 虚拟机
 ---
 
-![java-jvm-overview](java-jvm-overview.png)
+<img src="\Java-05-虚拟机\java-jvm-overview.png" alt="java-jvm-overview" style="zoom:80%;" />
 
 #### Day 001
 
