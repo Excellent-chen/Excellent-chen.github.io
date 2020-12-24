@@ -7,7 +7,7 @@ tags:
 - 虚拟机
 ---
 
-<img src="C:\Users\HIT\Excellent-chen\source\_posts\Java-05-虚拟机\java-jvm-overview.png" alt="java-jvm-overview" style="zoom:80%;" />
+<img src=".\Java-05-虚拟机\java-jvm-overview.png" alt="java-jvm-overview" style="zoom:80%;" />
 
 #### Day 001
 
