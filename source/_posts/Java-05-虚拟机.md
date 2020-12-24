@@ -7,7 +7,7 @@ tags:
 - 虚拟机
 ---
 
-{% asset_img java-jvm-overview.png java-jvm-overview %}
+![java-jvm-overview](java-jvm-overview.png)
 
 #### Day 001
 
