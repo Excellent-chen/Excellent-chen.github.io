@@ -9,6 +9,8 @@ tags:
 
 <img src="Java-05-虚拟机/java-jvm-overview.png" style="zoom:80%;" />
 
+<!-- more -->
+
 #### Day 001
 
 > <!-- Part 005 -->
