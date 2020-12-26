@@ -9,13 +9,13 @@ tags:
 
 <img src="Java-05-虚拟机/java-jvm-overview.png" style="zoom:80%;" />
 
-<!-- more -->
-
 #### Day 001
 
 > <!-- Part 005 -->
 >
 > ※ 虚拟机可分为<span style="color:blue">系统虚拟机</span>（如`VMware`）和<span style="color:blue">程序虚拟机</span>（如`JVM`）。<span title="它们之间存在哪些区别？">**TODO**</span>
+
+<!-- more -->
 
 > <!-- Part 008 -->
 >
