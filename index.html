@@ -186,7 +186,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -199,7 +199,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -231,6 +231,98 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/28/Read-02-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="刘晨">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿晨的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/28/Read-02-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Read-02-推荐系统实践</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-12-28 19:01:13 / 修改时间：22:05:01" itemprop="dateCreated datePublished" datetime="2020-12-28T19:01:13+08:00">2020-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Read/" itemprop="url" rel="index"><span itemprop="name">Read</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="Chapter-001"><a href="#Chapter-001" class="headerlink" title="Chapter 001"></a>Chapter 001</h4><blockquote>
+<!-- Section 001 -->
+
+<p>※ 推荐系统的基本任务是联系用户和物品，解决信息过载的问题。</p>
+<p>※ 推荐系统是一种自动联系用户和物品的工具，它既能够在信息过载的环境中帮助用户发现令它们感兴趣的工具，也能够将信息推送给对它们感兴趣的用户。</p>
+<p>※ <span style="color:blue">分类目录</span>，<span style="color:blue">搜索引擎</span>，<span style="color:blue">推荐系统</span>。从某种意义上说，搜索引擎和推荐系统是两个互补的工具，前者满足了用户有明确目的时的主动查找需求，后者能够在用户没有明确目的时帮助他们发现感兴趣的新内容。</p>
+</blockquote>
+<blockquote>
+<!-- Section 002 -->
+
+<p>※ 总得来说，几乎所有的推荐系统都是由<span style="color:blue">前台展示页面</span>，<span style="color:blue">后台日志系统</span>和<span style="color:blue">推荐算法</span>构成的。</p>
+</blockquote>
+<blockquote>
+<!-- Section 003 -->
+
+<p>※ 在推荐系统中，主要有三种评测推荐效果的实验方法，即<span style="color:blue">离线实验</span>，<span style="color:blue">用户调查</span>和<span style="color:blue">在线实验</span>。<span title="它们各自有哪些优缺点？"><strong>TODO</strong></span></p>
+<p>※ 常见的评测指标包括：用户满意度；预测准确度（评分预测：<code>RMSE</code>，<code>MAE</code>；<code>TopN</code>推荐：<code>Recall</code>，<code>Precision</code>）；覆盖率（信息熵；基尼系数）；多样性；新颖性；惊喜度；信任度；实时性；健壮性；商业目标。<strong>注</strong>：如果一个系统会增大热门物品和非热门物品的流行度差距，让热门的物品更加热门，不热门的物品更加不热门，那么这个系统就有<span style="color:blue">马太效应</span>。评测推荐系统是否具有马太效应的简单办法就是使用基尼系数。<span title="如何利用基尼系数进行判断？"><strong>TODO</strong></span></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -1108,105 +1200,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/09/27/Leetcode-03-%E6%95%B0%E5%AD%A6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/Leetcode-05-%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="刘晨">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿晨的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/24/Leetcode-05-%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" class="post-title-link" itemprop="url">05 优先搜索</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-09-24 14:53:11" itemprop="dateCreated datePublished" datetime="2020-09-24T14:53:11+08:00">2020-09-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-26 16:01:18" itemprop="dateModified" datetime="2020-12-26T16:01:18+08:00">2020-12-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="中等"><a href="#中等" class="headerlink" title="中等"></a>中等</h3><hr>
-<h4 id="130-被围绕的区域"><a href="#130-被围绕的区域" class="headerlink" title="130. 被围绕的区域"></a>130. 被围绕的区域</h4><blockquote>
-<p>※ 该题目可以抽象成图的深度优先搜索，比较简单。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[][] visited;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (board.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[board.length][board[<span class="number">0</span>].length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; board.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != <span class="number">0</span> &amp;&amp; i != board.length - <span class="number">1</span> &amp;&amp; j != <span class="number">0</span> &amp;&amp; j != board[<span class="number">0</span>].length - <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == <span class="string">&#x27;O&#x27;</span> &amp;&amp; visited[i][j] == <span class="keyword">false</span>) &#123;</span><br><span class="line">                    visited[i][j] = <span class="keyword">true</span>;</span><br><span class="line">                    DFS(board, i, j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; board.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == <span class="string">&#x27;O&#x27;</span> &amp;&amp; visited[i][j] == <span class="keyword">false</span>) &#123;</span><br><span class="line">                    board[i][j] = <span class="string">&#x27;X&#x27;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">char</span>[][] board, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[][] directions = &#123;&#123;<span class="number">0</span>, -<span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;-<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] direction : directions) &#123;</span><br><span class="line">            <span class="keyword">int</span> dx = x + direction[<span class="number">0</span>], dy = y + direction[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (<span class="number">0</span> &lt;= dx &amp;&amp; dx &lt; board.length &amp;&amp; <span class="number">0</span> &lt;= dy &amp;&amp; dy &lt; board[<span class="number">0</span>].length) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[dx][dy] == <span class="string">&#x27;O&#x27;</span> &amp;&amp; visited[dx][dy] == <span class="keyword">false</span>) &#123;</span><br><span class="line">                    visited[dx][dy] = <span class="keyword">true</span>;</span><br><span class="line">                    DFS(board, dx, dy);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>※ 时间复杂度：$O(MN)$；空间复杂度：$O(MN)$。</p>
-</blockquote>
-<blockquote>
-<p><strong>TODO</strong>：在解决该题目时借助了一个与<code>board</code>同样大小的<code>boolean</code>数组，若题目规定不能声明新的数组，此时你知道该怎么办嘛？</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/24/Leetcode-05-%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
