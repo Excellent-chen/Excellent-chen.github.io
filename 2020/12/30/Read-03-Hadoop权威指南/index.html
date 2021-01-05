@@ -30,7 +30,7 @@
 <meta property="og:description" content="Chapter 002   ※ 不同版本的Hadoop之间存在哪些区别？ ※  Hadoop主要由HDFS，YARN和MapReduce三部分组成。HDFS包括NameNode，DataNode和SecondaryNameNode；YARN包括ResourceManager，NodeManager，ApplicationMaster和Container；MapReduce包括Map和Reduce">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-30T01:47:27.000Z">
-<meta property="article:modified_time" content="2021-01-04T14:31:23.135Z">
+<meta property="article:modified_time" content="2021-01-05T12:47:55.524Z">
 <meta property="article:author" content="刘晨">
 <meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-002"><span class="nav-number">1.</span> <span class="nav-text">Chapter 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-003"><span class="nav-number">2.</span> <span class="nav-text">Chapter 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-004"><span class="nav-number">3.</span> <span class="nav-text">Chapter 004</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-002"><span class="nav-number">1.</span> <span class="nav-text">Chapter 002</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-003"><span class="nav-number">2.</span> <span class="nav-text">Chapter 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-004"><span class="nav-number">3.</span> <span class="nav-text">Chapter 004</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-001"><span class="nav-number">4.</span> <span class="nav-text">Chapter 001</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-003-1"><span class="nav-number">5.</span> <span class="nav-text">Chapter 003</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-004-1"><span class="nav-number">6.</span> <span class="nav-text">Chapter 004</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chapter-005"><span class="nav-number">7.</span> <span class="nav-text">Chapter 005</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -277,7 +277,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-04 22:31:23" itemprop="dateModified" datetime="2021-01-04T22:31:23+08:00">2021-01-04</time>
+        <time title="修改时间：2021-01-05 20:47:55" itemprop="dateModified" datetime="2021-01-05T20:47:55+08:00">2021-01-05</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -334,6 +334,34 @@
 <!-- Section 003 -->
 
 <p>※ <code>scp</code>安全拷贝，<code>rsync</code>远程同步，<code>xsync</code>集群分发。</p>
+</blockquote>
+<h4 id="Chapter-001"><a href="#Chapter-001" class="headerlink" title="Chapter 001"></a>Chapter 001</h4><blockquote>
+<!-- Section 001 -->
+
+<p>※ <code>HDFS</code>是一个分布式文件系统，适用于<span style="color:red">一次写入，多次读出</span>的场景，且不支持文件修改。注：常见的文件系统还有<code>FAT</code>，<code>NTFS</code>。</p>
+</blockquote>
+<blockquote>
+<!-- Section 002 -->
+
+<p>※ <code>HDFS</code>具有”高容错性，适合处理大数据，可构建在廉价机器上“的优点，”不适合低延时数据访问，无法高效对大量小文件进行存储，不支持并发写入、文件随机修改“的缺点。</p>
+</blockquote>
+<blockquote>
+<!-- Section 004 -->
+
+<p>※ <code>HDFS</code>的块的大小设置主要取决于磁盘传输速率。若块设置过小，寻址开销将会增加；若块设置过大，作业的运行速度将会变慢。</p>
+</blockquote>
+<h4 id="Chapter-003-1"><a href="#Chapter-003-1" class="headerlink" title="Chapter 003"></a>Chapter 003</h4><blockquote>
+<!-- Section 002 -->
+
+<p>※ 参数优先级排序：客户端代码设置的值；<code>ClassPath</code>下用户自定义的配置文件；服务器的默认配置。</p>
+</blockquote>
+<h4 id="Chapter-004-1"><a href="#Chapter-004-1" class="headerlink" title="Chapter 004"></a>Chapter 004</h4><blockquote>
+<!-- Section 001 -->
+
+<p>※ <span style="color:blue">节点距离</span>：两个节点到达最近的共同祖先的距离之和。</p>
+<p>※ <span style="color:blue">机架感知</span>：<code>For the common case, when the replication factor is three, HDFS’s placement policy is to put one replica on the local machine if the writer is on a datanode, otherwise on a random datanode in the same rack as that of the writer, another replica on a node in a different (remote) rack, and the last on a different node in the same remote rack.</code></p>
+</blockquote>
+<h4 id="Chapter-005"><a href="#Chapter-005" class="headerlink" title="Chapter 005"></a>Chapter 005</h4><blockquote>
 </blockquote>
 <hr>
 
