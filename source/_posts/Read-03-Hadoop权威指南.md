@@ -46,5 +46,37 @@ tags:
 >
 > ※ `scp`安全拷贝，`rsync`远程同步，`xsync`集群分发。
 
+#### Chapter 001
+
+> <!-- Section 001 -->
+>
+> ※ `HDFS`是一个分布式文件系统，适用于<span style="color:red">一次写入，多次读出</span>的场景，且不支持文件修改。注：常见的文件系统还有`FAT`，`NTFS`。
+
+> <!-- Section 002 -->
+>
+> ※ `HDFS`具有”高容错性，适合处理大数据，可构建在廉价机器上“的优点，”不适合低延时数据访问，无法高效对大量小文件进行存储，不支持并发写入、文件随机修改“的缺点。
+
+> <!-- Section 004 -->
+>
+> ※ `HDFS`的块的大小设置主要取决于磁盘传输速率。若块设置过小，寻址开销将会增加；若块设置过大，作业的运行速度将会变慢。
+
+#### Chapter 003
+
+> <!-- Section 002 -->
+>
+> ※ 参数优先级排序：客户端代码设置的值；`ClassPath`下用户自定义的配置文件；服务器的默认配置。
+
+#### Chapter 004
+
+> <!-- Section 001 -->
+>
+> ※ <span style="color:blue">节点距离</span>：两个节点到达最近的共同祖先的距离之和。
+>
+> ※ <span style="color:blue">机架感知</span>：`For the common case, when the replication factor is three, HDFS’s placement policy is to put one replica on the local machine if the writer is on a datanode, otherwise on a random datanode in the same rack as that of the writer, another replica on a node in a different (remote) rack, and the last on a different node in the same remote rack.`
+
+#### Chapter 005
+
+> 
+
 -----
 
