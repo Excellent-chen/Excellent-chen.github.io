@@ -15,7 +15,7 @@ tags:
 >
 > ※ 不同版本的`Hadoop`之间存在哪些区别？
 >
-> ※  `Hadoop`主要由`HDFS`，`YARN`和`MapReduce`三部分组成。`HDFS`包括`NameNode`，`DataNode`和`SecondaryNameNode`；`YARN`包括`ResourceManager`，`NodeManager`，`ApplicationMaster`和`Container`；`MapReduce`包括`Map`和`Reduce`两个阶段，前者对输入数据进行并行处理，后者对前者的结果进行汇总。
+> ※  `Hadoop`主要由`HDFS`，`YARN`和`MapReduce`三部分组成。`HDFS`包括`NameNode`，`DataNode`和`Secondary NameNode`；`YARN`包括`ResourceManager`，`NodeManager`，`Application Master`和`Container`；`MapReduce`包括`Map`和`Reduce`两个阶段，前者对输入数据进行并行处理，后者对前者的结果进行汇总。
 
 > <!-- Scetion 006 -->
 >
@@ -76,7 +76,21 @@ tags:
 
 #### Chapter 005
 
-> 
+> <!-- Section 001 -->
+>
+> ※ `NameNode`和`Secondary NameNode`的工作机制。
+
+> <!-- Section 002 -->
+>
+> ※ `fsimage`和`edits`解析。
+
+> <!-- Section 004 -->
+>
+> ※ `NameNode`故障处理：将`Secondary NameNode`中的数据拷贝到`NameNode`存储数据的目录中；使用`-importCheckpoint`选项启动`NameNode`守护进程，从而将`Secondary NameNode`中的数据拷贝到`NameNode`存储数据的目录中。
+
+> <!-- Section 005 -->
+>
+> ※ 集群安全模式：只读！
 
 -----
 
