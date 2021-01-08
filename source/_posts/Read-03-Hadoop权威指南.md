@@ -92,5 +92,21 @@ tags:
 >
 > ※ 集群安全模式：只读！
 
+#### Chapter 006
+
+> <!-- Section 001 -->
+>
+> ※ `DateNode`的工作机制。
+
+#### Chapter 001
+
+> <!-- section 001 -->
+>
+> ※ `MapReduce`
+>
+> <!-- Section 004 -->
+>
+> ※ 一个完整的`MapReduce`程序在运行时有三类实例进程：`MrAppMaster`，负责整个程序的过程调度及状态协调；`MapTask`，负责`Map`阶段的整个数据处理流程；`ReduceTask`，负责`Reduce`阶段的整个数据处理流程。
+
 -----
 
